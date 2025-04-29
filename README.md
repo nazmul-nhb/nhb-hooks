@@ -1,3 +1,3 @@
 # NHB Hooks
 
-Reusable hooks for react projects.
+Reusable hooks to use in react project.
