@@ -29,7 +29,7 @@ export function useDebouncedValue<T>(value: T, delay = 300): [T, () => void] {
 		setTimeoutId(id);
 
 		return () => clearTimeout(id);
-	}, [value, delay]);
+	}, [timeoutId, value, delay]);
 
 	const cancelFn = () => {
 		if (timeoutId) {

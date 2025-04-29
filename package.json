@@ -1,6 +1,6 @@
 {
   "name": "nhb-hooks",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -32,9 +32,11 @@
   "sideEffects": false,
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc -b && vite build",
     "lint": "eslint . --ext .ts,.tsx",
-    "prepublishOnly": "vite build"
+    "test": "vitest",
+    "prepublishOnly": "tsc -b && vite build",
+    "coverage": "vitest run --coverage"
   },
   "keywords": [
     "react",
@@ -61,19 +63,27 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.25.1",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^29.5.14",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
+    "@vitest/ui": "^3.1.2",
     "eslint": "^9.25.1",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.0.0",
+    "jsdom": "^26.1.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "rollup-plugin-dts": "^6.2.1",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.31.1",
-    "vite": "^6.3.3"
+    "vite": "^6.3.3",
+    "vitest": "^3.1.2"
   },
   "dependencies": {
     "nhb-toolbox": "^4.3.2"
