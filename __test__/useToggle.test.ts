@@ -24,3 +24,19 @@ test('should toggle the value', () => {
 	});
 	expect(result.current[0]).toBe(false);
 });
+
+test('should toggle the value', () => {
+	const { result } = renderHook(() => useToggle(['man', 'boy']));
+
+	// First toggle - wrap in act
+	act(() => {
+		result.current[1]();
+	});
+	expect(result.current[0]).toBe('boy');
+
+	// Second toggle - wrap in act
+	act(() => {
+		result.current[1]();
+	});
+	expect(result.current[0]).toBe('man');
+});
