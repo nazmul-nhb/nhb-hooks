@@ -7,7 +7,7 @@ export default defineConfig({
 	build: {
 		lib: {
 			entry: './src/index.ts',
-			name: 'nhb-toolbox',
+			name: 'nhb-hooks',
 			fileName: 'index',
 			formats: ['es', 'cjs'],
 		},

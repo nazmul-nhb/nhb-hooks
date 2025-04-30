@@ -17,7 +17,7 @@ import React from 'react';
  */
 export function useDebouncedValue<T>(value: T, delay = 300): [T, () => void] {
 	const [debouncedValue, setDebouncedValue] = React.useState(value);
-	const [timeoutId, setTimeoutId] = React.useState<number | null>(null);
+	const [timeoutId, setTimeoutId] = React.useState<NodeJS.Timeout | null>(null);
 
 	React.useEffect(() => {
 		if (timeoutId) clearTimeout(timeoutId);
