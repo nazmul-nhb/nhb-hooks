@@ -10,14 +10,18 @@ export default tseslint.config(
     { ignores: ['dist'] },
     {
         extends: [
-            ...js.configs.recommended,
+            js.configs.recommended,
             ...tseslint.configs.recommended,
-            ...vitest.configs.recommended,
         ],
         files: ['**/*.{ts,tsx}'],
         languageOptions: {
             ecmaVersion: 2020,
-            globals: { ...globals.browser, ...vitest.environments.env.globals },
+            globals: {
+                ...globals.browser,
+                ...globals.node,
+                ...vitest.environments.env.globals,
+                NodeJS: 'readonly',
+            },
         },
         plugins: {
             'react-hooks': reactHooks,
@@ -38,18 +42,7 @@ export default tseslint.config(
                 'warn',
                 { prefer: 'type-imports' },
             ],
-            'no-unused-vars': [
-                'error',
-                {
-                    args: 'all',
-                    argsIgnorePattern: '^_',
-                    caughtErrors: 'all',
-                    caughtErrorsIgnorePattern: '^_',
-                    destructuredArrayIgnorePattern: '^_',
-                    varsIgnorePattern: '^_',
-                    ignoreRestSiblings: false,
-                },
-            ],
+            'no-unused-vars': 'off',
             '@typescript-eslint/no-unused-vars': [
                 'error',
                 {
