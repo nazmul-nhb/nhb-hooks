@@ -33,9 +33,11 @@ export function useTimer(
 	time: ChronosInput,
 	unit?: Exclude<TimeUnit, 'week'>
 ): TimeDuration {
-	const now = new Chronos();
+	const now = /*#__PURE__*/ new Chronos();
 	const target =
-		typeof time === 'number' && unit ? now.add(time, unit) : new Chronos(time);
+		typeof time === 'number' && unit
+			? now.add(time, unit)
+			: /*#__PURE__*/ new Chronos(time);
 
 	const initialMs = target.diff(now, 'millisecond');
 
@@ -61,5 +63,5 @@ export function useTimer(
 		};
 	}, [remainingMs]);
 
-	return new Chronos().subtract(remainingMs, 'millisecond').duration();
+	return /*#__PURE__*/ new Chronos().subtract(remainingMs, 'millisecond').duration();
 }
