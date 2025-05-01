@@ -1,6 +1,6 @@
 {
   "name": "nhb-hooks",
-  "version": "0.2.2",
+  "version": "0.3.3",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -28,7 +28,8 @@
     "access": "public"
   },
   "files": [
-    "dist"
+    "dist",
+    "assets"
   ],
   "repository": {
     "type": "git",
