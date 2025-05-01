@@ -42,13 +42,15 @@ export function useValidImage<T extends string | string[]>(
 	useEffect(() => {
 		let isMounted = true;
 
-		const normalize = (url?: string) => `${imgHostLink}/${url}`;
+		const normalizeUrl = (url?: string) => {
+			return imgHostLink && url ? `${imgHostLink}/${url}` : placeholder;
+		};
 
 		const validate = async () => {
 			if (Array.isArray(input)) {
 				const results = await Promise.all(
 					input.map(async (url) => {
-						const fullUrl = normalize(url);
+						const fullUrl = normalizeUrl(url);
 
 						const isValid = await checkImageExists(fullUrl);
 
@@ -60,7 +62,7 @@ export function useValidImage<T extends string | string[]>(
 					setValidImages(results);
 				}
 			} else {
-				const fullUrl = normalize(input);
+				const fullUrl = normalizeUrl(input);
 				const isValid = await checkImageExists(fullUrl);
 
 				if (isMounted) {
