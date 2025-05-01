@@ -5,6 +5,9 @@ export type ValidImage<T> = T extends string ? string : string[];
 export interface ValidImageOptions {
 	/** Optional base path to prepend to image URLs (no trailing slash) */
 	imgHostLink?: string;
-	/** Fallback image URL. If your project is not using `Vite`, you must provide the placeholder explicitly. */
+	/** Fallback image URL.
+	 *
+	 *  **Note**: *If your project is not using `Vite`, you might have to provide the placeholder explicitly in the options.*
+	 */
 	placeholder?: string;
 }
