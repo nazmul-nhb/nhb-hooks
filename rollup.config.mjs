@@ -2,10 +2,12 @@ import dts from 'rollup-plugin-dts';
 import { defineConfig } from 'rollup';
 
 export default defineConfig({
-	input: './src/index.ts',
+	input: {
+		index: './src/index.ts',
+		types: './src/types/index.ts',
+	},
 	output: {
-		file: './dist/index.d.ts',
-
+		dir: './dist',
 		format: 'es',
 	},
 	plugins: [dts()],
