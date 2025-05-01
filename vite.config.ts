@@ -15,7 +15,7 @@ export default defineConfig({
 			formats: ['es', 'cjs'],
 		},
 		rollupOptions: {
-			external: ['react'],
+			external: ['react', 'nhb-toolbox'],
 			plugins: [visualizer({ open: true })],
 			output: {
 				globals: {

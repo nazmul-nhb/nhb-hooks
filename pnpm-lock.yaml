@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      nhb-toolbox:
-        specifier: ^4.10.8
-        version: 4.10.8
     devDependencies:
       '@eslint/js':
         specifier: ^9.25.1
@@ -63,6 +59,9 @@ importers:
       jsdom:
         specifier: ^26.1.0
         version: 26.1.0
+      nhb-toolbox:
+        specifier: ^4.10.8
+        version: 4.10.8
       react:
         specifier: ^19.1.0
         version: 19.1.0

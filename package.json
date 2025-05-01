@@ -1,6 +1,6 @@
 {
   "name": "nhb-hooks",
-  "version": "0.4.4",
+  "version": "0.4.8",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -56,7 +56,8 @@
   "packageManager": "pnpm@10.9.0",
   "peerDependencies": {
     "react": "^18 || ^19",
-    "react-dom": "^18 || ^19"
+    "react-dom": "^18 || ^19",
+    "nhb-toolbox": ">=4.10.8"
   },
   "peerDependenciesMeta": {
     "react": {
@@ -64,6 +65,9 @@
     },
     "react-dom": {
       "optional": false
+    },
+    "nhb-toolbox": {
+      "optional": true
     }
   },
   "devDependencies": {
@@ -84,6 +88,7 @@
     "eslint-plugin-vitest": "^0.5.4",
     "globals": "^16.0.0",
     "jsdom": "^26.1.0",
+    "nhb-toolbox": "^4.10.8",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "rollup": "^4.40.1",
@@ -93,8 +98,5 @@
     "typescript-eslint": "^8.31.1",
     "vite": "^6.3.3",
     "vitest": "^3.1.2"
-  },
-  "dependencies": {
-    "nhb-toolbox": "^4.10.8"
   }
 }
