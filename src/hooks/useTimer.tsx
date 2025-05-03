@@ -36,7 +36,7 @@ export function useTimer(
 	const now = /*#__PURE__*/ new Chronos();
 	const target =
 		typeof time === 'number' && unit
-			? now.add(time, unit)
+			? /*#__PURE__*/ now.add(time, unit)
 			: /*#__PURE__*/ new Chronos(time);
 
 	const initialMs = target.diff(now, 'millisecond');

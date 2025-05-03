@@ -56,8 +56,7 @@
   "packageManager": "pnpm@10.9.0",
   "peerDependencies": {
     "react": "^18 || ^19",
-    "react-dom": "^18 || ^19",
-    "nhb-toolbox": ">=4.10.8"
+    "react-dom": "^18 || ^19"
   },
   "peerDependenciesMeta": {
     "react": {
@@ -88,7 +87,7 @@
     "eslint-plugin-vitest": "^0.5.4",
     "globals": "^16.0.0",
     "jsdom": "^26.1.0",
-    "nhb-toolbox": "^4.10.8",
+    "nhb-toolbox": "^4.10.9",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "rollup": "^4.40.1",
