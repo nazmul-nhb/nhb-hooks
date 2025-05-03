@@ -1,7 +1,8 @@
 export { useBreakPoint } from './hooks/useBreakPoint';
 export { useClickOutside } from './hooks/useClickOutside';
 export { useDebouncedValue } from './hooks/useDebouncedValue';
-export { useToggle } from './hooks/useToggle';
+export { useMediaQuery } from './hooks/useMediaQuery';
 export { useTimer } from './hooks/useTimer';
+export { useToggle } from './hooks/useToggle';
 export { useValidImage } from './hooks/useValidImage';
 export { useWindowResize } from './hooks/useWindowResize';

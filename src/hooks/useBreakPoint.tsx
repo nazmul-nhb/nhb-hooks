@@ -1,29 +1,4 @@
-import React from 'react';
-
-/**
- * * Evaluates a given media query string and returns a boolean indicating whether it matches.
- * @param query - The media query string to evaluate.
- * @returns Boolean: `true` if the media query matches, otherwise `false`.
- */
-const useMediaQuery = (query: string): boolean => {
-	const getMatches = (q: string) =>
-		typeof window !== 'undefined' && window.matchMedia(q).matches;
-
-	const [matches, setMatches] = React.useState<boolean>(getMatches(query));
-
-	React.useEffect(() => {
-		if (typeof window === 'undefined') return;
-
-		const mediaQueryList = window.matchMedia(query);
-
-		const handleChange = () => setMatches(mediaQueryList.matches);
-
-		mediaQueryList.addEventListener('change', handleChange);
-		return () => mediaQueryList.removeEventListener('change', handleChange);
-	}, [query]);
-
-	return matches;
-};
+import { useMediaQuery } from './useMediaQuery';
 
 /**
  * * Custom hook to detect responsive breakpoints based on screen width.

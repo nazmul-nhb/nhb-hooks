@@ -33,7 +33,11 @@ export function useValidImage<T extends string | string[]>(
 	input: T | undefined,
 	options?: ValidImageOptions
 ): ValidImage<T> {
-	const { placeholder = placeholderImage, imgHostLink } = options ?? {};
+	const {
+		placeholder = placeholderImage,
+		imgHostLink,
+		trailingSlash = true,
+	} = options ?? {};
 
 	const [validImages, setValidImages] = useState<string | string[]>(
 		Array.isArray(input) ? input.map(() => placeholder) : placeholder
@@ -43,7 +47,9 @@ export function useValidImage<T extends string | string[]>(
 		let isMounted = true;
 
 		const normalizeUrl = (url?: string) => {
-			return imgHostLink && url ? `${imgHostLink}/${url}` : placeholder;
+			return imgHostLink && url
+				? `${imgHostLink}${trailingSlash ? '/' : ''}${url}`
+				: placeholder;
 		};
 
 		const validate = async () => {
@@ -78,7 +84,7 @@ export function useValidImage<T extends string | string[]>(
 		return () => {
 			isMounted = false;
 		};
-	}, [imgHostLink, input, placeholder]);
+	}, [imgHostLink, input, placeholder, trailingSlash]);
 
 	return validImages as ValidImage<T>;
 }
