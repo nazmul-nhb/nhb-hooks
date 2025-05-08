@@ -1,5 +1,17 @@
 # NHB Hooks
 
+<p>
+  <a href="https://www.npmjs.com/package/nhb-hooks" aria-label="Downloads">
+    <img src="https://img.shields.io/npm/dm/nhb-hooks.svg?label=downloads&style=for-the-badge" alt="Downloads" />
+  </a>
+  <a href="https://www.npmjs.com/package/nhb-hooks" aria-label="Version">
+    <img src="https://img.shields.io/npm/v/nhb-hooks.svg?style=for-the-badge" alt="Version" />
+  </a>
+  <a href="https://www.npmjs.com/package/nhb-hooks" aria-label="License">
+    <img src="https://img.shields.io/npm/l/nhb-hooks.svg?label=license&style=for-the-badge" alt="License" />
+  </a>
+</p>
+
 A lightweight, tree-shakable collection of essential React hooks for common use cases. Only the hooks you use will be included in your bundle.
 
 <!-- markdownlint-disable-file MD024 -->
@@ -41,9 +53,9 @@ yarn add nhb-hooks nhb-toolbox
 
 ✅ **Tree-shakable** – Only bundle what you use.  
 ✅ **TypeScript support** – Built with type safety in mind.  
-✅ **Minimal dependencies** – Only `react` as a peer dependency (except `useTimer`, which requires `nhb-toolbox`).
+✅ **Minimal dependencies** – Only `react` and `react-dom` as a peer dependencies (except `useTimer`, which requires `nhb-toolbox`).
 
-## Import
+## Import(s)
 
 ```ts
 import { hookName } from 'nhb-hooks';
@@ -600,3 +612,11 @@ useWindowResize(() => {
 const [width, setWidth] = useState(window.innerWidth);
 useWindowResize(debounceAction(() => setWidth(window.innerWidth), 200);
 ```
+
+---
+
+## 📜 License
+
+MIT © [Nazmul Hassan](https://nazmul-nhb.vercel.app/). See [LICENSE](LICENSE) for details.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
