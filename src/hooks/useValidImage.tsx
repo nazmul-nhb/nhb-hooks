@@ -18,9 +18,7 @@ const checkImageExists = (fullUrl: string): Promise<boolean> => {
  * @description If an image fails to load, it will be replaced with a fallback placeholder.
  * Automatically prepends the image host base (`imgHostLink`) to each input path.
  *
- * **Note**: *If your project is not using `Vite`, you might have to provide the placeholder explicitly in the options.*
- *
- * @param input - A single image path or an array of image paths (relative to the `imgHostLink` base).
+ * @param input - A single image path or an array of image paths (relative to the `imgHostLink` base if image(s) is/are hosted somewhere else).
  * @param options - Options to set-up image host link and placeholder image.
  *
  * @returns A single valid image URL string or an array of valid image URL strings (with fallback applied as needed).
@@ -48,7 +46,7 @@ export function useValidImage<T extends string | string[]>(
 
 		const normalizeUrl = (url?: string) => {
 			return imgHostLink && url
-				? `${imgHostLink}${trailingSlash ? '/' : ''}${url}`
+				? `${imgHostLink}${trailingSlash ? '' : '/'}${url}`
 				: placeholder;
 		};
 
