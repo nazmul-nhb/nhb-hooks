@@ -3,7 +3,7 @@ export type ValidImage<T> = T extends string ? string : string[];
 
 /** Options for `useValidImage` hook. */
 export interface ValidImageOptions {
-	/** Optional base path to prepend to image URL(s) if the image is hosted somewhere else. By default the hook assumes that the link has a trailing `/`. Customize it in `trailingSlash` option. */
+	/** Base path to prepend to image URL(s) if the image is hosted somewhere else. By default the hook assumes that the link has a trailing `/`. Customize it in `trailingSlash` option. */
 	imgHostLink?: string;
 	/** Whether the `imgHostLink` has a trailing slash `/`. Default is `true`. Full image URL will be built on this flag. */
 	trailingSlash?: boolean;

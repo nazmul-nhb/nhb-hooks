@@ -1,11 +1,11 @@
 {
   "name": "nhb-hooks",
-  "version": "0.7.0",
+  "version": "1.1.0",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
-  "description": "Reusable hooks to use in react project.",
+  "description": "A lightweight, tree-shakable collection of essential React hooks for common use cases.",
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -52,7 +52,7 @@
     "name": "Nazmul Hassan",
     "email": "nazmulnhb@gmail.com"
   },
-  "license": "Apache-2.0",
+  "license": "MIT",
   "packageManager": "pnpm@10.9.0",
   "peerDependencies": {
     "react": "^18 || ^19",
