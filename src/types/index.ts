@@ -18,3 +18,24 @@ export interface MediaQueryOptions {
 	/** Maximum screen width in pixels (inclusive) */
 	maxWidth?: number;
 }
+
+/** Options for `useCopyText` hook */
+export interface CopyOptions {
+	/**
+	 * * Callback invoked when the text is successfully copied.
+	 * @param msg Message describing the success event.
+	 */
+	onSuccess?: (msg: string) => void;
+
+	/**
+	 * * Callback invoked when the copy operation fails.
+	 * @param msg Message describing the error.
+	 */
+	onError?: (msg: string) => void;
+
+	/**
+	 * * Time (in milliseconds) to reset the copied text state.
+	 * @default 2500
+	 */
+	resetTimeOut?: number;
+}

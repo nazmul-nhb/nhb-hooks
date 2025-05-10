@@ -63,14 +63,15 @@ import { hookName } from 'nhb-hooks';
 
 ## Table of Contents
 
-1. [useMediaQuery](#usemediaquery)
-2. [useBreakPoint](#usebreakpoint)
-3. [useClickOutside](#useclickoutside)
-4. [useDebouncedValue](#usedebouncedvalue)
-5. [useTimer](#usetimer)
-6. [useToggle](#usetoggle)
-7. [useValidImage](#usevalidimage)
-8. [useWindowResize](#usewindowresize)
+- [useMediaQuery](#usemediaquery)
+- [useBreakPoint](#usebreakpoint)
+- [useClickOutside](#useclickoutside)
+- [useCopyText](#usecopytext)
+- [useDebouncedValue](#usedebouncedvalue)
+- [useTimer](#usetimer)
+- [useToggle](#usetoggle)
+- [useValidImage](#usevalidimage)
+- [useWindowResize](#usewindowresize)
 
 ---
 
@@ -280,6 +281,75 @@ function Dropdown() {
 // Memoize handler if it creates new functions
 const handler = useCallback(() => setIsOpen(false), []);
 const ref = useClickOutside(handler);
+```
+
+---
+
+## useCopyText
+
+Copy text to clipboard with lifecycle callbacks and timeout-controlled state reset.
+
+### Hook Signature
+
+```ts
+function useCopyText(options?: CopyOptions): {
+  copiedText: string;
+  copyToClipboard: (text: string, msg?: string, errorMsg?: string) => Promise<void>;
+}
+```
+
+### Examples
+
+```tsx
+// Basic usage
+const { copiedText, copyToClipboard } = useCopyText();
+
+return (
+  <button onClick={() => copyToClipboard("Hello, world!")}>
+    {copiedText ? "Copied!" : "Copy Text"}
+  </button>
+);
+```
+
+```tsx
+// With success and error handling
+const { copiedText, copyToClipboard } = useCopyText({
+  onSuccess: (msg) => toast.success(msg),
+  onError: (msg) => toast.error(msg),
+  resetTimeOut: 1500
+});
+
+return (
+  <button onClick={() => copyToClipboard("secret-token", "Token copied!")}>
+    {copiedText ? "✔ Copied" : "Copy Token"}
+  </button>
+);
+```
+
+### Options
+
+- `onSuccess`: Callback called when text is successfully copied. Receives a success message string.
+- `onError`: Callback called if copy operation fails. Receives an error message string.
+- `resetTimeOut`: Time in milliseconds to retain `copiedText` before it resets. Defaults to `2500`.
+
+### Notes for useCopyText
+
+- **copiedText State**: Useful for showing transient UI feedback like button label change ("Copied!" state).
+- **Fallback-Safe**: Works in environments without `navigator.clipboard` by falling back to `document.execCommand('copy')`.
+- **Resets Automatically**: Automatically clears `copiedText` after timeout.
+
+### Type Definitions
+
+```ts
+/** Options for useCopyText hook. */
+interface CopyOptions {
+  /** Called when text is successfully copied. Receives a message. */
+  onSuccess?: (msg: string) => void;
+  /** Called when copy operation fails. Receives an error message. */
+  onError?: (msg: string) => void;
+  /** How long to retain the copied text in state before resetting. */
+  resetTimeOut?: number;
+}
 ```
 
 ---
