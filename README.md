@@ -2,64 +2,56 @@
 
 <p>
   <a href="https://www.npmjs.com/package/nhb-hooks" aria-label="Downloads">
-    <img src="https://img.shields.io/npm/dm/nhb-hooks.svg?label=downloads&style=for-the-badge" alt="Downloads" />
+    <img src="https://img.shields.io/npm/dm/nhb-hooks.svg?label=downloads&style=for-the-badge&color=navy" alt="Downloads" />
   </a>
   <a href="https://www.npmjs.com/package/nhb-hooks" aria-label="Version">
     <img src="https://img.shields.io/npm/v/nhb-hooks.svg?style=for-the-badge" alt="Version" />
   </a>
   <a href="https://www.npmjs.com/package/nhb-hooks" aria-label="License">
-    <img src="https://img.shields.io/npm/l/nhb-hooks.svg?label=license&style=for-the-badge" alt="License" />
+    <img src="https://img.shields.io/npm/l/nhb-hooks.svg?label=license&style=for-the-badge&color=red" alt="License" />
   </a>
 </p>
 
-A lightweight, tree-shakable collection of essential React hooks for common use cases. Only the hooks you use will be included in your bundle.
-
 <!-- markdownlint-disable-file MD024 -->
-## Installation
+## 📦 Description
 
-**npm**:
+A **lightweight**, **tree-shakable** collection of essential React hooks designed for common use cases. Only the hooks you import are included in your final bundle, ensuring optimal performance.
 
-```bash
-npm i nhb-hooks
-```
+> This package requires [`nhb-toolbox`](https://nhb-toolbox.vercel.app/) as a peer dependency, as some hooks rely on utilities from it.
 
-**pnpm**:
+---
 
-```bash
-pnpm add nhb-hooks
-```
+## 🚀 Installation
 
-**yarn**:
+**npm:**
 
 ```bash
-yarn add nhb-hooks
-```
-
-> **Note**: `useTimer` hook depends on `Chronos/chronos` from [nhb-toolbox](https://nhb-toolbox.vercel.app/) package. You must install it if you want to use `useTimer`. `nhb-toolbox` is also tree-shakable, meaning only required module from it will be bundled in your final build.
-
-```shell
 npm i nhb-hooks nhb-toolbox
 ```
 
-```shell
+**pnpm:**
+
+```bash
 pnpm add nhb-hooks nhb-toolbox
 ```
 
-```shell
+**yarn:**
+
+```bash
 yarn add nhb-hooks nhb-toolbox
 ```
+
+> **Note:** The `useTimer` hook depends on the `Chronos` class from `nhb-toolbox`. Make sure to install both packages to use all available features. Both packages are fully tree-shakable, so only the code you use will be bundled.
+
+---
 
 ## Features  
 
 ✅ **Tree-shakable** – Only bundle what you use.  
 ✅ **TypeScript support** – Built with type safety in mind.  
-✅ **Minimal dependencies** – Only `react` and `react-dom` as a peer dependencies (except `useTimer`, which requires `nhb-toolbox`).
+✅ **Minimal dependencies** – Only `react`, `react-dom` and `nhb-toolbox` as a peer dependencies.
 
-## Import(s)
-
-```ts
-import { hookName } from 'nhb-hooks';
-```
+---
 
 ## Table of Contents
 
@@ -78,6 +70,12 @@ import { hookName } from 'nhb-hooks';
 ## useMediaQuery
 
 Evaluates a media query string or a screen width range and returns whether it matches. Detect if a media query matches the current viewport. Perfect for responsive UI logic.
+
+### Import
+
+```ts
+import { useMediaQuery } from 'nhb-hooks';
+```
 
 ### Hook Signature
 
@@ -157,6 +155,12 @@ interface MediaQueryOptions {
 
 Simplified responsive breakpoints detection. Detects responsive breakpoints based on screen width.
 
+### Import
+
+```ts
+import { useBreakPoint } from 'nhb-hooks';
+```
+
 ### Hook Signature
 
 ```ts
@@ -206,6 +210,12 @@ return (
 ## useClickOutside
 
 Detects clicks outside of specified element(s). Great for closing dropdowns/modals when clicking outside.
+
+### Import
+
+```ts
+import { useClickOutside } from 'nhb-hooks';
+```
 
 ### Hook Signatures
 
@@ -289,6 +299,12 @@ const ref = useClickOutside(handler);
 
 Copy text to clipboard with lifecycle callbacks and timeout-controlled state reset.
 
+### Import
+
+```ts
+import { useCopyText } from 'nhb-hooks';
+```
+
 ### Hook Signature
 
 ```ts
@@ -358,6 +374,12 @@ interface CopyOptions {
 
 Returns a debounced version of the input value. Optimize inputs and expensive calculations.
 
+### Import
+
+```ts
+import { useDebouncedValue } from 'nhb-hooks';
+```
+
 ### Hook Signature
 
 ```tsx
@@ -410,6 +432,12 @@ useEffect(() => {
 ## useTimer
 
 Creates a countdown timer. Requires [nhb-toolbox](https://nhb-toolbox.vercel.app/) (automatically tree-shaken if not used). Install it separately. Create countdown timers with minimal setup.
+
+### Import
+
+```ts
+import { useTimer } from 'nhb-hooks';
+```
 
 ### Hook Signature
 
@@ -508,6 +536,12 @@ Exclude<TimeUnit, 'week'>
 
 Clean state toggling between two values.
 
+### Import
+
+```ts
+import { useToggle } from 'nhb-hooks';
+```
+
 ### Hook Signature
 
 ```ts
@@ -548,6 +582,12 @@ const [view, toggleView] = useToggle(['list', 'grid']); // Layout
 ## useValidImage
 
 Graceful image loading with fallbacks. Validates image URLs and provides fallback for broken images.
+
+### Import
+
+```ts
+import { useValidImage } from 'nhb-hooks';
+```
 
 ### Hook Signature
 
@@ -642,6 +682,12 @@ interface ValidImageOptions {
 ## useWindowResize
 
 Triggers a callback whenever the window is resized..
+
+### Import
+
+```ts
+import { useWindowResize } from 'nhb-hooks';
+```
 
 ### Hook Signature
 
