@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { CopyOptions } from '../types';
+import type { CopyOptions, UseCopyTextReturn } from '../types';
 
 /**
  * * Hook to copy text to the clipboard with optional callbacks.
@@ -40,9 +40,8 @@ import type { CopyOptions } from '../types';
  * copyToClipboard('Text with fallback', 'Copied!', 'Oops, try again!');
  * ```
  */
-export const useCopyText = (options?: CopyOptions) => {
-	const [/** - Text Copied in Clipboard */ copiedText, setCopiedText] =
-		useState<string>('');
+export const useCopyText = (options?: CopyOptions): UseCopyTextReturn => {
+	const [copiedText, setCopiedText] = useState<string>('');
 
 	/**
 	 * * Function to copy the provided text to the clipboard.

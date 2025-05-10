@@ -39,3 +39,17 @@ export interface CopyOptions {
 	 */
 	resetTimeOut?: number;
 }
+
+/** Return type of `useCopyText` */
+export interface UseCopyTextReturn {
+	/** * A string containing the last copied text. Automatically resets after timeout. */
+	copiedText: string;
+	/**
+	 * * Function to copy the provided text to the clipboard.
+	 *
+	 * @param text - The string content to be copied.
+	 * @param msg - Optional custom success message. Default is `'Text Copied!'`
+	 * @param errorMsg - Optional custom error message. Default is from message from the error object or `'Failed to copy!'`
+	 */
+	copyToClipboard: (text: string, msg?: string, errorMsg?: string) => Promise<void>;
+}
