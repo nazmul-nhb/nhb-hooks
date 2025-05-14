@@ -15,7 +15,7 @@ import { estimator } from "./estimator.mjs";
 
     // Start linting...
     await estimator(
-      execa("npx", ["eslint", "src", "--fix"], {
+      execa("npx", ["eslint", "src", "--ext", ".ts,.tsx"], {
         stdio: "inherit",
         reject: false,
       }),
