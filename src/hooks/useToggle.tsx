@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 /**
  * * Hook to toggle between two values.
@@ -12,11 +12,11 @@ import React from 'react';
  * toggle(); // Switches between false and true
  */
 export function useToggle<T>(values: [T, T]): [T, () => void] {
-	const [state, setState] = React.useState<T>(values[0]);
+  const [state, setState] = React.useState<T>(values[0]);
 
-	const toggle = React.useCallback(() => {
-		setState((prev) => (prev === values[0] ? values[1] : values[0]));
-	}, [values]);
+  const toggle = React.useCallback(() => {
+    setState((prev) => (prev === values[0] ? values[1] : values[0]));
+  }, [values]);
 
-	return [state, toggle];
+  return [state, toggle];
 }

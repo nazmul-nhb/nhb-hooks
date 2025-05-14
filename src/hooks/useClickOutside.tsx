@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 type RefType<T> = React.RefObject<T | null>;
 
@@ -15,7 +15,7 @@ type RefType<T> = React.RefObject<T | null>;
  * return <div ref={ref}>Click outside me</div>;
  */
 export function useClickOutside<T extends Element | null>(
-	handler: () => void
+  handler: () => void,
 ): React.RefObject<T>;
 
 /**
@@ -39,8 +39,8 @@ export function useClickOutside<T extends Element | null>(
  * );
  */
 export function useClickOutside<T extends Element | null>(
-	refs: RefType<T>[],
-	handler: () => void
+  refs: RefType<T>[],
+  handler: () => void,
 ): void;
 
 /**
@@ -50,37 +50,37 @@ export function useClickOutside<T extends Element | null>(
  * @returns A ref object if a single ref is provided, otherwise nothing.
  */
 export function useClickOutside<T extends Element | null>(
-	arg1: (() => void) | RefType<T>[],
-	arg2?: () => void
+  arg1: (() => void) | RefType<T>[],
+  arg2?: () => void,
 ): React.RefObject<T> | void {
-	const singleRef = React.useRef<T>(null);
+  const singleRef = React.useRef<T>(null);
 
-	React.useEffect(() => {
-		const handler = typeof arg1 === 'function' ? arg1 : arg2;
-		const refs: RefType<T>[] = Array.isArray(arg1) ? arg1 : [singleRef];
+  React.useEffect(() => {
+    const handler = typeof arg1 === "function" ? arg1 : arg2;
+    const refs: RefType<T>[] = Array.isArray(arg1) ? arg1 : [singleRef];
 
-		if (!handler) return;
+    if (!handler) return;
 
-		const listener = (event: MouseEvent | TouchEvent) => {
-			const clickedInside = refs.some((ref) => {
-				return ref.current && ref.current.contains(event.target as Node);
-			});
+    const listener = (event: MouseEvent | TouchEvent) => {
+      const clickedInside = refs.some((ref) => {
+        return ref.current && ref.current.contains(event.target as Node);
+      });
 
-			if (!clickedInside) {
-				handler();
-			}
-		};
+      if (!clickedInside) {
+        handler();
+      }
+    };
 
-		document.addEventListener('mouseup', listener);
-		document.addEventListener('touchend', listener);
+    document.addEventListener("mouseup", listener);
+    document.addEventListener("touchend", listener);
 
-		return () => {
-			document.removeEventListener('mouseup', listener);
-			document.removeEventListener('touchend', listener);
-		};
-	}, [arg1, arg2]);
+    return () => {
+      document.removeEventListener("mouseup", listener);
+      document.removeEventListener("touchend", listener);
+    };
+  }, [arg1, arg2]);
 
-	if (typeof arg1 === 'function') {
-		return singleRef as React.RefObject<T>;
-	}
+  if (typeof arg1 === "function") {
+    return singleRef as React.RefObject<T>;
+  }
 }

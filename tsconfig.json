@@ -1,25 +1,25 @@
 {
-	"compilerOptions": {
-		"target": "ES2021",
-		"module": "ESNext",
-		// "lib": ["DOM", "DOM.Iterable", "ES2021"],
-		"declaration": true,
-		"declarationDir": "dist",
-		"outDir": "dist",
-		"jsx": "react-jsx",
-		"moduleResolution": "node",
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"types": ["vite/client", "node"],
-		"strict": true,
-		"baseUrl": "./",
-		"paths": {
-			"*": ["src/*"]
-		},
-		"skipLibCheck": true,
-		"resolveJsonModule": true,
-		"allowJs": true
-	},
-	"include": ["vite-env.d.ts", "src"],
-	"exclude": ["dist", "node_modules", "vite.config.ts"]
+  "compilerOptions": {
+    "target": "ES2021",
+    "module": "ESNext",
+    // "lib": ["DOM", "DOM.Iterable", "ES2021"],
+    "declaration": true,
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["vite/client", "node"],
+    "strict": true,
+    "baseUrl": "./",
+    "paths": {
+      "*": ["src/*"]
+    },
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "allowJs": true
+  },
+  "include": ["vite-env.d.ts", "src"],
+  "exclude": ["dist", "node_modules", "vite.config.ts"]
 }

@@ -1,5 +1,5 @@
-import React from 'react';
-import type { MediaQueryOptions } from '../types';
+import React from "react";
+import type { MediaQueryOptions } from "../types";
 
 /**
  * * Evaluates a media query string or a screen width range and returns whether it matches.
@@ -38,37 +38,40 @@ import type { MediaQueryOptions } from '../types';
  * - If you pass a media query string, it will evaluate that query.
  * - If you pass an object with `minWidth`/`maxWidth`, the hook will build the media query and evaluate it.
  */
-export const useMediaQuery = (queryOrOptions: string | MediaQueryOptions): boolean => {
-	const getQuery = React.useCallback((): string => {
-		if (typeof queryOrOptions === 'string') return queryOrOptions;
+export const useMediaQuery = (
+  queryOrOptions: string | MediaQueryOptions,
+): boolean => {
+  const getQuery = React.useCallback((): string => {
+    if (typeof queryOrOptions === "string") return queryOrOptions;
 
-		const conditions: string[] = [];
-		if (queryOrOptions.minWidth != null)
-			conditions.push(`(min-width: ${queryOrOptions.minWidth}px)`);
+    const conditions: string[] = [];
+    if (queryOrOptions.minWidth != null)
+      conditions.push(`(min-width: ${queryOrOptions.minWidth}px)`);
 
-		if (queryOrOptions.maxWidth != null)
-			conditions.push(`(max-width: ${queryOrOptions.maxWidth}px)`);
-		return conditions.join(' and ');
-	}, [queryOrOptions]);
+    if (queryOrOptions.maxWidth != null)
+      conditions.push(`(max-width: ${queryOrOptions.maxWidth}px)`);
+    return conditions.join(" and ");
+  }, [queryOrOptions]);
 
-	const getMatches = React.useCallback(
-		() => typeof window !== 'undefined' && window.matchMedia(getQuery()).matches,
-		[getQuery]
-	);
+  const getMatches = React.useCallback(
+    () =>
+      typeof window !== "undefined" && window.matchMedia(getQuery()).matches,
+    [getQuery],
+  );
 
-	const [matches, setMatches] = React.useState<boolean>(getMatches());
+  const [matches, setMatches] = React.useState<boolean>(getMatches());
 
-	React.useEffect(() => {
-		if (typeof window === 'undefined') return;
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
 
-		const mediaQueryList = window.matchMedia(getQuery());
+    const mediaQueryList = window.matchMedia(getQuery());
 
-		const handleChange = () => setMatches(mediaQueryList.matches);
+    const handleChange = () => setMatches(mediaQueryList.matches);
 
-		mediaQueryList.addEventListener('change', handleChange);
+    mediaQueryList.addEventListener("change", handleChange);
 
-		return () => mediaQueryList.removeEventListener('change', handleChange);
-	}, [getQuery]);
+    return () => mediaQueryList.removeEventListener("change", handleChange);
+  }, [getQuery]);
 
-	return matches;
+  return matches;
 };

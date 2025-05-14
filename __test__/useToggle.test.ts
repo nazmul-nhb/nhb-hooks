@@ -1,44 +1,44 @@
 /// <reference types="vitest/globals" />
 
-import { renderHook, act } from '@testing-library/react';
-import { useToggle } from '../src';
+import { renderHook, act } from "@testing-library/react";
+import { useToggle } from "../src";
 
-test('should return a boolean and a function', () => {
-	const { result } = renderHook(() => useToggle([false, true]));
+test("should return a boolean and a function", () => {
+  const { result } = renderHook(() => useToggle([false, true]));
 
-	expect(typeof result.current[0]).toBe('boolean');
-	expect(result.current[0]).toBe(false);
-	expect(typeof result.current[1]).toBe('function');
+  expect(typeof result.current[0]).toBe("boolean");
+  expect(result.current[0]).toBe(false);
+  expect(typeof result.current[1]).toBe("function");
 });
 
-test('should toggle the value', () => {
-	const { result } = renderHook(() => useToggle([false, true]));
+test("should toggle the value", () => {
+  const { result } = renderHook(() => useToggle([false, true]));
 
-	// First toggle - wrap in act
-	act(() => {
-		result.current[1]();
-	});
-	expect(result.current[0]).toBe(true);
+  // First toggle - wrap in act
+  act(() => {
+    result.current[1]();
+  });
+  expect(result.current[0]).toBe(true);
 
-	// Second toggle - wrap in act
-	act(() => {
-		result.current[1]();
-	});
-	expect(result.current[0]).toBe(false);
+  // Second toggle - wrap in act
+  act(() => {
+    result.current[1]();
+  });
+  expect(result.current[0]).toBe(false);
 });
 
-test('should toggle the value', () => {
-	const { result } = renderHook(() => useToggle(['man', 'boy']));
+test("should toggle the value", () => {
+  const { result } = renderHook(() => useToggle(["man", "boy"]));
 
-	// First toggle - wrap in act
-	act(() => {
-		result.current[1]();
-	});
-	expect(result.current[0]).toBe('boy');
+  // First toggle - wrap in act
+  act(() => {
+    result.current[1]();
+  });
+  expect(result.current[0]).toBe("boy");
 
-	// Second toggle - wrap in act
-	act(() => {
-		result.current[1]();
-	});
-	expect(result.current[0]).toBe('man');
+  // Second toggle - wrap in act
+  act(() => {
+    result.current[1]();
+  });
+  expect(result.current[0]).toBe("man");
 });

@@ -1,6 +1,10 @@
-import { Chronos } from 'nhb-toolbox';
-import type { ChronosInput, TimeDuration, TimeUnit } from 'nhb-toolbox/date/types';
-import { useEffect, useRef, useState } from 'react';
+import { Chronos } from "nhb-toolbox";
+import type {
+  ChronosInput,
+  TimeDuration,
+  TimeUnit,
+} from "nhb-toolbox/date/types";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * * Hook to create a countdown timer from a duration and unit.
@@ -10,8 +14,8 @@ import { useEffect, useRef, useState } from 'react';
  * @returns Remaining time as a structured duration object.
  */
 export function useTimer(
-	initialDuration: number,
-	unit: Exclude<TimeUnit, 'week'>
+  initialDuration: number,
+  unit: Exclude<TimeUnit, "week">,
 ): TimeDuration;
 
 /**
@@ -30,38 +34,40 @@ export function useTimer(time: ChronosInput): TimeDuration;
  * @returns Remaining time as a structured duration object.
  */
 export function useTimer(
-	time: ChronosInput,
-	unit?: Exclude<TimeUnit, 'week'>
+  time: ChronosInput,
+  unit?: Exclude<TimeUnit, "week">,
 ): TimeDuration {
-	const now = /*#__PURE__*/ new Chronos();
-	const target =
-		typeof time === 'number' && unit
-			? /*#__PURE__*/ now.add(time, unit)
-			: /*#__PURE__*/ new Chronos(time);
+  const now = /*#__PURE__*/ new Chronos();
+  const target =
+    typeof time === "number" && unit
+      ? /*#__PURE__*/ now.add(time, unit)
+      : /*#__PURE__*/ new Chronos(time);
 
-	const initialMs = target.diff(now, 'millisecond');
+  const initialMs = target.diff(now, "millisecond");
 
-	const [remainingMs, setRemainingMs] = useState<number>(initialMs);
-	const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [remainingMs, setRemainingMs] = useState<number>(initialMs);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-	useEffect(() => {
-		if (remainingMs <= 0) return;
+  useEffect(() => {
+    if (remainingMs <= 0) return;
 
-		intervalRef.current = setInterval(() => {
-			setRemainingMs((prev) => {
-				const next = prev - 1000;
-				if (next <= 0) {
-					clearInterval(intervalRef.current!);
-					return 0;
-				}
-				return next;
-			});
-		}, 1000);
+    intervalRef.current = setInterval(() => {
+      setRemainingMs((prev) => {
+        const next = prev - 1000;
+        if (next <= 0) {
+          clearInterval(intervalRef.current!);
+          return 0;
+        }
+        return next;
+      });
+    }, 1000);
 
-		return () => {
-			if (intervalRef.current) clearInterval(intervalRef.current);
-		};
-	}, [remainingMs]);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [remainingMs]);
 
-	return /*#__PURE__*/ new Chronos().subtract(remainingMs, 'millisecond').duration();
+  return /*#__PURE__*/ new Chronos()
+    .subtract(remainingMs, "millisecond")
+    .duration();
 }

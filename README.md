@@ -13,6 +13,7 @@
 </p>
 
 <!-- markdownlint-disable-file MD024 -->
+
 ## 📦 Description
 
 A **lightweight**, **tree-shakable** collection of essential React hooks designed for common use cases. Only the hooks you import are included in your final bundle, ensuring optimal performance.
@@ -45,7 +46,7 @@ yarn add nhb-hooks nhb-toolbox
 
 ---
 
-## Features  
+## Features
 
 ✅ **Tree-shakable** – Only bundle what you use.  
 ✅ **TypeScript support** – Built with type safety in mind.  
@@ -74,13 +75,13 @@ Evaluates a media query string or a screen width range and returns whether it ma
 ### Import
 
 ```ts
-import { useMediaQuery } from 'nhb-hooks';
+import { useMediaQuery } from "nhb-hooks";
 ```
 
 ### Hook Signature
 
 ```ts
-function useMediaQuery(queryOrOptions: string | MediaQueryOptions): boolean
+function useMediaQuery(queryOrOptions: string | MediaQueryOptions): boolean;
 ```
 
 ### Examples
@@ -96,10 +97,10 @@ const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1024 });
 const isDesktop = useMediaQuery({ minWidth: 1025 });
 
 // Using a Custom Media Query String
-const isLandscape = useMediaQuery('(orientation: landscape)');
-const mobile = useMediaQuery('(max-width: 767px)');
-const tablet = useMediaQuery('(min-width: 768px) and (max-width: 1279px)');
-const desktop = useMediaQuery('(min-width: 1280px)');
+const isLandscape = useMediaQuery("(orientation: landscape)");
+const mobile = useMediaQuery("(max-width: 767px)");
+const tablet = useMediaQuery("(min-width: 768px) and (max-width: 1279px)");
+const desktop = useMediaQuery("(min-width: 1280px)");
 ```
 
 ```tsx
@@ -133,19 +134,18 @@ return (
 const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1024 });
 
 // Less recommended (prone to typos)
-const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1024px)');
+const isTablet = useMediaQuery("(min-width: 768px) and (max-width: 1024px)");
 ```
 
 ### Type Definitions
 
 ```ts
-
 /** Interface for `useMediaQuery` hook's options */
 interface MediaQueryOptions {
- /** Minimum screen width in pixels (inclusive) */
- minWidth?: number;
- /** Maximum screen width in pixels (inclusive) */
- maxWidth?: number;
+  /** Minimum screen width in pixels (inclusive) */
+  minWidth?: number;
+  /** Maximum screen width in pixels (inclusive) */
+  maxWidth?: number;
 }
 ```
 
@@ -158,7 +158,7 @@ Simplified responsive breakpoints detection. Detects responsive breakpoints base
 ### Import
 
 ```ts
-import { useBreakPoint } from 'nhb-hooks';
+import { useBreakPoint } from "nhb-hooks";
 ```
 
 ### Hook Signature
@@ -168,7 +168,7 @@ function useBreakPoint(): {
   mobile: boolean;
   tablet: boolean;
   desktop: boolean;
-}
+};
 ```
 
 ### Examples
@@ -190,7 +190,7 @@ return (
     {tablet && <TabletLayout />}
     {desktop && <DesktopSidebar />}
   </>
-)
+);
 ```
 
 ### Notes for useBreakPoint
@@ -214,7 +214,7 @@ Detects clicks outside of specified element(s). Great for closing dropdowns/moda
 ### Import
 
 ```ts
-import { useClickOutside } from 'nhb-hooks';
+import { useClickOutside } from "nhb-hooks";
 ```
 
 ### Hook Signatures
@@ -222,32 +222,32 @@ import { useClickOutside } from 'nhb-hooks';
 ```ts
 // Single element version
 function useClickOutside<T extends Element | null>(
-  handler: () => void
-): React.RefObject<T>
+  handler: () => void,
+): React.RefObject<T>;
 
 // Multiple elements version
 function useClickOutside<T extends Element | null>(
   refs: RefType<T>[],
-  handler: () => void
-): void
+  handler: () => void,
+): void;
 ```
 
 ### Examples
 
 ```tsx
 // Single element
- const ref = useClickOutside(() => {
-   console.log('Clicked outside the element');
- });
+const ref = useClickOutside(() => {
+  console.log("Clicked outside the element");
+});
 
- return <div ref={ref}>Click outside me</div>;
+return <div ref={ref}>Click outside me</div>;
 
 // Multiple elements
 const ref1 = useRef(null);
 const ref2 = useRef(null);
 
 useClickOutside([ref1, ref2], () => {
-  console.log('Clicked outside both elements');
+  console.log("Clicked outside both elements");
 });
 
 return (
@@ -302,7 +302,7 @@ Copy text to clipboard with lifecycle callbacks and timeout-controlled state res
 ### Import
 
 ```ts
-import { useCopyText } from 'nhb-hooks';
+import { useCopyText } from "nhb-hooks";
 ```
 
 ### Hook Signature
@@ -310,8 +310,12 @@ import { useCopyText } from 'nhb-hooks';
 ```ts
 function useCopyText(options?: CopyOptions): {
   copiedText: string;
-  copyToClipboard: (text: string, msg?: string, errorMsg?: string) => Promise<void>;
-}
+  copyToClipboard: (
+    text: string,
+    msg?: string,
+    errorMsg?: string,
+  ) => Promise<void>;
+};
 ```
 
 ### Examples
@@ -332,7 +336,7 @@ return (
 const { copiedText, copyToClipboard } = useCopyText({
   onSuccess: (msg) => toast.success(msg),
   onError: (msg) => toast.error(msg),
-  resetTimeOut: 1500
+  resetTimeOut: 1500,
 });
 
 return (
@@ -377,19 +381,19 @@ Returns a debounced version of the input value. Optimize inputs and expensive ca
 ### Import
 
 ```ts
-import { useDebouncedValue } from 'nhb-hooks';
+import { useDebouncedValue } from "nhb-hooks";
 ```
 
 ### Hook Signature
 
 ```tsx
-function useDebouncedValue<T>(value: T, delay?: number): [T, () => void]
+function useDebouncedValue<T>(value: T, delay?: number): [T, () => void];
 ```
 
 ### Examples
 
 ```tsx
-const [search, setSearch] = useState('');
+const [search, setSearch] = useState("");
 const [debouncedSearch, cancel] = useDebouncedValue(search, 500);
 
 // debouncedSearch updates 500ms after search stops changing
@@ -398,7 +402,7 @@ const [debouncedSearch, cancel] = useDebouncedValue(search, 500);
 
 ```tsx
 function Search() {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebouncedValue(query, 500);
 
   return <input value={query} onChange={(e) => setQuery(e.target.value)} />;
@@ -436,7 +440,7 @@ Creates a countdown timer. Requires [nhb-toolbox](https://nhb-toolbox.vercel.app
 ### Import
 
 ```ts
-import { useTimer } from 'nhb-hooks';
+import { useTimer } from "nhb-hooks";
 ```
 
 ### Hook Signature
@@ -445,28 +449,28 @@ import { useTimer } from 'nhb-hooks';
 // Duration-based timer
 function useTimer(
   initialDuration: number,
-  unit: Exclude<TimeUnit, 'week'>
-): TimeDuration
+  unit: Exclude<TimeUnit, "week">,
+): TimeDuration;
 
 // Target time-based timer
-function useTimer(time: ChronosInput): TimeDuration
+function useTimer(time: ChronosInput): TimeDuration;
 ```
 
 ### Examples
 
 ```tsx
 // Countdown from 5 minutes
-const timeLeft = useTimer(5, 'minute');
+const timeLeft = useTimer(5, "minute");
 // { days: 0, hours: 0, minutes: 4, seconds: 59, ... }
 
 // Countdown to specific date
-const timeLeft = useTimer('2023-12-31');
+const timeLeft = useTimer("2023-12-31");
 ```
 
 ```tsx
 // Product sale countdown
 function SaleBanner() {
-  const { days, hours, minutes, seconds } = useTimer('2023-12-31');
+  const { days, hours, minutes, seconds } = useTimer("2023-12-31");
 
   return (
     <div>
@@ -477,7 +481,7 @@ function SaleBanner() {
 
 // Session timeout warning
 function SessionTimeout() {
-  const timeLeft = useTimer(15, 'minute');
+  const timeLeft = useTimer(15, "minute");
   return (
     <div>
       Session expires in: {timeLeft.minutes}m {timeLeft.seconds}s
@@ -502,32 +506,40 @@ function SessionTimeout() {
 **Example Formats**:
 
 ```ts
-useTimer(5, 'minute') // Countdown from 5 minutes
-useTimer(5, 'day') // Countdown from 5 days
-useTimer('2025-12-31') // Countdown to NYE
-useTimer(new Date(2025, 11, 31)) // Date object
-useTimer(new Chronos(2025, 11, 31)) // Chronos object
+useTimer(5, "minute"); // Countdown from 5 minutes
+useTimer(5, "day"); // Countdown from 5 days
+useTimer("2025-12-31"); // Countdown to NYE
+useTimer(new Date(2025, 11, 31)); // Date object
+useTimer(new Chronos(2025, 11, 31)); // Chronos object
 ```
 
 ### Type Definitions
 
 ```ts
 interface TimeDuration {
-    years: number;
-    months: number;
-    days: number;
-    hours: number;
-    minutes: number;
-    seconds: number;
-    milliseconds: number;
+  years: number;
+  months: number;
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  milliseconds: number;
 }
 
 type ChronosInput = number | string | Date | Chronos;
 
-type TimeUnit = 'year' | 'month' | 'day' | 'week' | 'hour' | 'minute' | 'second' | 'millisecond';
+type TimeUnit =
+  | "year"
+  | "month"
+  | "day"
+  | "week"
+  | "hour"
+  | "minute"
+  | "second"
+  | "millisecond";
 
 // And `unit` parameter type is just excluding `week`
-Exclude<TimeUnit, 'week'>
+Exclude<TimeUnit, "week">;
 ```
 
 ---
@@ -539,13 +551,13 @@ Clean state toggling between two values.
 ### Import
 
 ```ts
-import { useToggle } from 'nhb-hooks';
+import { useToggle } from "nhb-hooks";
 ```
 
 ### Hook Signature
 
 ```ts
-function useToggle<T>(values: [T, T]): [T, () => void]
+function useToggle<T>(values: [T, T]): [T, () => void];
 ```
 
 ### Examples
@@ -554,10 +566,10 @@ function useToggle<T>(values: [T, T]): [T, () => void]
 const [isOn, toggle] = useToggle([false, true]);
 toggle(); // switches between false and true
 
-const [fruit, switchFruit] = useToggle(['apple', 'orange']);
+const [fruit, switchFruit] = useToggle(["apple", "orange"]);
 switchFruit(); // switches between 'apple' and 'orange'
 
-const [theme, toggleTheme] = useToggle(['light', 'dark']);
+const [theme, toggleTheme] = useToggle(["light", "dark"]);
 toggleTheme(); // Switches between `dark` and `light` theme
 ```
 
@@ -572,9 +584,9 @@ toggleTheme(); // Switches between `dark` and `light` theme
 **Creative Uses**:
 
 ```ts
-const [mode, toggle] = useToggle(['light', 'dark']); // Theme
-const [tab, switchTab] = useToggle(['overview', 'details']); // Tabs
-const [view, toggleView] = useToggle(['list', 'grid']); // Layout
+const [mode, toggle] = useToggle(["light", "dark"]); // Theme
+const [tab, switchTab] = useToggle(["overview", "details"]); // Tabs
+const [view, toggleView] = useToggle(["list", "grid"]); // Layout
 ```
 
 ---
@@ -586,7 +598,7 @@ Graceful image loading with fallbacks. Validates image URLs and provides fallbac
 ### Import
 
 ```ts
-import { useValidImage } from 'nhb-hooks';
+import { useValidImage } from "nhb-hooks";
 ```
 
 ### Hook Signature
@@ -594,8 +606,8 @@ import { useValidImage } from 'nhb-hooks';
 ```ts
 function useValidImage<T extends string | string[]>(
   input: T | undefined,
-  options?: ValidImageOptions
-): ValidImage<T>
+  options?: ValidImageOptions,
+): ValidImage<T>;
 ```
 
 ### Examples
@@ -604,7 +616,7 @@ function useValidImage<T extends string | string[]>(
 // Single image
 const avatar = useValidImage("user/avatar.jpg", {
   imgHostLink: "https://cdn.example.com/",
-  placeholder: "/default-avatar.png"
+  placeholder: "/default-avatar.png",
 });
 
 // Multiple images
@@ -613,9 +625,9 @@ const gallery = useValidImage(["img1.jpg", "img2.jpg"]);
 
 ```tsx
 // Single image with CDN prefix and no trailing slash
-const avatar = useValidImage('user123.jpg', {
-  imgHostLink: 'https://cdn.example.com',
-  placeholder: '/default-avatar.png',
+const avatar = useValidImage("user123.jpg", {
+  imgHostLink: "https://cdn.example.com",
+  placeholder: "/default-avatar.png",
   trailingSlash: false,
 });
 
@@ -623,8 +635,8 @@ return <img src={avatar} alt="Profile" />;
 
 // Image gallery
 const galleryImages = useValidImage(
-  ['photo1.jpg', 'photo2.jpg', 'photo3.jpg'],
-  { imgHostLink: 'https://images.example.com' }
+  ["photo1.jpg", "photo2.jpg", "photo3.jpg"],
+  { imgHostLink: "https://images.example.com" },
 );
 
 return galleryImages.map((img, i) => (
@@ -668,12 +680,12 @@ type ValidImage<T> = T extends string ? string : string[];
 
 /** Options for `useValidImage` hook. */
 interface ValidImageOptions {
- /** Base path to prepend to image URL(s) if the image is hosted somewhere else. By default the hook assumes that the link has a trailing `/`. Customize it in `trailingSlash` option. */
- imgHostLink?: string;
- /** Whether the `imgHostLink` has a trailing slash `/`. Default is `true`. Full image URL will be built on this flag. */
- trailingSlash?: boolean;
- /** Fallback image URL. It can be local/public image or hosted image (needs full url for hosted placeholder image). */
- placeholder?: string;
+  /** Base path to prepend to image URL(s) if the image is hosted somewhere else. By default the hook assumes that the link has a trailing `/`. Customize it in `trailingSlash` option. */
+  imgHostLink?: string;
+  /** Whether the `imgHostLink` has a trailing slash `/`. Default is `true`. Full image URL will be built on this flag. */
+  trailingSlash?: boolean;
+  /** Fallback image URL. It can be local/public image or hosted image (needs full url for hosted placeholder image). */
+  placeholder?: string;
 }
 ```
 
@@ -686,13 +698,13 @@ Triggers a callback whenever the window is resized..
 ### Import
 
 ```ts
-import { useWindowResize } from 'nhb-hooks';
+import { useWindowResize } from "nhb-hooks";
 ```
 
 ### Hook Signature
 
 ```ts
-function useWindowResize(callback: () => void): void
+function useWindowResize(callback: () => void): void;
 ```
 
 ### Examples
