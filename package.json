@@ -41,6 +41,7 @@
 		"build": "vite build && rollup -c",
 		"lint": "node scripts/lint.mjs",
 		"fix": "node scripts/fix.mjs",
+		"format": "prettier --write .",
 		"prepublishOnly": "vite build && rollup -c",
 		"commit": "node scripts/commit.mjs",
 		"count": "node scripts/count.mjs",
