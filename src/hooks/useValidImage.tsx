@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import type { ValidImage, ValidImageOptions } from "../types";
+import { useEffect, useState } from 'react';
+import type { ValidImage, ValidImageOptions } from '../types';
 
-import placeholderImage from "@assets/placeholder.png";
+import placeholderImage from '@assets/placeholder.png';
 
 const checkImageExists = (fullUrl: string): Promise<boolean> => {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.onload = () => resolve(true);
-    img.onerror = () => resolve(false);
-    img.src = fullUrl;
-  });
+	return new Promise((resolve) => {
+		const img = new Image();
+		img.crossOrigin = 'anonymous';
+		img.onload = () => resolve(true);
+		img.onerror = () => resolve(false);
+		img.src = fullUrl;
+	});
 };
 
 /**
@@ -28,61 +28,61 @@ const checkImageExists = (fullUrl: string): Promise<boolean> => {
  * const avatars = useValidImage(["img1.jpg", "img2.jpg"]); // `as string[]`
  */
 export function useValidImage<T extends string | string[]>(
-  input: T | undefined,
-  options?: ValidImageOptions,
+	input: T | undefined,
+	options?: ValidImageOptions,
 ): ValidImage<T> {
-  const {
-    placeholder = placeholderImage,
-    imgHostLink,
-    trailingSlash = true,
-  } = options ?? {};
+	const {
+		placeholder = placeholderImage,
+		imgHostLink,
+		trailingSlash = true,
+	} = options ?? {};
 
-  const [validImages, setValidImages] = useState<string | string[]>(
-    Array.isArray(input) ? input.map(() => placeholder) : placeholder,
-  );
+	const [validImages, setValidImages] = useState<string | string[]>(
+		Array.isArray(input) ? input.map(() => placeholder) : placeholder,
+	);
 
-  useEffect(() => {
-    let isMounted = true;
+	useEffect(() => {
+		let isMounted = true;
 
-    const normalizeUrl = (url?: string) => {
-      return imgHostLink && url
-        ? `${imgHostLink}${trailingSlash ? "" : "/"}${url}`
-        : placeholder;
-    };
+		const normalizeUrl = (url?: string) => {
+			return imgHostLink && url ?
+					`${imgHostLink}${trailingSlash ? '' : '/'}${url}`
+				:	placeholder;
+		};
 
-    const validate = async () => {
-      if (Array.isArray(input)) {
-        const results = await Promise.all(
-          input.map(async (url) => {
-            const fullUrl = normalizeUrl(url);
+		const validate = async () => {
+			if (Array.isArray(input)) {
+				const results = await Promise.all(
+					input.map(async (url) => {
+						const fullUrl = normalizeUrl(url);
 
-            const isValid = await checkImageExists(fullUrl);
+						const isValid = await checkImageExists(fullUrl);
 
-            return isValid ? fullUrl : placeholder;
-          }),
-        );
+						return isValid ? fullUrl : placeholder;
+					}),
+				);
 
-        if (isMounted) {
-          setValidImages(results);
-        }
-      } else {
-        const fullUrl = normalizeUrl(input);
-        const isValid = await checkImageExists(fullUrl);
+				if (isMounted) {
+					setValidImages(results);
+				}
+			} else {
+				const fullUrl = normalizeUrl(input);
+				const isValid = await checkImageExists(fullUrl);
 
-        if (isMounted) {
-          setValidImages(isValid ? fullUrl : placeholder);
-        }
-      }
-    };
+				if (isMounted) {
+					setValidImages(isValid ? fullUrl : placeholder);
+				}
+			}
+		};
 
-    if (input) {
-      validate();
-    }
+		if (input) {
+			validate();
+		}
 
-    return () => {
-      isMounted = false;
-    };
-  }, [imgHostLink, input, placeholder, trailingSlash]);
+		return () => {
+			isMounted = false;
+		};
+	}, [imgHostLink, input, placeholder, trailingSlash]);
 
-  return validImages as ValidImage<T>;
+	return validImages as ValidImage<T>;
 }

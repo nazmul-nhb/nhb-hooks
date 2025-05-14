@@ -1,4 +1,4 @@
-import { useMediaQuery } from "./useMediaQuery";
+import { useMediaQuery } from './useMediaQuery';
 
 /**
  * * Custom hook to detect responsive breakpoints based on screen width.
@@ -9,9 +9,9 @@ import { useMediaQuery } from "./useMediaQuery";
  * @returns Object with boolean flags: `{ mobile, tablet, desktop }`
  */
 export const useBreakPoint = () => {
-  const mobile = useMediaQuery("(max-width: 767px)");
-  const tablet = useMediaQuery("(min-width: 768px) and (max-width: 1279px)");
-  const desktop = useMediaQuery("(min-width: 1280px)");
+	const mobile = useMediaQuery('(max-width: 767px)');
+	const tablet = useMediaQuery('(min-width: 768px) and (max-width: 1279px)');
+	const desktop = useMediaQuery('(min-width: 1280px)');
 
-  return { mobile, tablet, desktop };
+	return { mobile, tablet, desktop };
 };

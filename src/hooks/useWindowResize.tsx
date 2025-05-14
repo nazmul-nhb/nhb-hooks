@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 /**
  * * Custom React hook that triggers a callback whenever the window is resized.
@@ -11,15 +11,15 @@ import React from "react";
  * });
  */
 export function useWindowResize(callback: () => void): void {
-  React.useEffect(() => {
-    if (typeof callback !== "function") return;
+	React.useEffect(() => {
+		if (typeof callback !== 'function') return;
 
-    const handleResize = () => callback();
+		const handleResize = () => callback();
 
-    window.addEventListener("resize", handleResize);
+		window.addEventListener('resize', handleResize);
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [callback]);
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	}, [callback]);
 }

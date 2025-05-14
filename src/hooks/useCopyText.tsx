@@ -1,5 +1,5 @@
-import { useState } from "react";
-import type { CopyOptions, UseCopyTextReturn } from "../types";
+import { useState } from 'react';
+import type { CopyOptions, UseCopyTextReturn } from '../types';
 
 /**
  * * Hook to copy text to the clipboard with optional callbacks.
@@ -41,67 +41,67 @@ import type { CopyOptions, UseCopyTextReturn } from "../types";
  * ```
  */
 export const useCopyText = (options?: CopyOptions): UseCopyTextReturn => {
-  const [copiedText, setCopiedText] = useState<string>("");
+	const [copiedText, setCopiedText] = useState<string>('');
 
-  /**
-   * * Function to copy the provided text to the clipboard.
-   *
-   * @param text - The string content to be copied.
-   * @param msg - Optional custom success message. Default is `'Text Copied!'`
-   * @param errorMsg - Optional custom error message. Default is from message from the error object or `'Failed to copy!'`
-   */
-  const copyToClipboard = async (
-    text: string,
-    msg?: string,
-    errorMsg?: string,
-  ) => {
-    try {
-      if (navigator?.clipboard?.writeText) {
-        await navigator.clipboard.writeText(text);
-      } else {
-        const textArea = document.createElement("textarea");
+	/**
+	 * * Function to copy the provided text to the clipboard.
+	 *
+	 * @param text - The string content to be copied.
+	 * @param msg - Optional custom success message. Default is `'Text Copied!'`
+	 * @param errorMsg - Optional custom error message. Default is from message from the error object or `'Failed to copy!'`
+	 */
+	const copyToClipboard = async (
+		text: string,
+		msg?: string,
+		errorMsg?: string,
+	) => {
+		try {
+			if (navigator?.clipboard?.writeText) {
+				await navigator.clipboard.writeText(text);
+			} else {
+				const textArea = document.createElement('textarea');
 
-        textArea.value = text;
-        textArea.style.position = "fixed";
-        textArea.style.opacity = "0";
-        document.body.appendChild(textArea);
+				textArea.value = text;
+				textArea.style.position = 'fixed';
+				textArea.style.opacity = '0';
+				document.body.appendChild(textArea);
 
-        textArea.select();
-        textArea.setSelectionRange(0, textArea.value.length);
+				textArea.select();
+				textArea.setSelectionRange(0, textArea.value.length);
 
-        const success = document.execCommand("copy");
+				const success = document.execCommand('copy');
 
-        document.body.removeChild(textArea);
+				document.body.removeChild(textArea);
 
-        if (!success) {
-          throw new Error("Cannot execute command in this environment!");
-        }
-      }
+				if (!success) {
+					throw new Error(
+						'Cannot execute command in this environment!',
+					);
+				}
+			}
 
-      setCopiedText(text);
+			setCopiedText(text);
 
-      options?.onSuccess?.(msg ?? "Text Copied!");
+			options?.onSuccess?.(msg ?? 'Text Copied!');
 
-      setTimeout(() => {
-        setCopiedText("");
-      }, options?.resetTimeOut ?? 2500);
-    } catch (err) {
-      options?.onError?.(
-        errorMsg
-          ? errorMsg
-          : err instanceof Error
-            ? err?.message
-            : "Failed to copy!",
-      );
-      console.error("Clipboard copy failed:", err);
-    } finally {
-      const textArea = document.querySelector('textarea[style*="fixed"]');
+			setTimeout(() => {
+				setCopiedText('');
+			}, options?.resetTimeOut ?? 2500);
+		} catch (err) {
+			options?.onError?.(
+				errorMsg ? errorMsg
+				: err instanceof Error ? err?.message
+				: 'Failed to copy!',
+			);
+			console.error('Clipboard copy failed:', err);
+		} finally {
+			const textArea = document.querySelector('textarea[style*="fixed"]');
 
-      if (textArea) {
-        document.body.removeChild(textArea);
-      }
-    }
-  };
+			if (textArea) {
+				document.body.removeChild(textArea);
+			}
+		}
+	};
 
-  return { copiedText, copyToClipboard };
+	return { copiedText, copyToClipboard };
 };

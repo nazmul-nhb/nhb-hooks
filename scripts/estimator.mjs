@@ -1,9 +1,9 @@
 // @ts-check
 
-import { fileURLToPath } from "url";
-import { dirname, join } from "path";
-import { existsSync } from "fs";
-import progressEstimator from "progress-estimator";
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import { existsSync } from 'fs';
+import progressEstimator from 'progress-estimator';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -15,18 +15,18 @@ const __dirname = dirname(__filename);
  * @returns {string} Directory path containing package.json
  */
 function findProjectRoot(fromDir) {
-  let currentDir = fromDir;
+	let currentDir = fromDir;
 
-  while (!existsSync(join(currentDir, "package.json"))) {
-    const parentDir = dirname(currentDir);
-    if (parentDir === currentDir) {
-      // Reached filesystem root without finding package.json
-      break;
-    }
-    currentDir = parentDir;
-  }
+	while (!existsSync(join(currentDir, 'package.json'))) {
+		const parentDir = dirname(currentDir);
+		if (parentDir === currentDir) {
+			// Reached filesystem root without finding package.json
+			break;
+		}
+		currentDir = parentDir;
+	}
 
-  return currentDir;
+	return currentDir;
 }
 
 const projectRoot = findProjectRoot(__dirname);
@@ -40,5 +40,5 @@ const projectRoot = findProjectRoot(__dirname);
  * @type {progressEstimator.ProgressEstimator}
  */
 export const estimator = progressEstimator({
-  storagePath: join(projectRoot, ".estimator"),
+	storagePath: join(projectRoot, '.estimator'),
 });

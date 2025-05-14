@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 /**
  * * Returns a debounced version of the input value.
@@ -16,27 +16,29 @@ import React from "react";
  * const [debouncedSearch] = useDebouncedValue(search, 500);
  */
 export function useDebouncedValue<T>(value: T, delay = 300): [T, () => void] {
-  const [debouncedValue, setDebouncedValue] = React.useState(value);
-  const [timeoutId, setTimeoutId] = React.useState<NodeJS.Timeout | null>(null);
+	const [debouncedValue, setDebouncedValue] = React.useState(value);
+	const [timeoutId, setTimeoutId] = React.useState<NodeJS.Timeout | null>(
+		null,
+	);
 
-  React.useEffect(() => {
-    if (timeoutId) clearTimeout(timeoutId);
+	React.useEffect(() => {
+		if (timeoutId) clearTimeout(timeoutId);
 
-    const id = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
+		const id = setTimeout(() => {
+			setDebouncedValue(value);
+		}, delay);
 
-    setTimeoutId(id);
+		setTimeoutId(id);
 
-    return () => clearTimeout(id);
-  }, [timeoutId, value, delay]);
+		return () => clearTimeout(id);
+	}, [timeoutId, value, delay]);
 
-  const cancelFn = () => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-      setTimeoutId(null);
-    }
-  };
+	const cancelFn = () => {
+		if (timeoutId) {
+			clearTimeout(timeoutId);
+			setTimeoutId(null);
+		}
+	};
 
-  return [debouncedValue, cancelFn];
+	return [debouncedValue, cancelFn];
 }
