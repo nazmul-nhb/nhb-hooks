@@ -68,8 +68,8 @@ importers:
                 specifier: ^26.1.0
                 version: 26.1.0
             nhb-toolbox:
-                specifier: ^4.10.50
-                version: 4.10.50
+                specifier: ^4.10.96
+                version: 4.10.96
             prettier:
                 specifier: ^3.5.3
                 version: 3.5.3
@@ -2849,10 +2849,10 @@ packages:
                 integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==,
             }
 
-    nhb-toolbox@4.10.50:
+    nhb-toolbox@4.10.96:
         resolution:
             {
-                integrity: sha512-BdWEA5IL8cEDVVgeiFEVYBIeTZn2gXTHdUeX5XdKomzvT0MWtOeZm/xHt5I0WkU+P3QkCKXws9k8ankIF+knEQ==,
+                integrity: sha512-W3CgrWMH7G7pyMevdIAVyxaTbHtGjlu3S0uEjw5g4pdner0j/8XJGjB1OVQCaQifNwLb+F6xeqVkDCelEwlEjw==,
             }
 
     node-releases@2.0.19:
@@ -5781,7 +5781,7 @@ snapshots:
 
     natural-compare@1.4.0: {}
 
-    nhb-toolbox@4.10.50: {}
+    nhb-toolbox@4.10.96: {}
 
     node-releases@2.0.19: {}
 

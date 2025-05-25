@@ -15,7 +15,7 @@ export default defineConfig({
 			formats: ['es', 'cjs'],
 		},
 		rollupOptions: {
-			external: ['react', 'nhb-toolbox'],
+			external: ['react', 'nhb-toolbox/chronos'],
 			plugins: [visualizer({ open: true })],
 			output: {
 				globals: {

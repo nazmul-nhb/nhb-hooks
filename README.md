@@ -492,7 +492,7 @@ function SessionTimeout() {
 
 ### Notes for useTimer
 
-- **Dependency**: Requires [nhb-toolbox](https://nhb-toolbox.vercel.app/) (Chronos)
+- **Dependency**: Requires [Chronos](https://nhb-toolbox.vercel.app/docs/classes/Chronos) from `nhb-toolbox`
 - **Precision**: Updates every second (1000ms)
 - **Formats**: Accepts both duration and target date
 - **Output**: Returns a TimeDuration object with days/hours/minutes/seconds
