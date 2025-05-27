@@ -6,10 +6,6 @@ settings:
 
 importers:
     .:
-        dependencies:
-            nhb-toolbox:
-                specifier: ^4.12.0
-                version: 4.12.0
         devDependencies:
             '@eslint/js':
                 specifier: ^9.25.1
@@ -71,6 +67,9 @@ importers:
             jsdom:
                 specifier: ^26.1.0
                 version: 26.1.0
+            nhb-toolbox:
+                specifier: ^4.12.0
+                version: 4.12.0
             prettier:
                 specifier: ^3.5.3
                 version: 3.5.3

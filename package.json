@@ -1,6 +1,6 @@
 {
 	"name": "nhb-hooks",
-	"version": "1.11.1",
+	"version": "1.11.2",
 	"type": "module",
 	"main": "dist/index.js",
 	"module": "dist/index.js",
@@ -95,6 +95,7 @@
 		"globals": "^16.0.0",
 		"globby": "^14.1.0",
 		"jsdom": "^26.1.0",
+		"nhb-toolbox": "^4.12.0",
 		"prettier": "^3.5.3",
 		"progress-estimator": "^0.3.1",
 		"react": "^19.1.0",
@@ -106,8 +107,5 @@
 		"typescript-eslint": "^8.31.1",
 		"vite": "^6.3.3",
 		"vitest": "^3.1.2"
-	},
-	"dependencies": {
-		"nhb-toolbox": "^4.12.0"
 	}
 }
