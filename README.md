@@ -2,13 +2,16 @@
 
 <p>
   <a href="https://www.npmjs.com/package/nhb-hooks" aria-label="Downloads">
-    <img src="https://img.shields.io/npm/dm/nhb-hooks.svg?label=downloads&style=for-the-badge&color=navy" alt="Downloads" />
+    <img src="https://img.shields.io/npm/dm/nhb-hooks.svg?label=downloads&style=for-the-badge&color=navy&logo=npm" alt="Downloads" />
   </a>
   <a href="https://www.npmjs.com/package/nhb-hooks" aria-label="Version">
-    <img src="https://img.shields.io/npm/v/nhb-hooks.svg?style=for-the-badge" alt="Version" />
+    <img src="https://img.shields.io/npm/v/nhb-hooks.svg?style=for-the-badge&logo=npm" alt="Version" />
+  </a>
+  <a href="https://bundlephobia.com/result?p=nhb-hooks" aria-label="Bundle size">
+    <img src="https://img.shields.io/bundlephobia/minzip/nhb-hooks?style=for-the-badge&color=purple&label=size&logo=nodedotjs" alt="Bundle Size" />
   </a>
   <a href="https://www.npmjs.com/package/nhb-hooks" aria-label="License">
-    <img src="https://img.shields.io/npm/l/nhb-hooks.svg?label=license&style=for-the-badge&color=red" alt="License" />
+    <img src="https://img.shields.io/npm/l/nhb-hooks.svg?label=license&style=for-the-badge&color=red&logo=open-source-initiative" alt="License" />
   </a>
 </p>
 
@@ -18,7 +21,7 @@
 
 A **lightweight**, **tree-shakable** collection of essential React hooks designed for common use cases. Only the hooks you import are included in your final bundle, ensuring optimal performance.
 
-> This package requires [`nhb-toolbox`](https://nhb-toolbox.vercel.app/) as a peer dependency, as some hooks rely on utilities from it.
+> This package requires [nhb-toolbox](https://nhb-toolbox.vercel.app/) as a peer dependency, as some hooks rely on utilities from it.
 
 ---
 
@@ -42,7 +45,7 @@ pnpm add nhb-hooks nhb-toolbox
 yarn add nhb-hooks nhb-toolbox
 ```
 
-> **Note:** The `useTimer` hook depends on the `Chronos` class from `nhb-toolbox`. Make sure to install both packages to use all available features. Both packages are fully tree-shakable, so only the code you use will be bundled.
+> **Note:** The `useTimer` hook depends on the [Chronos](https://nhb-toolbox.vercel.app/docs/classes/Chronos) class from [nhb-toolbox](https://www.npmjs.com/package/nhb-toolbox). Make sure to install both packages to use all available features. Both packages are fully tree-shakable, so only the code you use will be bundled.
 
 ---
 
@@ -142,10 +145,10 @@ const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1024px)');
 ```ts
 /** Interface for `useMediaQuery` hook's options */
 interface MediaQueryOptions {
-	/** Minimum screen width in pixels (inclusive) */
-	minWidth?: number;
-	/** Maximum screen width in pixels (inclusive) */
-	maxWidth?: number;
+ /** Minimum screen width in pixels (inclusive) */
+ minWidth?: number;
+ /** Maximum screen width in pixels (inclusive) */
+ maxWidth?: number;
 }
 ```
 
@@ -165,9 +168,9 @@ import { useBreakPoint } from 'nhb-hooks';
 
 ```ts
 function useBreakPoint(): {
-	mobile: boolean;
-	tablet: boolean;
-	desktop: boolean;
+ mobile: boolean;
+ tablet: boolean;
+ desktop: boolean;
 };
 ```
 
@@ -185,11 +188,11 @@ const { mobile, tablet, desktop } = useBreakPoint();
 const { mobile, tablet, desktop } = useBreakPoint();
 
 return (
-	<>
-		{mobile && <MobileNav />}
-		{tablet && <TabletLayout />}
-		{desktop && <DesktopSidebar />}
-	</>
+ <>
+  {mobile && <MobileNav />}
+  {tablet && <TabletLayout />}
+  {desktop && <DesktopSidebar />}
+ </>
 );
 ```
 
@@ -222,13 +225,13 @@ import { useClickOutside } from 'nhb-hooks';
 ```ts
 // Single element version
 function useClickOutside<T extends Element | null>(
-	handler: () => void,
+ handler: () => void,
 ): React.RefObject<T>;
 
 // Multiple elements version
 function useClickOutside<T extends Element | null>(
-	refs: RefType<T>[],
-	handler: () => void,
+ refs: RefType<T>[],
+ handler: () => void,
 ): void;
 ```
 
@@ -237,7 +240,7 @@ function useClickOutside<T extends Element | null>(
 ```tsx
 // Single element
 const ref = useClickOutside(() => {
-	console.log('Clicked outside the element');
+ console.log('Clicked outside the element');
 });
 
 return <div ref={ref}>Click outside me</div>;
@@ -247,28 +250,28 @@ const ref1 = useRef(null);
 const ref2 = useRef(null);
 
 useClickOutside([ref1, ref2], () => {
-	console.log('Clicked outside both elements');
+ console.log('Clicked outside both elements');
 });
 
 return (
-	<>
-		<div ref={ref1}>Box 1</div>
-		<div ref={ref2}>Box 2</div>
-	</>
+ <>
+  <div ref={ref1}>Box 1</div>
+  <div ref={ref2}>Box 2</div>
+ </>
 );
 ```
 
 ```tsx
 function Dropdown() {
-	const [isOpen, setIsOpen] = useState(false);
-	const ref = useClickOutside(() => setIsOpen(false));
+ const [isOpen, setIsOpen] = useState(false);
+ const ref = useClickOutside(() => setIsOpen(false));
 
-	return (
-		<div ref={ref}>
-			<button onClick={() => setIsOpen(true)}>Menu</button>
-			{isOpen && <div className="dropdown">...</div>}
-		</div>
-	);
+ return (
+  <div ref={ref}>
+   <button onClick={() => setIsOpen(true)}>Menu</button>
+   {isOpen && <div className="dropdown">...</div>}
+  </div>
+ );
 }
 ```
 
@@ -309,12 +312,12 @@ import { useCopyText } from 'nhb-hooks';
 
 ```ts
 function useCopyText(options?: CopyOptions): {
-	copiedText: string;
-	copyToClipboard: (
-		text: string,
-		msg?: string,
-		errorMsg?: string,
-	) => Promise<void>;
+ copiedText: string;
+ copyToClipboard: (
+  text: string,
+  msg?: string,
+  errorMsg?: string,
+ ) => Promise<void>;
 };
 ```
 
@@ -325,24 +328,24 @@ function useCopyText(options?: CopyOptions): {
 const { copiedText, copyToClipboard } = useCopyText();
 
 return (
-	<button onClick={() => copyToClipboard('Hello, world!')}>
-		{copiedText ? 'Copied!' : 'Copy Text'}
-	</button>
+ <button onClick={() => copyToClipboard('Hello, world!')}>
+  {copiedText ? 'Copied!' : 'Copy Text'}
+ </button>
 );
 ```
 
 ```tsx
 // With success and error handling
 const { copiedText, copyToClipboard } = useCopyText({
-	onSuccess: (msg) => toast.success(msg),
-	onError: (msg) => toast.error(msg),
-	resetTimeOut: 1500,
+ onSuccess: (msg) => toast.success(msg),
+ onError: (msg) => toast.error(msg),
+ resetTimeOut: 1500,
 });
 
 return (
-	<button onClick={() => copyToClipboard('secret-token', 'Token copied!')}>
-		{copiedText ? '✔ Copied' : 'Copy Token'}
-	</button>
+ <button onClick={() => copyToClipboard('secret-token', 'Token copied!')}>
+  {copiedText ? '✔ Copied' : 'Copy Token'}
+ </button>
 );
 ```
 
@@ -363,12 +366,12 @@ return (
 ```ts
 /** Options for useCopyText hook. */
 interface CopyOptions {
-	/** Called when text is successfully copied. Receives a message. */
-	onSuccess?: (msg: string) => void;
-	/** Called when copy operation fails. Receives an error message. */
-	onError?: (msg: string) => void;
-	/** How long to retain the copied text in state before resetting. */
-	resetTimeOut?: number;
+ /** Called when text is successfully copied. Receives a message. */
+ onSuccess?: (msg: string) => void;
+ /** Called when copy operation fails. Receives an error message. */
+ onError?: (msg: string) => void;
+ /** How long to retain the copied text in state before resetting. */
+ resetTimeOut?: number;
 }
 ```
 
@@ -402,10 +405,10 @@ const [debouncedSearch, cancel] = useDebouncedValue(search, 500);
 
 ```tsx
 function Search() {
-	const [query, setQuery] = useState('');
-	const [debouncedQuery] = useDebouncedValue(query, 500);
+ const [query, setQuery] = useState('');
+ const [debouncedQuery] = useDebouncedValue(query, 500);
 
-	return <input value={query} onChange={(e) => setQuery(e.target.value)} />;
+ return <input value={query} onChange={(e) => setQuery(e.target.value)} />;
 }
 ```
 
@@ -427,7 +430,7 @@ function Search() {
 ```ts
 // Try to avoid this - creates new function each render. For tiny project using like this is okay but for large scale project use it with `RTK Query` or `React (Tanstack) Query`
 useEffect(() => {
-	fetchResults(debouncedQuery);
+ fetchResults(debouncedQuery);
 }, [debouncedQuery]);
 ```
 
@@ -448,8 +451,8 @@ import { useTimer } from 'nhb-hooks';
 ```ts
 // Duration-based timer
 function useTimer(
-	initialDuration: number,
-	unit: Exclude<TimeUnit, 'week'>,
+ initialDuration: number,
+ unit: Exclude<TimeUnit, 'week'>,
 ): TimeDuration;
 
 // Target time-based timer
@@ -470,23 +473,23 @@ const timeLeft = useTimer('2023-12-31');
 ```tsx
 // Product sale countdown
 function SaleBanner() {
-	const { days, hours, minutes, seconds } = useTimer('2023-12-31');
+ const { days, hours, minutes, seconds } = useTimer('2023-12-31');
 
-	return (
-		<div>
-			Sale ends in: {days}d {hours}h {minutes}m {seconds}s
-		</div>
-	);
+ return (
+  <div>
+   Sale ends in: {days}d {hours}h {minutes}m {seconds}s
+  </div>
+ );
 }
 
 // Session timeout warning
 function SessionTimeout() {
-	const timeLeft = useTimer(15, 'minute');
-	return (
-		<div>
-			Session expires in: {timeLeft.minutes}m {timeLeft.seconds}s
-		</div>
-	);
+ const timeLeft = useTimer(15, 'minute');
+ return (
+  <div>
+   Session expires in: {timeLeft.minutes}m {timeLeft.seconds}s
+  </div>
+ );
 }
 ```
 
@@ -517,26 +520,26 @@ useTimer(new Chronos(2025, 11, 31)); // Chronos object
 
 ```ts
 interface TimeDuration {
-	years: number;
-	months: number;
-	days: number;
-	hours: number;
-	minutes: number;
-	seconds: number;
-	milliseconds: number;
+ years: number;
+ months: number;
+ days: number;
+ hours: number;
+ minutes: number;
+ seconds: number;
+ milliseconds: number;
 }
 
 type ChronosInput = number | string | Date | Chronos;
 
 type TimeUnit =
-	| 'year'
-	| 'month'
-	| 'day'
-	| 'week'
-	| 'hour'
-	| 'minute'
-	| 'second'
-	| 'millisecond';
+ | 'year'
+ | 'month'
+ | 'day'
+ | 'week'
+ | 'hour'
+ | 'minute'
+ | 'second'
+ | 'millisecond';
 
 // And `unit` parameter type is just excluding `week`
 Exclude<TimeUnit, 'week'>;
@@ -605,8 +608,8 @@ import { useValidImage } from 'nhb-hooks';
 
 ```ts
 function useValidImage<T extends string | string[]>(
-	input: T | undefined,
-	options?: ValidImageOptions,
+ input: T | undefined,
+ options?: ValidImageOptions,
 ): ValidImage<T>;
 ```
 
@@ -615,8 +618,8 @@ function useValidImage<T extends string | string[]>(
 ```tsx
 // Single image
 const avatar = useValidImage('user/avatar.jpg', {
-	imgHostLink: 'https://cdn.example.com/',
-	placeholder: '/default-avatar.png',
+ imgHostLink: 'https://cdn.example.com/',
+ placeholder: '/default-avatar.png',
 });
 
 // Multiple images
@@ -626,21 +629,21 @@ const gallery = useValidImage(['img1.jpg', 'img2.jpg']);
 ```tsx
 // Single image with CDN prefix and no trailing slash
 const avatar = useValidImage('user123.jpg', {
-	imgHostLink: 'https://cdn.example.com',
-	placeholder: '/default-avatar.png',
-	trailingSlash: false,
+ imgHostLink: 'https://cdn.example.com',
+ placeholder: '/default-avatar.png',
+ trailingSlash: false,
 });
 
 return <img src={avatar} alt="Profile" />;
 
 // Image gallery
 const galleryImages = useValidImage(
-	['photo1.jpg', 'photo2.jpg', 'photo3.jpg'],
-	{ imgHostLink: 'https://images.example.com' },
+ ['photo1.jpg', 'photo2.jpg', 'photo3.jpg'],
+ { imgHostLink: 'https://images.example.com' },
 );
 
 return galleryImages.map((img, i) => (
-	<img key={i} src={img} alt={`Photo ${i}`} />
+ <img key={i} src={img} alt={`Photo ${i}`} />
 ));
 ```
 
@@ -680,12 +683,12 @@ type ValidImage<T> = T extends string ? string : string[];
 
 /** Options for `useValidImage` hook. */
 interface ValidImageOptions {
-	/** Base path to prepend to image URL(s) if the image is hosted somewhere else. By default the hook assumes that the link has a trailing `/`. Customize it in `trailingSlash` option. */
-	imgHostLink?: string;
-	/** Whether the `imgHostLink` has a trailing slash `/`. Default is `true`. Full image URL will be built on this flag. */
-	trailingSlash?: boolean;
-	/** Fallback image URL. It can be local/public image or hosted image (needs full url for hosted placeholder image). */
-	placeholder?: string;
+ /** Base path to prepend to image URL(s) if the image is hosted somewhere else. By default the hook assumes that the link has a trailing `/`. Customize it in `trailingSlash` option. */
+ imgHostLink?: string;
+ /** Whether the `imgHostLink` has a trailing slash `/`. Default is `true`. Full image URL will be built on this flag. */
+ trailingSlash?: boolean;
+ /** Fallback image URL. It can be local/public image or hosted image (needs full url for hosted placeholder image). */
+ placeholder?: string;
 }
 ```
 
@@ -711,14 +714,14 @@ function useWindowResize(callback: () => void): void;
 
 ```tsx
 useWindowResize(() => {
-	console.log('Window resized');
+ console.log('Window resized');
 });
 ```
 
 ```tsx
 useWindowResize(() => {
-	// Recalculate layout on resize
-	updateChartDimensions();
+ // Recalculate layout on resize
+ updateChartDimensions();
 });
 ```
 

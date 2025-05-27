@@ -1,5 +1,9 @@
-import type { ChronosInput, TimeDuration, TimeUnit } from 'nhb-toolbox/chronos';
-import { Chronos } from 'nhb-toolbox/chronos';
+import { Chronos } from 'nhb-toolbox';
+import type {
+	ChronosInput,
+	TimeDuration,
+	TimeUnit,
+} from 'nhb-toolbox/date/types';
 import { useEffect, useRef, useState } from 'react';
 
 /**
