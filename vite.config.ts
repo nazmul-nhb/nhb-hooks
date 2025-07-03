@@ -5,7 +5,7 @@ import { defineConfig } from 'vite';
 import type { ViteUserConfig } from 'vitest/config';
 
 export default defineConfig({
-	plugins: [react()],
+	plugins: [react({ jsxRuntime: 'automatic' })],
 	assetsInlineLimit: 0,
 	build: {
 		lib: {
@@ -15,11 +15,17 @@ export default defineConfig({
 			formats: ['es', 'cjs'],
 		},
 		rollupOptions: {
-			external: ['react', 'nhb-toolbox'],
+			external: [
+				'react',
+				'react-dom',
+				'react/jsx-runtime',
+				'nhb-toolbox',
+			],
 			plugins: [visualizer({ open: true })],
 			output: {
 				globals: {
 					react: 'React',
+					'react-dom': 'ReactDOM',
 				},
 				assetFileNames: './assets/[name].[hash][extname]',
 			},

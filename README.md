@@ -68,6 +68,7 @@ yarn add nhb-hooks nhb-toolbox
 - [useToggle](#usetoggle)
 - [useValidImage](#usevalidimage)
 - [useWindowResize](#usewindowresize)
+- [useTitle](#usetitle)
 
 ---
 
@@ -743,6 +744,162 @@ useWindowResize(() => {
 const [width, setWidth] = useState(window.innerWidth);
 useWindowResize(debounceAction(() => setWidth(window.innerWidth), 200);
 ```
+
+---
+
+## useTitle
+
+Sets the `document.title` dynamically at runtime, using your app’s site title configuration. Supports prepend/append positions, custom separators, and global title context via a provider.
+
+### Import
+
+```ts
+import { useTitle, TitleProvider } from 'nhb-hooks';
+```
+
+---
+
+### 📦 Context Setup (Required Once)
+
+Wrap your root component (or layout) with `TitleProvider` to configure the global site title and defaults:
+
+```tsx
+import { TitleProvider } from 'nhb-hooks';
+
+<TitleProvider
+  config={{
+    siteTitle: 'Bangu Site Inc.',
+    defaultPosition: 'after',     // or 'before'
+    defaultSeparator: ' - ',
+  }}
+>
+  <App />
+</TitleProvider>
+```
+
+---
+
+### ✅ Hook Signature
+
+```ts
+function useTitle(title: string, options?: TitleOptions): void
+```
+
+---
+
+### 🔧 Options
+
+| Option      | Type                  | Description                                                   | Default   |
+| ----------- | --------------------- | ------------------------------------------------------------- | --------- |
+| `separator` | `string`              | Character(s) between page and site title                      | `" - "`   |
+| `position`  | `"before" \| "after"` | Where to place the page title: before or after the site title | `"before"` |
+
+---
+
+### 🧪 Examples
+
+```tsx
+// Basic usage (uses default site title and config)
+useTitle('Dashboard'); // → "Dashboard - Bangu Site Inc."
+
+// Change position
+useTitle('Login', { position: 'after' }); // → "Bangu Site Inc. - Login"
+
+// Custom separator
+useTitle('Docs', { separator: ' | ' }); // → "Docs | Bangu Site Inc."
+
+// Custom everything
+useTitle('Account', { position: 'after', separator: ' • ' }); // → "Bangu Site Inc. • Account"
+```
+
+---
+
+### 🌐 Full Page Example
+
+```tsx
+function Page() {
+  useTitle('Settings');
+
+  return <h1>Settings Page</h1>;
+}
+```
+
+```tsx
+function Page() {
+  useTitle('About', { position: 'after', separator: ' · ' });
+
+  return <h1>About Us</h1>;
+}
+```
+
+---
+
+### 🧼 Cleanup Behavior
+
+On unmount, `useTitle` will **restore the previous document title**, making it safe for conditional rendering and nested layouts.
+
+---
+
+### ⚠️ Notes
+
+- **Client-only**: This hook must run in a browser environment.
+- **Memoization**: You don’t need to memoize `options`; shallow comparison is already handled.
+- **TitleProvider config options**: If not used, fallback title will be `title` only.
+
+---
+
+### 🧩 Advanced Customization
+
+You can extract the current config using:
+
+```ts
+import { useTitleConfig } from 'nhb-hooks';
+
+const { siteTitle, defaultSeparator, defaultPosition } = useTitleConfig();
+```
+
+This allows integrating the config into SSR, breadcrumbs, or meta tag generation.
+
+---
+
+### 📘 Type Definitions
+
+```ts
+/** Configuration values for the provider context */
+interface TitleConfig {
+  siteTitle: string;
+  defaultPosition?: 'before' | 'after';
+  defaultSeparator?: string;
+}
+
+/** Props for the TitleProvider component */
+interface TitleProviderProps {
+  children: React.ReactNode;
+  config?: Partial<TitleConfig>;
+}
+
+/** Per-call override options */
+interface TitleOptions {
+  separator?: string;
+  position?: 'before' | 'after';
+}
+```
+
+---
+
+### 🧠 Best Practices
+
+| Scenario               | Recommendation                                                                 |
+| ---------------------- | ------------------------------------------------------------------------------ |
+| Default branding       | Use `TitleProvider` once in your root layout for consistent app-wide titles    |
+| Specific page titles   | Use `useTitle` for client-side updates; use `<title>` tag for SSR              |
+| Custom separator needs | Pass per-page `separator` via `useTitle` `options` parameter                  |
+| SSR                    | `useTitle` doesn't run on server — inject `<title>` tag manually for SEO       |
+
+---
+
+> ℹ️ `useTitle` only affects the document title **after hydration**.  
+> For proper SEO and server-rendered HTML, include a static `<title>` in your SSR framework's head management.
 
 ---
 

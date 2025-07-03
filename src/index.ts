@@ -7,3 +7,7 @@ export { useTimer } from './hooks/useTimer';
 export { useToggle } from './hooks/useToggle';
 export { useValidImage } from './hooks/useValidImage';
 export { useWindowResize } from './hooks/useWindowResize';
+
+export { useTitleConfig } from './helpers/useTitleConfig';
+export { useTitle } from './hooks/useTitle';
+export { TitleProvider } from './providers/TitleProvider';

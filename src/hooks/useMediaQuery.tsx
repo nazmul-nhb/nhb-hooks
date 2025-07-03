@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import type { MediaQueryOptions } from '../types';
 
 /**
@@ -41,7 +41,7 @@ import type { MediaQueryOptions } from '../types';
 export const useMediaQuery = (
 	queryOrOptions: string | MediaQueryOptions,
 ): boolean => {
-	const getQuery = React.useCallback((): string => {
+	const getQuery = useCallback((): string => {
 		if (typeof queryOrOptions === 'string') return queryOrOptions;
 
 		const conditions: string[] = [];
@@ -53,16 +53,16 @@ export const useMediaQuery = (
 		return conditions.join(' and ');
 	}, [queryOrOptions]);
 
-	const getMatches = React.useCallback(
+	const getMatches = useCallback(
 		() =>
 			typeof window !== 'undefined' &&
 			window.matchMedia(getQuery()).matches,
 		[getQuery],
 	);
 
-	const [matches, setMatches] = React.useState<boolean>(getMatches());
+	const [matches, setMatches] = useState<boolean>(getMatches());
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (typeof window === 'undefined') return;
 
 		const mediaQueryList = window.matchMedia(getQuery());

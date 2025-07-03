@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * * Returns a debounced version of the input value.
@@ -16,12 +16,10 @@ import React from 'react';
  * const [debouncedSearch] = useDebouncedValue(search, 500);
  */
 export function useDebouncedValue<T>(value: T, delay = 300): [T, () => void] {
-	const [debouncedValue, setDebouncedValue] = React.useState(value);
-	const [timeoutId, setTimeoutId] = React.useState<NodeJS.Timeout | null>(
-		null,
-	);
+	const [debouncedValue, setDebouncedValue] = useState(value);
+	const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (timeoutId) clearTimeout(timeoutId);
 
 		const id = setTimeout(() => {

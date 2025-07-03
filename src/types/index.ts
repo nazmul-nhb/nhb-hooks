@@ -1,3 +1,6 @@
+import type React from 'react';
+import type { TITLE_POSITIONS } from '../constants';
+
 /** Type for `useValidImage` hook's return type. */
 export type ValidImage<T> = T extends string ? string : string[];
 
@@ -56,4 +59,32 @@ export interface UseCopyTextReturn {
 		msg?: string,
 		errorMsg?: string,
 	) => Promise<void>;
+}
+
+export type TitlePosition = (typeof TITLE_POSITIONS)[number];
+
+/** * Configuration options for the title context provider. */
+export interface TitleConfig {
+	/** Default site or app title (e.g., 'Bangu Site Inc.'). */
+	siteTitle: string;
+	/** Where to place the page title relative to the site title. Default is `"before"`. */
+	defaultPosition?: TitlePosition;
+	/** Separator string between page title and site title. Default is `" - "`. */
+	defaultSeparator?: string;
+}
+
+/** * Runtime options for a specific call to `useTitle`. */
+export interface TitleOptions {
+	/** Custom separator string (overrides context default).. Default is `" - "`.  */
+	separator?: string;
+	/** Position of the page title relative to the site title (overrides context default). Default is `"before"`. */
+	position?: TitlePosition;
+}
+
+/** * Props accepted by the `TitleProvider` component. */
+export interface TitleProviderProps {
+	/** React children to wrap in the provider. */
+	children: React.ReactNode;
+	/** Optional override configuration for title behavior. */
+	config?: Partial<TitleConfig>;
 }

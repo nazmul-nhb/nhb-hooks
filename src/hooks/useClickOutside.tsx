@@ -1,6 +1,6 @@
-import React from 'react';
+import { useEffect, useRef, type RefObject } from 'react';
 
-type RefType<T> = React.RefObject<T | null>;
+type RefType<T> = RefObject<T | null>;
 
 /**
  * * Custom hook to detect clicks outside of a specified element.
@@ -16,7 +16,7 @@ type RefType<T> = React.RefObject<T | null>;
  */
 export function useClickOutside<T extends Element | null>(
 	handler: () => void,
-): React.RefObject<T>;
+): RefObject<T>;
 
 /**
  * * Custom hook to detect clicks outside multiple specified elements.
@@ -52,10 +52,10 @@ export function useClickOutside<T extends Element | null>(
 export function useClickOutside<T extends Element | null>(
 	arg1: (() => void) | RefType<T>[],
 	arg2?: () => void,
-): React.RefObject<T> | void {
-	const singleRef = React.useRef<T>(null);
+): RefObject<T> | void {
+	const singleRef = useRef<T>(null);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const handler = typeof arg1 === 'function' ? arg1 : arg2;
 		const refs: RefType<T>[] = Array.isArray(arg1) ? arg1 : [singleRef];
 
@@ -83,6 +83,6 @@ export function useClickOutside<T extends Element | null>(
 	}, [arg1, arg2]);
 
 	if (typeof arg1 === 'function') {
-		return singleRef as React.RefObject<T>;
+		return singleRef as RefObject<T>;
 	}
 }
