@@ -1,17 +1,19 @@
 # NHB Hooks
 
+## Reusable React Hooks
+
 <p>
   <a href="https://www.npmjs.com/package/nhb-hooks" aria-label="Downloads">
-    <img src="https://img.shields.io/npm/dm/nhb-hooks.svg?label=downloads&style=for-the-badge&color=navy&logo=npm" alt="Downloads" />
+    <img src="https://img.shields.io/npm/dm/nhb-hooks.svg?label=DOWNLOADS&style=flat&color=red&logo=npm" alt="Downloads" />
   </a>
   <a href="https://www.npmjs.com/package/nhb-hooks" aria-label="Version">
-    <img src="https://img.shields.io/npm/v/nhb-hooks.svg?style=for-the-badge&logo=npm" alt="Version" />
+    <img src="https://img.shields.io/npm/v/nhb-hooks.svg?label=NPM&style=flat&color=teal&logo=npm" alt="Latest Version" />
   </a>
   <a href="https://bundlephobia.com/result?p=nhb-hooks" aria-label="Bundle size">
-    <img src="https://img.shields.io/bundlephobia/minzip/nhb-hooks?style=for-the-badge&color=purple&label=size&logo=nodedotjs" alt="Bundle Size" />
+    <img src="https://img.shields.io/bundlephobia/minzip/nhb-hooks?style=flat&color=purple&label=SIZE&logo=nodedotjs" alt="Bundle Size" />
   </a>
   <a href="https://www.npmjs.com/package/nhb-hooks" aria-label="License">
-    <img src="https://img.shields.io/npm/l/nhb-hooks.svg?label=license&style=for-the-badge&color=red&logo=open-source-initiative" alt="License" />
+    <img src="https://img.shields.io/npm/l/nhb-hooks.svg?label=LICENSE&style=flat&color=orange&logo=open-source-initiative" alt="License" />
   </a>
 </p>
 
