@@ -1,6 +1,6 @@
 {
 	"name": "nhb-hooks",
-	"version": "1.12.8",
+	"version": "1.12.9",
 	"type": "module",
 	"main": "dist/index.js",
 	"module": "dist/index.js",
@@ -60,7 +60,7 @@
 	"license": "MIT",
 	"packageManager": "pnpm@10.9.0",
 	"peerDependencies": {
-		"nhb-toolbox": ">=4.12.0",
+		"nhb-toolbox": ">=4.12.67",
 		"react": "^18 || ^19",
 		"react-dom": "^18 || ^19"
 	},

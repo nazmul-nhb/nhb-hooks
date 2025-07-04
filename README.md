@@ -755,8 +755,8 @@ Sets the `document.title` dynamically at runtime, using your app’s site title 
 
 ### Import
 
-```ts
-import { useTitle, TitleProvider } from 'nhb-hooks';
+```tsx
+import { useTitle, useTitleMeta, TitleProvider } from 'nhb-hooks';
 ```
 
 ---
@@ -853,12 +853,12 @@ On unmount, `useTitle` will **restore the previous document title**, making it s
 
 ### 🧩 Advanced Customization
 
-You can extract the current config using:
+You can extract the current title metadata using:
 
 ```tsx
 import { useTitleMeta } from 'nhb-hooks';
 
-const { siteTitle, pageTitle, fullTitle } = useTitleMeta();
+const { siteTitle, pageTitle, fullTitle, ... } = useTitleMeta();
 ```
 
 Extract and observe current title state from the global `TitleProvider` context.
