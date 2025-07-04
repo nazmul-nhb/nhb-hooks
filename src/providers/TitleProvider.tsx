@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { defaultTitleConfig, TitleContext } from '../contexts/TitleContext';
-import type { TitleProviderProps } from '../types';
+import type { TitleContextConfig, TitleProviderProps } from '../types';
 
 /**
  * * Provides default site title and formatting options for `useTitle`
@@ -18,7 +19,17 @@ import type { TitleProviderProps } from '../types';
  * </TitleProvider>;
  */
 export function TitleProvider({ children, config }: TitleProviderProps) {
-	const merged = { ...defaultTitleConfig, ...config };
+	const [pageTitle, setPageTitle] = useState<string>();
+	const [fullTitle, setFullTitle] = useState<string>();
+
+	const merged: TitleContextConfig = {
+		...defaultTitleConfig,
+		...config,
+		pageTitle,
+		setPageTitle,
+		fullTitle,
+		setFullTitle,
+	};
 
 	return (
 		<TitleContext.Provider value={merged}>{children}</TitleContext.Provider>

@@ -1,4 +1,5 @@
-import type React from 'react';
+import type { Prettify } from 'nhb-toolbox/utils/types';
+import type { ReactNode } from 'react';
 import type { TITLE_POSITIONS } from '../constants';
 
 /** Type for `useValidImage` hook's return type. */
@@ -63,15 +64,36 @@ export interface UseCopyTextReturn {
 
 export type TitlePosition = (typeof TITLE_POSITIONS)[number];
 
-/** * Configuration options for the title context provider. */
-export interface TitleConfig {
+/** * Configuration options for the title context. */
+export interface TitleContextConfig {
 	/** Default site or app title (e.g., 'Bangu Site Inc.'). */
 	siteTitle: string;
+	/** Title of the current page. Site title not included. */
+	pageTitle?: string;
+	/** Set current page's title. */
+	setPageTitle?: (title: string) => void;
+	/** Full title of the current page. Site title included with separator. */
+	fullTitle?: string;
+	/** Set current page's full title. */
+	setFullTitle?: (title: string) => void;
 	/** Where to place the page title relative to the site title. Default is `"before"`. */
 	defaultPosition?: TitlePosition;
 	/** Separator string between page title and site title. Default is `" - "`. */
 	defaultSeparator?: string;
 }
+
+/** Metadata from `TitleProvider` and `useTitle` */
+export type TitleMeta = Prettify<
+	Partial<Omit<TitleContextConfig, 'setPageTitle' | 'setFullTitle'>>
+>;
+
+/** Configuration options for the title context provider. */
+export type TitleConfig = Partial<
+	Pick<
+		TitleContextConfig,
+		'siteTitle' | 'defaultPosition' | 'defaultSeparator'
+	>
+>;
 
 /** * Runtime options for a specific call to `useTitle`. */
 export interface TitleOptions {
@@ -79,12 +101,14 @@ export interface TitleOptions {
 	separator?: string;
 	/** Position of the page title relative to the site title (overrides context default). Default is `"before"`. */
 	position?: TitlePosition;
+	/** Set favicon for the current page, use static image path. */
+	favicon?: string;
 }
 
 /** * Props accepted by the `TitleProvider` component. */
 export interface TitleProviderProps {
 	/** React children to wrap in the provider. */
-	children: React.ReactNode;
+	children: ReactNode;
 	/** Optional override configuration for title behavior. */
-	config?: Partial<TitleConfig>;
+	config?: TitleConfig;
 }

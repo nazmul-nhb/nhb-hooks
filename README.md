@@ -791,10 +791,11 @@ function useTitle(title: string, options?: TitleOptions): void
 
 ### 🔧 Options
 
-| Option      | Type                  | Description                                                   | Default   |
-| ----------- | --------------------- | ------------------------------------------------------------- | --------- |
-| `separator` | `string`              | Character(s) between page and site title                      | `" - "`   |
-| `position`  | `"before" \| "after"` | Where to place the page title: before or after the site title | `"before"` |
+| Option      | Type                   | Description                                                   | Default   |
+| ----------- | ---------------------- | ------------------------------------------------------------- | --------- |
+| `separator` | `string`               | Character(s) between page and site title                      | `" - "`   |
+| `position`  | `"before" \| "after"`  | Where to place the page title: before or after the site title | `"before"`|
+| `favicon`   | `string` \| `undefined`| Optional favicon to temporarily set with the title            |           |
 
 ---
 
@@ -854,13 +855,45 @@ On unmount, `useTitle` will **restore the previous document title**, making it s
 
 You can extract the current config using:
 
-```ts
-import { useTitleConfig } from 'nhb-hooks';
+```tsx
+import { useTitleMeta } from 'nhb-hooks';
 
-const { siteTitle, defaultSeparator, defaultPosition } = useTitleConfig();
+const { siteTitle, pageTitle, fullTitle } = useTitleMeta();
 ```
 
-This allows integrating the config into SSR, breadcrumbs, or meta tag generation.
+Extract and observe current title state from the global `TitleProvider` context.
+
+### Purpose
+
+Use `useTitleMeta` when you want to **read** the current title state (e.g., for displaying breadcrumbs, page headers, or meta tags).
+
+### Signature
+
+```ts
+function useTitleMeta(): TitleMeta
+```
+
+### Returned Object
+
+| Key                | Type                    | Description                          |
+| ------------------ | ----------------------- | ------------------------------------ |
+| `pageTitle`        | `string`                | The current page-specific title      |
+| `siteTitle`        | `string`                | The global app/site name             |
+| `fullTitle`        | `string`                | The computed `document.title` value  |
+| `defaultPosition`  | `"before"` \| `"after"` | Global default for title positioning |
+| `defaultSeparator` | `string`                | Global default separator             |
+
+### Example Usage
+
+```tsx
+import { useTitleMeta } from 'nhb-hooks';
+
+function Breadcrumb() {
+  const { pageTitle, fullTitle } = useTitleMeta();
+
+  return <nav aria-label="breadcrumb">{pageTitle}</nav>;
+}
+```
 
 ---
 
@@ -869,7 +902,7 @@ This allows integrating the config into SSR, breadcrumbs, or meta tag generation
 ```ts
 /** Configuration values for the provider context */
 interface TitleConfig {
-  siteTitle: string;
+  siteTitle?: string;
   defaultPosition?: 'before' | 'after';
   defaultSeparator?: string;
 }
@@ -884,6 +917,16 @@ interface TitleProviderProps {
 interface TitleOptions {
   separator?: string;
   position?: 'before' | 'after';
+  favicon?: string;
+}
+
+/** Metadata from `TitleProvider` and `useTitle` */
+interface TitleMeta {
+  siteTitle?: string;
+  pageTitle?: string;
+  fullTitle?: string;
+  defaultPosition?: 'before' | 'after';
+  defaultSeparator?: string;
 }
 ```
 
@@ -891,12 +934,12 @@ interface TitleOptions {
 
 ### 🧠 Best Practices
 
-| Scenario               | Recommendation                                                                 |
-| ---------------------- | ------------------------------------------------------------------------------ |
-| Default branding       | Use `TitleProvider` once in your root layout for consistent app-wide titles    |
-| Specific page titles   | Use `useTitle` for client-side updates; use `<title>` tag for SSR              |
-| Custom separator needs | Pass per-page `separator` via `useTitle` `options` parameter                  |
-| SSR                    | `useTitle` doesn't run on server — inject `<title>` tag manually for SEO       |
+| Scenario             | Recommendation                                                              |
+| -------------------- | --------------------------------------------------------------------------- |
+| Default branding     | Use `TitleProvider` once in your root layout for consistent app-wide titles |
+| Specific page titles | Use `useTitle` for client-side updates; use `<title>` tag for SSR           |
+| Read-only access     | Use `useTitleMeta()` in components like breadcrumbs or metadata injection   |
+| SSR                  | `useTitle` doesn't run on server — inject `<title>` tag manually for SEO    |
 
 ---
 
