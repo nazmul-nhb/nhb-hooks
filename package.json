@@ -96,7 +96,7 @@
     "globals": "^16.0.0",
     "globby": "^14.1.0",
     "jsdom": "^26.1.0",
-    "nhb-scripts": "^1.2.6",
+    "nhb-scripts": "^1.2.7",
     "nhb-toolbox": "^4.12.68",
     "prettier": "^3.5.3",
     "progress-estimator": "^0.3.1",
