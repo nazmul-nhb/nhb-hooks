@@ -125,7 +125,7 @@ export interface UseClockOptions {
 
 	/**
 	 * Format string to return a formatted time value via `Chronos.format()`.
-	 * If omitted, no formatted string will be returned.
+	 * If omitted, default formatted (`'HH:mm:ss'`) string will be returned.
 	 * @default 'HH:mm:ss'
 	 */
 	format?: StrictFormat;
@@ -148,7 +148,7 @@ export interface UseClockOptions {
 export interface UseClockResult {
 	/** * Current Chronos time instance, respecting timezone (if provided). */
 	time: Chronos;
-	/** * Formatted time string based on the `format` option, or `undefined` if no format was given. */
+	/** * Formatted time string based on the `format` option. */
 	formatted: string | undefined;
 	/** * Stops the clock updates (pause effect). */
 	pause: () => void;
