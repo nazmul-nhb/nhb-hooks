@@ -1,3 +1,5 @@
+import type { Chronos } from 'nhb-toolbox';
+import type { StrictFormat, TimeZone, UTCOffSet } from 'nhb-toolbox/date/types';
 import type { Prettify } from 'nhb-toolbox/utils/types';
 import type { ReactNode } from 'react';
 import type { TITLE_POSITIONS } from '../constants';
@@ -111,4 +113,47 @@ export interface TitleProviderProps {
 	children: ReactNode;
 	/** Optional override configuration for title behavior. */
 	config?: TitleConfig;
+}
+
+/** Configurable options for `useClock` hook */
+export interface UseClockOptions {
+	/**
+	 * Timezone string (e.g., `'BDT'`, or UTC offset like `'+06:00'`).
+	 * Passed to `Chronos.timeZone()`.
+	 */
+	timeZone?: TimeZone | UTCOffSet;
+
+	/**
+	 * Format string to return a formatted time value via `Chronos.format()`.
+	 * If omitted, no formatted string will be returned.
+	 * @default 'HH:mm:ss'
+	 */
+	format?: StrictFormat;
+
+	/**
+	 * Update interval in milliseconds, or `'frame'` to use `requestAnimationFrame`.
+	 * @default 1000
+	 */
+	interval?: number | 'frame';
+
+	/**
+	 * Whether to start the clock immediately.
+	 * If `false`, the clock is paused until `resume()` is called.
+	 * @default true
+	 */
+	autoStart?: boolean;
+}
+
+/** * Object returned by `useClock` hook. */
+export interface UseClockResult {
+	/** * Current Chronos time instance, respecting timezone (if provided). */
+	time: Chronos;
+	/** * Formatted time string based on the `format` option, or `undefined` if no format was given. */
+	formatted: string | undefined;
+	/** * Stops the clock updates (pause effect). */
+	pause: () => void;
+	/** * Resumes the clock updates (if previously paused). */
+	resume: () => void;
+	/** * Indicates whether the clock is currently paused. */
+	isPaused: boolean;
 }

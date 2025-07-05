@@ -47,7 +47,7 @@ pnpm add nhb-hooks nhb-toolbox
 yarn add nhb-hooks nhb-toolbox
 ```
 
-> **Note:** The `useTimer` hook depends on the [Chronos](https://nhb-toolbox.vercel.app/docs/classes/Chronos) class from [nhb-toolbox](https://www.npmjs.com/package/nhb-toolbox). Make sure to install both packages to use all available features. Both packages are fully tree-shakable, so only the code you use will be bundled.
+> **Note:** The `useTimer` and `useClock` hooks depend on the [Chronos](https://nhb-toolbox.vercel.app/docs/classes/Chronos) class and/or [chronos](https://nhb-toolbox.vercel.app/docs/utilities/date/chronos) function from [nhb-toolbox](https://www.npmjs.com/package/nhb-toolbox). Make sure to install both `nhb-hooks` and `nhb-toolbox` packages to use all available features. Both packages are fully tree-shakable, so only the code you use will be bundled if you use bundler tools like vite, rollup, webpack etc.
 
 ---
 
@@ -66,6 +66,7 @@ yarn add nhb-hooks nhb-toolbox
 - [useClickOutside](#useclickoutside)
 - [useCopyText](#usecopytext)
 - [useDebouncedValue](#usedebouncedvalue)
+- [useClock](#useclock)
 - [useTimer](#usetimer)
 - [useToggle](#usetoggle)
 - [useValidImage](#usevalidimage)
@@ -436,6 +437,116 @@ useEffect(() => {
  fetchResults(debouncedQuery);
 }, [debouncedQuery]);
 ```
+
+---
+
+## useClock
+
+Live-updating clock based on `Chronos` from [`nhb-toolbox`](https://nhb-toolbox.vercel.app/). Supports formatting, timezones, animation frame ticking, and pause/resume. Lightweight and reactive by default.
+
+### Import
+
+```ts
+import { useClock } from 'nhb-hooks';
+```
+
+### Hook Signature
+
+```ts
+function useClock(options?: UseClockOptions): UseClockResult;
+```
+
+### Examples
+
+```tsx
+// Default usage — updates every second
+const { time } = useClock();
+console.log(time.toISOString());
+```
+
+```tsx
+// With formatting
+const { formatted } = useClock({ format: 'HH:mm:ss' });
+console.log(formatted); // → "14:45:32"
+```
+
+```tsx
+// With custom timezone
+const { time } = useClock({ timeZone: 'BDT' });
+console.log(time.format()); // → local time in BDT
+```
+
+```tsx
+// Frame-based updates (using requestAnimationFrame)
+const { time } = useClock({ interval: 'frame' });
+```
+
+```tsx
+// Start paused, then resume manually
+const clock = useClock({ autoStart: false });
+clock.resume(); // Starts ticking
+```
+
+### UI Example
+
+```tsx
+function ClockWidget() {
+ const { formatted } = useClock({ format: 'hh:mm:ss A', timeZone: '+06:00' });
+
+ return <p className="text-lg font-mono">{formatted}</p>;
+}
+```
+
+### Notes for `useClock`
+
+- **Dependency**: Uses `Chronos` from [`nhb-toolbox`](https://nhb-toolbox.vercel.app/).
+- **Timezone**: Supports `TimeZone` names or `UTCOffset` values (e.g. `"BDT"` or `"+06:00"`).
+- **Formats**: Supports `Chronos.format()` strings.
+- **Precision**: Set `interval` for custom update rate (default: `1000`ms). Use `'frame'` for smooth updates.
+- **Control**: Fully pauseable/resumable using `.pause()` / `.resume()`.
+- **Tree-shaking**: Only includes `Chronos` and its `timeZonePlugin` plugin is automatically applied internally.
+
+---
+
+### Type Definitions
+
+```ts
+interface UseClockOptions {
+ timeZone?: TimeZone | UTCOffSet;
+ format?: StrictFormat;
+ interval?: number | 'frame';
+ autoStart?: boolean;
+}
+
+interface UseClockResult {
+ time: Chronos;
+ formatted: string | undefined;
+ pause: () => void;
+ resume: () => void;
+ isPaused: boolean;
+}
+```
+
+### `UseClockOptions`
+
+| Property     | Type                    | Default      | Description                          |
+| ------------ | ----------------------- | ------------ | ----------------------------------------------- |
+| `timeZone`   | `TimeZone \| UTCOffSet` | System TZ    | Time zone override, e.g. `'BDT'` or `'+06:00'` etc.|
+| `format`     | `StrictFormat`          | `'HH:mm:ss'` | Format string used by `Chronos.format()` |
+| `interval`   | `number \| 'frame'`     | `1000`       | Update interval in milliseconds or `'frame'` for `requestAnimationFrame` |
+| `autoStart`  | `boolean`               | `true`       | Whether the clock starts immediately or remains paused |
+
+---
+
+### `UseClockResult`
+
+| Property    | Type                  | Description                                                          |
+| ----------- | --------------------- | -------------------------------------------------------------------- |
+| `time`      | `Chronos`             | The current `Chronos` instance, auto-updated                         |
+| `formatted` | `string \| undefined` | Formatted time string using the given format, or `HH:mm:ss` if none  |
+| `pause`     | `() => void`          | Function to pause the ticking clock                                  |
+| `resume`    | `() => void`          | Function to resume the clock if paused                               |
+| `isPaused`  | `boolean`             | Indicates whether the clock is currently paused                      |
 
 ---
 

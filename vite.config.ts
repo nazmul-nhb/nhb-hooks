@@ -20,6 +20,8 @@ export default defineConfig({
 				'react-dom',
 				'react/jsx-runtime',
 				'nhb-toolbox',
+				'nhb-toolbox/plugins/timeZonePlugin',
+				'nhb-toolbox/constants',
 			],
 			plugins: [visualizer({ open: true })],
 			output: {

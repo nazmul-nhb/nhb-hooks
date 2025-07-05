@@ -1,5 +1,6 @@
 export { useBreakPoint } from './hooks/useBreakPoint';
 export { useClickOutside } from './hooks/useClickOutside';
+export { useClock } from './hooks/useClock';
 export { useCopyText } from './hooks/useCopyText';
 export { useDebouncedValue } from './hooks/useDebouncedValue';
 export { useMediaQuery } from './hooks/useMediaQuery';
