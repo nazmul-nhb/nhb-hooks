@@ -57,11 +57,7 @@ export interface UseCopyTextReturn {
 	 * @param msg - Optional custom success message. Default is `'Text Copied!'`
 	 * @param errorMsg - Optional custom error message. Default is from message from the error object or `'Failed to copy!'`
 	 */
-	copyToClipboard: (
-		text: string,
-		msg?: string,
-		errorMsg?: string,
-	) => Promise<void>;
+	copyToClipboard: (text: string, msg?: string, errorMsg?: string) => Promise<void>;
 }
 
 export type TitlePosition = (typeof TITLE_POSITIONS)[number];
@@ -91,10 +87,7 @@ export type TitleMeta = Prettify<
 
 /** Configuration options for the title context provider. */
 export type TitleConfig = Partial<
-	Pick<
-		TitleContextConfig,
-		'siteTitle' | 'defaultPosition' | 'defaultSeparator'
-	>
+	Pick<TitleContextConfig, 'siteTitle' | 'defaultPosition' | 'defaultSeparator'>
 >;
 
 /** * Runtime options for a specific call to `useTitle`. */

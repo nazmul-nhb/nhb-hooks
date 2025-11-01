@@ -45,15 +45,8 @@ chronos.use(timeZonePlugin);
  * clock.resume(); // manually start
  */
 export function useClock(options?: UseClockOptions): UseClockResult {
-	const {
-		timeZone,
-		format = 'HH:mm:ss',
-		interval = 1000,
-		autoStart = true,
-	} = options || {};
-	const [now, setNow] = useState(() =>
-		timeZone ? chronos().timeZone(timeZone) : chronos(),
-	);
+	const { timeZone, format = 'HH:mm:ss', interval = 1000, autoStart = true } = options || {};
+	const [now, setNow] = useState(() => (timeZone ? chronos().timeZone(timeZone) : chronos()));
 
 	const rafRef = useRef<number | null>(null);
 	const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);

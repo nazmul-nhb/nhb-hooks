@@ -14,9 +14,7 @@ type RefType<T> = RefObject<T | null>;
  *
  * return <div ref={ref}>Click outside me</div>;
  */
-export function useClickOutside<T extends Element | null>(
-	handler: () => void,
-): RefObject<T>;
+export function useClickOutside<T extends Element | null>(handler: () => void): RefObject<T>;
 
 /**
  * * Custom hook to detect clicks outside multiple specified elements.
@@ -40,7 +38,7 @@ export function useClickOutside<T extends Element | null>(
  */
 export function useClickOutside<T extends Element | null>(
 	refs: RefType<T>[],
-	handler: () => void,
+	handler: () => void
 ): void;
 
 /**
@@ -51,7 +49,7 @@ export function useClickOutside<T extends Element | null>(
  */
 export function useClickOutside<T extends Element | null>(
 	arg1: (() => void) | RefType<T>[],
-	arg2?: () => void,
+	arg2?: () => void
 ): RefObject<T> | void {
 	const singleRef = useRef<T>(null);
 
@@ -63,9 +61,7 @@ export function useClickOutside<T extends Element | null>(
 
 		const listener = (event: MouseEvent | TouchEvent) => {
 			const clickedInside = refs.some((ref) => {
-				return (
-					ref.current && ref.current.contains(event.target as Node)
-				);
+				return ref.current && ref.current.contains(event.target as Node);
 			});
 
 			if (!clickedInside) {

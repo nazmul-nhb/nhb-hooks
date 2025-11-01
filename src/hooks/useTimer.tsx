@@ -1,9 +1,5 @@
 import { Chronos } from 'nhb-toolbox';
-import type {
-	ChronosInput,
-	TimeDuration,
-	TimeUnit,
-} from 'nhb-toolbox/date/types';
+import type { ChronosInput, TimeDuration, TimeUnit } from 'nhb-toolbox/date/types';
 import { useEffect, useRef, useState } from 'react';
 
 /**
@@ -15,7 +11,7 @@ import { useEffect, useRef, useState } from 'react';
  */
 export function useTimer(
 	initialDuration: number,
-	unit: Exclude<TimeUnit, 'week'>,
+	unit: Exclude<TimeUnit, 'week'>
 ): TimeDuration;
 
 /**
@@ -33,10 +29,7 @@ export function useTimer(time: ChronosInput): TimeDuration;
  * @param unit - Optional time unit if the first argument is a number.
  * @returns Remaining time as a structured duration object.
  */
-export function useTimer(
-	time: ChronosInput,
-	unit?: Exclude<TimeUnit, 'week'>,
-): TimeDuration {
+export function useTimer(time: ChronosInput, unit?: Exclude<TimeUnit, 'week'>): TimeDuration {
 	const now = /*#__PURE__*/ new Chronos();
 	const target =
 		typeof time === 'number' && unit ?
@@ -67,7 +60,5 @@ export function useTimer(
 		};
 	}, [remainingMs]);
 
-	return /*#__PURE__*/ new Chronos()
-		.subtract(remainingMs, 'millisecond')
-		.duration();
+	return /*#__PURE__*/ new Chronos().subtract(remainingMs, 'millisecond').duration();
 }

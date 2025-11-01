@@ -29,16 +29,12 @@ const checkImageExists = (fullUrl: string): Promise<boolean> => {
  */
 export function useValidImage<T extends string | string[]>(
 	input: T | undefined,
-	options?: ValidImageOptions,
+	options?: ValidImageOptions
 ): ValidImage<T> {
-	const {
-		placeholder = placeholderImage,
-		imgHostLink,
-		trailingSlash = true,
-	} = options ?? {};
+	const { placeholder = placeholderImage, imgHostLink, trailingSlash = true } = options ?? {};
 
 	const [validImages, setValidImages] = useState<string | string[]>(
-		Array.isArray(input) ? input.map(() => placeholder) : placeholder,
+		Array.isArray(input) ? input.map(() => placeholder) : placeholder
 	);
 
 	useEffect(() => {
@@ -59,7 +55,7 @@ export function useValidImage<T extends string | string[]>(
 						const isValid = await checkImageExists(fullUrl);
 
 						return isValid ? fullUrl : placeholder;
-					}),
+					})
 				);
 
 				if (isMounted) {

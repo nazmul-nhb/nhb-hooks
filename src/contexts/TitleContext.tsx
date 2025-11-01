@@ -9,5 +9,4 @@ export const defaultTitleConfig: TitleContextConfig = {
 };
 
 /**  * React context used internally by the `useTitle` hook and `TitleProvider`. */
-export const TitleContext =
-	createContext<TitleContextConfig>(defaultTitleConfig);
+export const TitleContext = createContext<TitleContextConfig>(defaultTitleConfig);

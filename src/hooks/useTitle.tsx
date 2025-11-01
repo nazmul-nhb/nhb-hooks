@@ -55,9 +55,7 @@ export function useTitle(title: string, options?: TitleOptions) {
 
 		setCurrentTitle?.(title);
 
-		const pos = (
-			options?.position ?? defaultPosition
-		)?.toLowerCase() as TitlePosition;
+		const pos = (options?.position ?? defaultPosition)?.toLowerCase() as TitlePosition;
 
 		const position = TITLE_POSITIONS.includes(pos) ? pos : 'before';
 		const separator = options?.separator ?? defaultSeparator ?? ' - ';
@@ -110,13 +108,8 @@ export function useTitle(title: string, options?: TitleOptions) {
  * This hook requires `TitleProvider` to be used in a parent component.
  */
 export const useTitleMeta = () => {
-	const {
-		siteTitle,
-		defaultPosition,
-		defaultSeparator,
-		pageTitle,
-		fullTitle,
-	} = useTitleConfig();
+	const { siteTitle, defaultPosition, defaultSeparator, pageTitle, fullTitle } =
+		useTitleConfig();
 
 	return {
 		pageTitle,

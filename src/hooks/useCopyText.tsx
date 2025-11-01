@@ -50,11 +50,7 @@ export const useCopyText = (options?: CopyOptions): UseCopyTextReturn => {
 	 * @param msg - Optional custom success message. Default is `'Text Copied!'`
 	 * @param errorMsg - Optional custom error message. Default is from message from the error object or `'Failed to copy!'`
 	 */
-	const copyToClipboard = async (
-		text: string,
-		msg?: string,
-		errorMsg?: string,
-	) => {
+	const copyToClipboard = async (text: string, msg?: string, errorMsg?: string) => {
 		try {
 			if (navigator?.clipboard?.writeText) {
 				await navigator.clipboard.writeText(text);
@@ -74,9 +70,7 @@ export const useCopyText = (options?: CopyOptions): UseCopyTextReturn => {
 				document.body.removeChild(textArea);
 
 				if (!success) {
-					throw new Error(
-						'Cannot execute command in this environment!',
-					);
+					throw new Error('Cannot execute command in this environment!');
 				}
 			}
 
@@ -91,7 +85,7 @@ export const useCopyText = (options?: CopyOptions): UseCopyTextReturn => {
 			options?.onError?.(
 				errorMsg ? errorMsg
 				: err instanceof Error ? err?.message
-				: 'Failed to copy!',
+				: 'Failed to copy!'
 			);
 			console.error('Clipboard copy failed:', err);
 		} finally {

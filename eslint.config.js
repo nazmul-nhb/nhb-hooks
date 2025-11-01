@@ -1,4 +1,8 @@
+// @ts-check
+
 import js from '@eslint/js';
+import tsEslintPlugin from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import vitest from 'eslint-plugin-vitest';
@@ -6,39 +10,38 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 /** @type {import('eslint').Linter.Config[]} */
-export default tseslint.config(
+export default [
 	{ ignores: ['dist'] },
+	js.configs.recommended,
+	...tseslint.configs.recommended,
 	{
-		extends: [js.configs.recommended, ...tseslint.configs.recommended],
-		files: ['**/*.{ts,tsx}'],
+		files: ['**/*.{ts,tsx,js,mjs}'],
 		languageOptions: {
-			ecmaVersion: 2020,
 			globals: {
 				...globals.browser,
 				...globals.node,
 				...vitest.environments.env.globals,
 				NodeJS: 'readonly',
 			},
+			parser: tsParser,
+			ecmaVersion: 'latest',
+			sourceType: 'module',
 		},
+	},
+	{
 		plugins: {
-			'react-hooks': reactHooks,
 			'react-refresh': reactRefresh,
 		},
 		rules: {
 			...reactHooks.configs.recommended.rules,
-			'react-refresh/only-export-components': [
-				'warn',
-				{ allowConstantExport: true },
-			],
+			...tsEslintPlugin.configs.recommended.rules,
+			'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
 			'no-unused-expressions': 'error',
 			'prefer-const': 'warn',
 			'no-undef': 'error',
 			'@typescript-eslint/no-empty-object-type': 'off',
 			'@typescript-eslint/no-unused-expressions': 'error',
-			'@typescript-eslint/consistent-type-imports': [
-				'warn',
-				{ prefer: 'type-imports' },
-			],
+			'@typescript-eslint/consistent-type-imports': ['warn', { prefer: 'type-imports' }],
 			'no-unused-vars': 'off',
 			'@typescript-eslint/no-unused-vars': [
 				'error',
@@ -52,6 +55,12 @@ export default tseslint.config(
 					ignoreRestSiblings: false,
 				},
 			],
+		},
+	},
+	{
+		files: ['**/*.{ts,tsx,js,mjs}'],
+		rules: {
+			// Disallow ONLY `console.log`
 			'no-restricted-syntax': [
 				'warn',
 				{
@@ -63,4 +72,4 @@ export default tseslint.config(
 			],
 		},
 	},
-);
+];

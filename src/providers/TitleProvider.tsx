@@ -31,7 +31,5 @@ export function TitleProvider({ children, config }: TitleProviderProps) {
 		setFullTitle,
 	};
 
-	return (
-		<TitleContext.Provider value={merged}>{children}</TitleContext.Provider>
-	);
+	return <TitleContext.Provider value={merged}>{children}</TitleContext.Provider>;
 }
