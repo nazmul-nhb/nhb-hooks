@@ -23,7 +23,7 @@
 
 A **lightweight**, **tree-shakable** collection of essential React hooks designed for common use cases. Only the hooks you import are included in your final bundle, ensuring optimal performance.
 
-> This package requires [nhb-toolbox](https://nhb-toolbox.vercel.app/) as a peer dependency, as some hooks rely on utilities from it.
+> This package requires [nhb-toolbox](https://toolbox.nazmul-nhb.dev/) as a peer dependency, as some hooks rely on utilities from it.
 
 ---
 
@@ -47,7 +47,7 @@ pnpm add nhb-hooks nhb-toolbox
 yarn add nhb-hooks nhb-toolbox
 ```
 
-> **Note:** The `useTimer` and `useClock` hooks depend on the [Chronos](https://nhb-toolbox.vercel.app/docs/classes/Chronos) class and/or [chronos](https://nhb-toolbox.vercel.app/docs/utilities/date/chronos) function from [nhb-toolbox](https://www.npmjs.com/package/nhb-toolbox). Make sure to install both `nhb-hooks` and `nhb-toolbox` packages to use all available features. Both packages are fully tree-shakable, so only the code you use will be bundled if you use bundler tools like vite, rollup, webpack etc.
+> **Note:** The `useTimer` and `useClock` hooks depend on the [Chronos](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos) class and/or [chronos](https://toolbox.nazmul-nhb.dev/docs/utilities/date/chronos) function from [nhb-toolbox](https://www.npmjs.com/package/nhb-toolbox). Make sure to install both `nhb-hooks` and `nhb-toolbox` packages to use all available features. Both packages are fully tree-shakable, so only the code you use will be bundled if you use bundler tools like vite, rollup, webpack etc.
 
 ---
 
@@ -442,7 +442,7 @@ useEffect(() => {
 
 ## useClock
 
-Live-updating clock based on `Chronos` from [`nhb-toolbox`](https://nhb-toolbox.vercel.app/). Supports formatting, timezones, animation frame ticking, and pause/resume. Lightweight and reactive by default.
+Live-updating clock based on `Chronos` from [`nhb-toolbox`](https://toolbox.nazmul-nhb.dev/). Supports formatting, timezones, animation frame ticking, and pause/resume. Lightweight and reactive by default.
 
 ### Import
 
@@ -499,9 +499,8 @@ function ClockWidget() {
 
 ### Notes for `useClock`
 
-- **Dependency**: Uses `Chronos` from [`nhb-toolbox`](https://nhb-toolbox.vercel.app/).
+- **Dependency**: Uses `Chronos` from [`nhb-toolbox`](https://toolbox.nazmul-nhb.dev).
 - **Timezone**: Supports `TimeZone` names or `UTCOffset` values (e.g. `"BDT"` or `"+06:00"`).
-- **Formats**: Supports `Chronos.format()` strings.
 - **Precision**: Set `interval` for custom update rate (default: `1000`ms). Use `'frame'` for smooth updates.
 - **Control**: Fully pauseable/resumable using `.pause()` / `.resume()`.
 - **Tree-shaking**: Only includes `Chronos` and its `timeZonePlugin` plugin is automatically applied internally.
@@ -529,30 +528,30 @@ interface UseClockResult {
 
 ### `UseClockOptions`
 
-| Property     | Type                    | Default      | Description                                        |
-| ------------ | ----------------------- | ------------ | -------------------------------------------------- |
-| `timeZone`   | `TimeZone \| UTCOffSet` | System TZ    | Time zone override, e.g. `'BDT'` or `'+06:00'` etc.|
-| `format`     | `StrictFormat`          | `'HH:mm:ss'` | Format string used by `Chronos.format()`           |
-| `interval`   | `number \| 'frame'`     | `1000`       | Update interval in milliseconds or `'frame'` for `requestAnimationFrame` |
-| `autoStart`  | `boolean`               | `true`       | Whether the clock starts immediately or remains paused |
+| Property    | Type                    | Default      | Description                                                              |
+| ----------- | ----------------------- | ------------ | ------------------------------------------------------------------------ |
+| `timeZone`  | `TimeZone \| UTCOffSet` | System TZ    | Time zone override, e.g. `'BDT'` or `'+06:00'` etc.                      |
+| `format`    | `StrictFormat`          | `'HH:mm:ss'` | Format string used by `Chronos.format()`                                 |
+| `interval`  | `number \| 'frame'`     | `1000`       | Update interval in milliseconds or `'frame'` for `requestAnimationFrame` |
+| `autoStart` | `boolean`               | `true`       | Whether the clock starts immediately or remains paused                   |
 
 ---
 
 ### `UseClockResult`
 
-| Property    | Type                  | Description                                                          |
-| ----------- | --------------------- | -------------------------------------------------------------------- |
-| `time`      | `Chronos`             | The current `Chronos` instance, auto-updated                         |
-| `formatted` | `string`              | Formatted time string using the given format, or `HH:mm:ss` if none  |
-| `pause`     | `() => void`          | Function to pause the ticking clock                                  |
-| `resume`    | `() => void`          | Function to resume the clock if paused                               |
-| `isPaused`  | `boolean`             | Indicates whether the clock is currently paused                      |
+| Property    | Type         | Description                                                         |
+| ----------- | ------------ | ------------------------------------------------------------------- |
+| `time`      | `Chronos`    | The current `Chronos` instance, auto-updated                        |
+| `formatted` | `string`     | Formatted time string using the given format, or `HH:mm:ss` if none |
+| `pause`     | `() => void` | Function to pause the ticking clock                                 |
+| `resume`    | `() => void` | Function to resume the clock if paused                              |
+| `isPaused`  | `boolean`    | Indicates whether the clock is currently paused                     |
 
 ---
 
 ## useTimer
 
-Creates a countdown timer. Requires [nhb-toolbox](https://nhb-toolbox.vercel.app/) (automatically tree-shaken if not used). Install it separately. Create countdown timers with minimal setup.
+Creates a countdown timer. Requires [nhb-toolbox](https://toolbox.nazmul-nhb.dev/) (automatically tree-shaken if not used). Install it separately. Create countdown timers with minimal setup.
 
 ### Import
 
@@ -609,7 +608,7 @@ function SessionTimeout() {
 
 ### Notes for useTimer
 
-- **Dependency**: Requires [Chronos](https://nhb-toolbox.vercel.app/docs/classes/Chronos) from `nhb-toolbox`
+- **Dependency**: Requires [Chronos](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos) from `nhb-toolbox`
 - **Precision**: Updates every second (1000ms)
 - **Formats**: Accepts both duration and target date
 - **Output**: Returns a TimeDuration object with days/hours/minutes/seconds
@@ -902,11 +901,11 @@ function useTitle(title: string, options?: TitleOptions): void
 
 ### 🔧 Options
 
-| Option      | Type                   | Description                                                   | Default   |
-| ----------- | ---------------------- | ------------------------------------------------------------- | --------- |
-| `separator` | `string`               | Character(s) between page and site title                      | `" - "`   |
-| `position`  | `"before" \| "after"`  | Where to place the page title: before or after the site title | `"before"`|
-| `favicon`   | `string` \| `undefined`| Optional favicon to temporarily set with the title            |           |
+| Option      | Type                    | Description                                                   | Default    |
+| ----------- | ----------------------- | ------------------------------------------------------------- | ---------- |
+| `separator` | `string`                | Character(s) between page and site title                      | `" - "`    |
+| `position`  | `"before" \| "after"`   | Where to place the page title: before or after the site title | `"before"` |
+| `favicon`   | `string` \| `undefined` | Optional favicon to temporarily set with the title            |            |
 
 ---
 
