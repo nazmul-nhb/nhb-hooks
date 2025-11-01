@@ -5,7 +5,7 @@ import { defineScriptConfig } from 'nhb-scripts';
 export default defineScriptConfig({
 	format: {
 		args: ['--write'],
-		files: ['src', 'eslint.config.js', 'nhb.scripts.config.mjs'],
+		files: ['src', 'eslint.config.mjs', 'nhb.scripts.config.mjs'],
 		ignorePath: '.prettierignore',
 	},
 	commit: {
