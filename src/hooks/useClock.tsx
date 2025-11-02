@@ -1,9 +1,10 @@
-import { chronos } from 'nhb-toolbox';
+import { Chronos } from 'nhb-toolbox';
 import { timeZonePlugin } from 'nhb-toolbox/plugins/timeZonePlugin';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import type { UseClockOptions, UseClockResult } from '../types';
 
-chronos.use(timeZonePlugin);
+// eslint-disable-next-line react-hooks/rules-of-hooks
+Chronos.use(timeZonePlugin);
 
 /**
  * * React hook that returns a live-updating `Chronos` clock.
@@ -45,57 +46,71 @@ chronos.use(timeZonePlugin);
  * clock.resume(); // manually start
  */
 export function useClock(options?: UseClockOptions): UseClockResult {
-	const { timeZone, format = 'HH:mm:ss', interval = 1000, autoStart = true } = options || {};
-	const [now, setNow] = useState(() => (timeZone ? chronos().timeZone(timeZone) : chronos()));
-
+	const chronosRef = useRef(new Chronos());
 	const rafRef = useRef<number | null>(null);
 	const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-	const isPausedRef = useRef(!autoStart);
+
+	const { timeZone, format = 'HH:mm:ss', interval = 1000, autoStart = true } = options || {};
+
+	const [isPaused, setIsPaused] = useState(!autoStart);
+
+	const [now, setNow] = useState(() =>
+		timeZone ? chronosRef.current.timeZone(timeZone) : chronosRef.current
+	);
 
 	const tick = useCallback(() => {
-		const current = chronos();
-		setNow(timeZone ? current.timeZone(timeZone) : current);
+		setNow(timeZone ? chronosRef.current.timeZone(timeZone) : chronosRef.current);
 	}, [timeZone]);
 
 	const start = useCallback(() => {
-		if (!isPausedRef.current) return;
-		isPausedRef.current = false;
+		setIsPaused(false);
 
 		if (interval === 'frame') {
 			const loop = () => {
 				tick();
 				rafRef.current = requestAnimationFrame(loop);
 			};
+
 			rafRef.current = requestAnimationFrame(loop);
 		} else {
 			tick();
+
 			intervalRef.current = setInterval(tick, interval);
 		}
 	}, [interval, tick]);
 
 	const stop = useCallback(() => {
-		isPausedRef.current = true;
+		setIsPaused(true);
+
 		if (rafRef.current) {
 			cancelAnimationFrame(rafRef.current);
 			rafRef.current = null;
 		}
+
 		if (intervalRef.current) {
 			clearInterval(intervalRef.current);
 			intervalRef.current = null;
 		}
 	}, []);
 
-	useEffect(() => {
-		if (autoStart) start();
+	const Effect = interval === 'frame' ? useLayoutEffect : useEffect;
 
-		return () => stop();
-	}, [start, stop, autoStart]);
+	Effect(() => {
+		if (autoStart) {
+			start();
+		}
 
-	return {
-		time: now,
-		formatted: now.format(format),
-		pause: stop,
-		resume: start,
-		isPaused: isPausedRef.current,
-	};
+		return stop;
+	}, [start, stop, autoStart, interval]);
+
+	return useMemo(
+		() => ({
+			time: now,
+			formatted: now.format(format),
+			pause: stop,
+			resume: start,
+			isPaused,
+		}),
+		[now, format, stop, start, isPaused]
+	);
 }

@@ -14,8 +14,9 @@ export default [
 	{ ignores: ['dist'] },
 	js.configs.recommended,
 	...tseslint.configs.recommended,
+	reactHooks.configs.flat.recommended,
 	{
-		files: ['**/*.{ts,tsx,js,mjs}'],
+		// files: ['**/*.{ts,tsx,js,mjs}'],
 		languageOptions: {
 			globals: {
 				...globals.browser,
@@ -33,7 +34,6 @@ export default [
 			'react-refresh': reactRefresh,
 		},
 		rules: {
-			...reactHooks.configs.recommended.rules,
 			...tsEslintPlugin.configs.recommended.rules,
 			'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
 			'no-unused-expressions': 'error',
@@ -58,7 +58,7 @@ export default [
 		},
 	},
 	{
-		files: ['**/*.{ts,tsx,js,mjs}'],
+		// files: ['**/*.{ts,tsx,js,mjs}'],
 		rules: {
 			// Disallow ONLY `console.log`
 			'no-restricted-syntax': [

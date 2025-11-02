@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 /**
  * * Returns a debounced version of the input value.
@@ -17,24 +17,26 @@ import { useEffect, useState } from 'react';
  */
 export function useDebouncedValue<T>(value: T, delay = 300): [T, () => void] {
 	const [debouncedValue, setDebouncedValue] = useState(value);
-	const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	useEffect(() => {
-		if (timeoutId) clearTimeout(timeoutId);
+		if (timeoutRef.current) {
+			clearTimeout(timeoutRef.current);
+		}
 
 		const id = setTimeout(() => {
 			setDebouncedValue(value);
 		}, delay);
 
-		setTimeoutId(id);
+		timeoutRef.current = id;
 
 		return () => clearTimeout(id);
-	}, [timeoutId, value, delay]);
+	}, [value, delay]);
 
 	const cancelFn = () => {
-		if (timeoutId) {
-			clearTimeout(timeoutId);
-			setTimeoutId(null);
+		if (timeoutRef.current) {
+			clearTimeout(timeoutRef.current);
+			timeoutRef.current = null;
 		}
 	};
 
