@@ -531,7 +531,7 @@ interface UseClockResult {
 | Property    | Type                    | Default      | Description                                                              |
 | ----------- | ----------------------- | ------------ | ------------------------------------------------------------------------ |
 | `timeZone`  | `TimeZone \| UTCOffSet` | System TZ    | Time zone override, e.g. `'BDT'` or `'+06:00'` etc.                      |
-| `format`    | `StrictFormat`          | `'HH:mm:ss'` | Format string used by `Chronos.format()`                                 |
+| `format`    | `StrictFormat`          | `'HH:mm:ss'` | Format string used by `format()` method of `Chronos` instance            |
 | `interval`  | `number \| 'frame'`     | `1000`       | Update interval in milliseconds or `'frame'` for `requestAnimationFrame` |
 | `autoStart` | `boolean`               | `true`       | Whether the clock starts immediately or remains paused                   |
 

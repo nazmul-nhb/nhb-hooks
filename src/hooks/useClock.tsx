@@ -11,8 +11,8 @@ Chronos.use(timeZonePlugin);
  *
  * It supports:
  * - Automatic or manual ticking
- * - Timezone handling via `chronos().timeZone(...)`
- * - Formatted string output via `chronos().format(...)`
+ * - Timezone handling via `timeZone(...)` method of `Chronos` instance
+ * - Formatted string output via `format(...)` method of `Chronos` instance
  * - Optional `requestAnimationFrame`-based ticking
  * - Pause and resume controls
  *
