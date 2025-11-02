@@ -616,7 +616,7 @@ function SessionTimeout() {
 **Important**:
 
 - Install required package: `npm i nhb-toolbox`
-- Tree-shaking works - only Chronos is bundled if used
+- Tree-shaking works - only `Chronos` is bundled if used
 - Week unit is excluded due to ambiguous duration
 
 **Example Formats**:
