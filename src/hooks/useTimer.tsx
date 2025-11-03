@@ -37,7 +37,7 @@ export function useTimer(time: ChronosInput, unit?: TimerUnit): TimeDuration {
 	const initialMs = target.diff(now, 'millisecond');
 
 	const [remainingMs, setRemainingMs] = useState<number>(initialMs);
-	const intervalRef = useRef<NodeJS.Timeout | null>(null);
+	const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	useEffect(() => {
 		if (remainingMs <= 0) return;
@@ -54,7 +54,9 @@ export function useTimer(time: ChronosInput, unit?: TimerUnit): TimeDuration {
 		}, 1000);
 
 		return () => {
-			if (intervalRef.current) clearInterval(intervalRef.current);
+			if (intervalRef.current) {
+				clearInterval(intervalRef.current);
+			}
 		};
 	}, [remainingMs]);
 

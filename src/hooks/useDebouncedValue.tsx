@@ -24,13 +24,13 @@ export function useDebouncedValue<T>(value: T, delay = 300): [T, () => void] {
 			clearTimeout(timeoutRef.current);
 		}
 
-		const id = setTimeout(() => {
+		const timeoutId = setTimeout(() => {
 			setDebouncedValue(value);
 		}, delay);
 
-		timeoutRef.current = id;
+		timeoutRef.current = timeoutId;
 
-		return () => clearTimeout(id);
+		return () => clearTimeout(timeoutId);
 	}, [value, delay]);
 
 	const cancelFn = () => {
