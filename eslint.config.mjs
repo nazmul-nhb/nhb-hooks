@@ -5,7 +5,6 @@ import tsEslintPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
-import vitest from 'eslint-plugin-vitest';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
@@ -21,7 +20,6 @@ export default [
 			globals: {
 				...globals.browser,
 				...globals.node,
-				...vitest.environments.env.globals,
 				NodeJS: 'readonly',
 			},
 			parser: tsParser,

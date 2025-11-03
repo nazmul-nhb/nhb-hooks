@@ -1,7 +1,7 @@
-/// <reference types="vitest/globals" />
-
 import { renderHook, act } from '@testing-library/react';
 import { useToggle } from '../src';
+import { test } from 'vitest';
+import { expect } from 'vitest';
 
 test('should return a boolean and a function', () => {
 	const { result } = renderHook(() => useToggle([false, true]));

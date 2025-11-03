@@ -478,7 +478,7 @@ useEffect(() => {
 
 ## useClock
 
-Live-updating clock based on `Chronos` from [`nhb-toolbox`](https://toolbox.nazmul-nhb.dev/). Supports formatting, timezones, animation frame ticking, and pause/resume. Lightweight and reactive by default.
+Live-updating clock based on [`Chronos` from `nhb-toolbox`](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos). Supports formatting, timezones, animation frame ticking, and pause/resume. Lightweight and reactive by default.
 
 ### Import
 
@@ -587,7 +587,7 @@ interface UseClockResult {
 
 ## useTimer
 
-Creates a countdown timer. Requires [nhb-toolbox](https://toolbox.nazmul-nhb.dev/) (automatically tree-shaken if not used). Install it separately. Create countdown timers with minimal setup.
+Creates a countdown timer. Requires [`Chronos` from `nhb-toolbox`](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos) (automatically tree-shaken if not used). Install it separately. Create countdown timers with minimal setup.
 
 ### Import
 
