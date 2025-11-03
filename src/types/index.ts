@@ -1,5 +1,5 @@
 import type { Chronos } from 'nhb-toolbox';
-import type { StrictFormat, TimeZone, UTCOffSet } from 'nhb-toolbox/date/types';
+import type { StrictFormat, TimeUnit, TimeZone, UTCOffSet } from 'nhb-toolbox/date/types';
 import type { Prettify } from 'nhb-toolbox/utils/types';
 import type { ReactNode } from 'react';
 import type { TITLE_POSITIONS } from '../constants';
@@ -142,7 +142,7 @@ export interface UseClockResult {
 	/** * Current Chronos time instance, respecting timezone (if provided). */
 	time: Chronos;
 	/** * Formatted time string based on the `format` option. */
-	formatted: string | undefined;
+	formatted: string;
 	/** * Stops the clock updates (pause effect). */
 	pause: () => void;
 	/** * Resumes the clock updates (if previously paused). */
@@ -150,3 +150,6 @@ export interface UseClockResult {
 	/** * Indicates whether the clock is currently paused. */
 	isPaused: boolean;
 }
+
+/** - Time units for `useTimer` hook. */
+export type TimerUnit = Exclude<TimeUnit, 'week'>;

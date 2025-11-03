@@ -1,6 +1,7 @@
 import { Chronos } from 'nhb-toolbox';
-import type { ChronosInput, TimeDuration, TimeUnit } from 'nhb-toolbox/date/types';
+import type { ChronosInput, TimeDuration } from 'nhb-toolbox/date/types';
 import { useEffect, useRef, useState } from 'react';
+import type { TimerUnit } from '../types';
 
 /**
  * * Hook to create a countdown timer from a duration and unit.
@@ -9,10 +10,7 @@ import { useEffect, useRef, useState } from 'react';
  * @param unit - The unit of time to count down from (excluding 'week').
  * @returns Remaining time as a structured duration object.
  */
-export function useTimer(
-	initialDuration: number,
-	unit: Exclude<TimeUnit, 'week'>
-): TimeDuration;
+export function useTimer(initialDuration: number, unit: TimerUnit): TimeDuration;
 
 /**
  * * Hook to create a countdown timer to a specific date or time.
@@ -29,7 +27,7 @@ export function useTimer(time: ChronosInput): TimeDuration;
  * @param unit - Optional time unit if the first argument is a number.
  * @returns Remaining time as a structured duration object.
  */
-export function useTimer(time: ChronosInput, unit?: Exclude<TimeUnit, 'week'>): TimeDuration {
+export function useTimer(time: ChronosInput, unit?: TimerUnit): TimeDuration {
 	const now = /*#__PURE__*/ new Chronos();
 	const target =
 		typeof time === 'number' && unit ?

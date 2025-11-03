@@ -46,7 +46,6 @@ Chronos.use(timeZonePlugin);
  * clock.resume(); // manually start
  */
 export function useClock(options?: UseClockOptions): UseClockResult {
-	const chronosRef = useRef(new Chronos());
 	const rafRef = useRef<number | null>(null);
 	const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -54,12 +53,17 @@ export function useClock(options?: UseClockOptions): UseClockResult {
 
 	const [isPaused, setIsPaused] = useState(!autoStart);
 
-	const [now, setNow] = useState(() =>
-		timeZone ? chronosRef.current.timeZone(timeZone) : chronosRef.current
-	);
+	const [now, setNow] = useState(() => {
+		const init = new Chronos();
+
+		return timeZone ? init.timeZone(timeZone) : init;
+	});
 
 	const tick = useCallback(() => {
-		setNow(timeZone ? chronosRef.current.timeZone(timeZone) : chronosRef.current);
+		const $init = new Chronos();
+		const tzApplied = timeZone ? $init.timeZone(timeZone) : $init;
+
+		setNow(tzApplied);
 	}, [timeZone]);
 
 	const start = useCallback(() => {
