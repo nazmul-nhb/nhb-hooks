@@ -3,6 +3,7 @@
 ## Reusable React Hooks
 
 <p>
+  <!-- Package Info -->
   <a href="https://www.npmjs.com/package/nhb-hooks" aria-label="Downloads">
     <img src="https://img.shields.io/npm/dm/nhb-hooks.svg?label=DOWNLOADS&style=flat&color=red&logo=npm" alt="Downloads" />
   </a>
@@ -12,6 +13,33 @@
   <a href="https://bundlephobia.com/result?p=nhb-hooks" aria-label="Bundle size">
     <img src="https://img.shields.io/bundlephobia/minzip/nhb-hooks?style=flat&color=purple&label=SIZE&logo=nodedotjs" alt="Bundle Size" />
   </a>
+
+  <!-- Project Metadata -->
+  <a href="https://github.com/nazmul-nhb/nhb-hooks" aria-label="TypeScript">
+    <img src="https://img.shields.io/badge/BUILT%20with-TypeScript-3178C6?style=flat&logo=typescript&logoColor=blue" alt="Built with TypeScript" />
+  </a>
+  <a href="https://github.com/nazmul-nhb/nhb-hooks/actions" aria-label="Build Status">
+    <img src="https://img.shields.io/github/actions/workflow/status/nazmul-nhb/nhb-hooks/publish.yml?label=BUILD%20%26%20PUBLISH&style=flat&logo=github" alt="Build Status" />
+  </a>
+  <a href="https://github.com/nazmul-nhb/nhb-hooks" aria-label="Project Status">
+    <img src="https://img.shields.io/badge/STATUS-maintained-brightgreen?style=flat&logo=git" alt="Maintained" />
+  </a>
+  <a href="https://github.com/nazmul-nhb/nhb-hooks/commits/main" aria-label="Last Commit">
+    <img src="https://img.shields.io/github/last-commit/nazmul-nhb/nhb-hooks?style=flat&label=LAST%20COMMIT&logo=git" alt="Last Commit" />
+  </a>
+
+  <!-- GitHub Meta -->
+  <a href="https://github.com/nazmul-nhb/nhb-hooks/stargazers" aria-label="GitHub Stars">
+    <img src="https://img.shields.io/github/stars/nazmul-nhb/nhb-hooks?style=flat&label=STARS&logo=github" alt="GitHub stars" />
+  </a>
+
+  <a href="https://github.com/nazmul-nhb/nhb-hooks/issues" aria-label="Open Issues">
+    <img src="https://img.shields.io/github/issues/nazmul-nhb/nhb-hooks?style=flat&label=ISSUES&logo=github" alt="Open Issues" />
+  </a>
+  <a href="https://github.com/nazmul-nhb/nhb-hooks/pulls" aria-label="Open Pull Requests">
+    <img src="https://img.shields.io/github/issues-pr/nazmul-nhb/nhb-hooks?style=flat&label=PRs&logo=github" alt="Pull Requests" />
+  </a>
+
   <a href="https://www.npmjs.com/package/nhb-hooks" aria-label="License">
     <img src="https://img.shields.io/npm/l/nhb-hooks.svg?label=LICENSE&style=flat&color=orange&logo=open-source-initiative" alt="License" />
   </a>
@@ -21,9 +49,16 @@
 
 ## 📦 Description
 
-A **lightweight**, **tree-shakable** collection of essential React hooks designed for common use cases. Only the hooks you import are included in your final bundle, ensuring optimal performance.
+A **lightweight**, **tree-shakable**, and **type-safe** collection of essential React hooks for modern applications.
+Each hook is designed to be **independent**, **performant**, and **production-ready**, covering common real-world scenarios with minimal overhead.
 
-> This package requires [nhb-toolbox](https://toolbox.nazmul-nhb.dev/) as a peer dependency, as some hooks rely on utilities from it.
+> 🧩 **Peer Dependency Notice**
+> This package depends on [**nhb-toolbox**](https://toolbox.nazmul-nhb.dev/), a modular utility library that provides foundational classes and utilities used internally by certain hooks.
+>
+> Specifically:
+>
+> - [**useClock**](#useclock) and [**useTimer**](#usetimer) rely on the [**Chronos**](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos) class from **nhb-toolbox** for accurate, timezone-aware date and time manipulation.
+> - Make sure to install both `nhb-hooks` and `nhb-toolbox` packages to use all available features. Both packages are **fully tree-shakable**, so only the hooks you use will be bundled if you use bundler tools like `vite`, `turbopack`, `rollup`, `webpack` etc.
 
 ---
 
@@ -47,15 +82,16 @@ pnpm add nhb-hooks nhb-toolbox
 yarn add nhb-hooks nhb-toolbox
 ```
 
-> **Note:** The `useTimer` and `useClock` hooks depend on the [Chronos](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos) class and/or [chronos](https://toolbox.nazmul-nhb.dev/docs/utilities/date/chronos) function from [nhb-toolbox](https://www.npmjs.com/package/nhb-toolbox). Make sure to install both `nhb-hooks` and `nhb-toolbox` packages to use all available features. Both packages are fully tree-shakable, so only the code you use will be bundled if you use bundler tools like vite, rollup, webpack etc.
-
 ---
 
-## Features
+## ✨ Features
 
-✅ **Tree-shakable** – Only bundle what you use.  
-✅ **TypeScript support** – Built with type safety in mind.  
-✅ **Minimal dependencies** – Only `react`, `react-dom` and `nhb-toolbox` as a peer dependencies.
+✅ **Tree-shakable** – Only bundles the hooks you actually import.
+✅ **First-class TypeScript support** – Written in TypeScript for strict type safety and IntelliSense.
+✅ **Zero runtime bloat** – Minimal footprint with no unnecessary dependencies.
+✅ **Chronos integration** – Hooks like [**useClock**](#useclock) and [**useTimer**](#usetimer) leverage the powerful [**Chronos**](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos) class for time, date, and timezone operations.
+
+> 🧠 So far, only one utility class ([**Chronos**](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos)) from [**nhb-toolbox**](https://www.npmjs.com/package/nhb-toolbox) is used. This keeps the package extremely light while allowing seamless future integration of more utilities from [**nhb-toolbox**](https://www.npmjs.com/package/nhb-toolbox).
 
 ---
 
@@ -563,10 +599,7 @@ import { useTimer } from 'nhb-hooks';
 
 ```ts
 // Duration-based timer
-function useTimer(
- initialDuration: number,
- unit: Exclude<TimeUnit, 'week'>,
-): TimeDuration;
+function useTimer(initialDuration: number, unit: TimerUnit): TimeDuration;
 
 // Target time-based timer
 function useTimer(time: ChronosInput): TimeDuration;
@@ -616,8 +649,7 @@ function SessionTimeout() {
 **Important**:
 
 - Install required package: `npm i nhb-toolbox`
-- Tree-shaking works - only `Chronos` is bundled if used
-- Week unit is excluded due to ambiguous duration
+- Tree-shaking works - `Chronos` is bundled only if it is used
 
 **Example Formats**:
 
@@ -644,18 +676,7 @@ interface TimeDuration {
 
 type ChronosInput = number | string | Date | Chronos;
 
-type TimeUnit =
- | 'year'
- | 'month'
- | 'day'
- | 'week'
- | 'hour'
- | 'minute'
- | 'second'
- | 'millisecond';
-
-// And `unit` parameter type is just excluding `week`
-Exclude<TimeUnit, 'week'>;
+type TimerUnit = 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond';
 ```
 
 ---
@@ -1060,6 +1081,6 @@ interface TitleMeta {
 
 ## 📜 License
 
-MIT © [Nazmul Hassan](https://nazmul-nhb.vercel.app/). See [LICENSE](LICENSE) for details.
+MIT © [Nazmul Hassan](https://nazmul-nhb.dev/). See [LICENSE](LICENSE) for details.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
