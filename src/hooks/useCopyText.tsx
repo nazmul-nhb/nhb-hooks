@@ -76,7 +76,7 @@ export const useCopyText = (options?: CopyOptions): UseCopyTextReturn => {
 			options?.onSuccess?.(msg ?? 'Text Copied!');
 
 			timeoutRef.current = setTimeout(() => {
-				setCopiedText('');
+				setCopiedText(undefined);
 				timeoutRef.current = null;
 			}, options?.resetTimeOut ?? 2500);
 		} catch (err) {
