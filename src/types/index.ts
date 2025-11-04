@@ -55,7 +55,7 @@ export interface UseCopyTextReturn {
 	 *
 	 * @param text - The string content to be copied.
 	 * @param msg - Optional custom success message. Default is `'Text Copied!'`
-	 * @param errorMsg - Optional custom error message. Default is from message from the error object or `'Failed to copy!'`
+	 * @param errorMsg - Optional custom error message. Default is `message` from the `Error` object or `'Failed to copy!'`
 	 */
 	copyToClipboard: (text: string, msg?: string, errorMsg?: string) => Promise<void>;
 }

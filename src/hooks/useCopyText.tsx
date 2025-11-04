@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import type { CopyOptions, UseCopyTextReturn } from '../types';
 
 /**
@@ -42,13 +42,9 @@ import type { CopyOptions, UseCopyTextReturn } from '../types';
  */
 export const useCopyText = (options?: CopyOptions): UseCopyTextReturn => {
 	const [copiedText, setCopiedText] = useState<string | undefined>(undefined);
-	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-	/** * Function to copy the provided text to the clipboard. */
 	const copyToClipboard = async (text: string, msg?: string, errorMsg?: string) => {
 		try {
-			if (timeoutRef.current) clearTimeout(timeoutRef.current);
-
 			if (navigator?.clipboard?.writeText) {
 				await navigator.clipboard.writeText(text);
 			} else {
@@ -75,9 +71,8 @@ export const useCopyText = (options?: CopyOptions): UseCopyTextReturn => {
 
 			options?.onSuccess?.(msg ?? 'Text Copied!');
 
-			timeoutRef.current = setTimeout(() => {
+			setTimeout(() => {
 				setCopiedText(undefined);
-				timeoutRef.current = null;
 			}, options?.resetTimeOut ?? 2500);
 		} catch (err) {
 			options?.onError?.(
