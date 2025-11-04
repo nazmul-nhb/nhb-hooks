@@ -1163,10 +1163,12 @@ import { useMount } from 'nhb-hooks';
 ### Hook Signature
 
 ```ts
-function useMount<T extends ReactNode>(children: T): T | null
+function useMount<T extends ReactNode>(children: T, onMount?: () => void): T | null
 ```
 
 ### Examples
+
+#### With `children` only
 
 ```tsx
 'use client';
@@ -1192,9 +1194,11 @@ export default function ThemeToggler() {
 }
 ```
 
+#### With optional `onMount`
+
 ```tsx
 const ClientOnlyContent = () => {
- return useMount(<div>This will only render on the client!</div>);
+ return useMount(<div>This will only render on the client!</div>, () => console.log('Mounted on client!'));
 };
 ```
 
@@ -1205,20 +1209,14 @@ const ClientOnlyContent = () => {
 - Lightweight, zero dependencies, fully typed for TypeScript.
 - Works seamlessly with `Next.js` **App Router**.
 
-### Benefits
-
-- Prevents React hydration mismatch errors.
-- No additional wrapper components or libraries required.
-- Keeps SSR clean while safely rendering client-only logic.
-
----
-
 ### Why It’s Effective
 
 - **Hydration-safe:** Ensures `children` render **only on the client**.  
-- **Tiny & composable:** Works with any component or UI element.  
+- **Tiny & composable:** Works with any component or UI element. Keeps SSR clean while safely rendering client-only logic.
+- **Optional callback:** Executes client-only logic after mount, useful for initialization.
 - **Type-safe:** Generic `<T extends ReactNode>` supports all React content.  
 - **No layout shift:** Simple, lightweight, no extra markup is added.  
+- **Versatile:** Can be used for buttons, modals, theme togglers, animations, etc.
 
 ---
 
