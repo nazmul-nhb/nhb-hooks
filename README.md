@@ -587,12 +587,12 @@ interface UseClockResult {
 
 ## useTimer
 
-Creates a countdown timer. Requires [`Chronos` from `nhb-toolbox`](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos) (automatically tree-shaken if not used). Install it separately. Create countdown timers with minimal setup.
+Creates a countdown timer. Requires [`Chronos` from `nhb-toolbox`](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos) (automatically tree-shaken if not used). Install it separately. Create countdown timers with minimal setup. Also provides a duration formatter utility: `formatTimer`.
 
 ### Import
 
 ```ts
-import { useTimer } from 'nhb-hooks';
+import { useTimer, formatTimer} from 'nhb-hooks';
 ```
 
 ### Hook Signature
@@ -628,6 +628,19 @@ function SaleBanner() {
  );
 }
 
+// Use the formatTimer utility
+function SaleBanner() {
+ const timeLeft = useTimer('2023-12-31');
+
+ return (
+  <div>
+   Sale ends in:  {formatTimer(timeLeft)}
+  </div>
+ );
+}
+```
+
+```ts
 // Session timeout warning
 function SessionTimeout() {
  const timeLeft = useTimer(15, 'minute');
@@ -637,21 +650,33 @@ function SessionTimeout() {
   </div>
  );
 }
+
+// Use the formatTimer utility
+function SessionTimeout() {
+ const timeLeft = useTimer(15, 'minute');
+ return (
+  <div>
+   Session expires in: {formatTimer(timeLeft)}
+  </div>
+ );
+}
 ```
 
 ### Notes for useTimer
 
-- **Dependency**: Requires [Chronos](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos) from `nhb-toolbox`
-- **Precision**: Updates every second (1000ms)
+- **Dependency**: Requires [**Chronos**](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos) from `nhb-toolbox`
+- **Precision**: Updates every second (`1000`ms)
 - **Formats**: Accepts both duration and target date
-- **Output**: Returns a TimeDuration object with days/hours/minutes/seconds
+- **Output**: Returns a `TimeDuration` object with *dynamic* `years`, `months`, `days`, `hours`, `minutes`, `seconds` and *static* `milliseconds` properties
+- **Duration Formatter**: The package also provides an utility function to format the `TimeDuration` object: `formatTimer`
+  - `formatTimer` returns a human-readable formatted duration string from duration object returned by [`useTimer`](#usetimer) hook
 
 **Important**:
 
 - Install required package: `npm i nhb-toolbox`
-- Tree-shaking works - `Chronos` is bundled only if it is used
+- Tree-shakable - `Chronos` is bundled only if the [hook](#usetimer) is used
 
-**Example Formats**:
+**Accepted Formats**:
 
 ```ts
 useTimer(5, 'minute'); // Countdown from 5 minutes

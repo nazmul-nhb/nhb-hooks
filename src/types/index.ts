@@ -1,5 +1,12 @@
 import type { Chronos } from 'nhb-toolbox';
-import type { StrictFormat, TimeUnit, TimeZone, UTCOffSet } from 'nhb-toolbox/date/types';
+import type {
+	DurationOptions,
+	StrictFormat,
+	TimeUnit,
+	TimeZone,
+	UTCOffSet,
+} from 'nhb-toolbox/date/types';
+import type { NumberRange } from 'nhb-toolbox/number/types';
 import type { Prettify } from 'nhb-toolbox/utils/types';
 import type { ReactNode } from 'react';
 import type { TITLE_POSITIONS } from '../constants';
@@ -153,3 +160,11 @@ export interface UseClockResult {
 
 /** - Time units for `useTimer` hook. */
 export type TimerUnit = Exclude<TimeUnit, 'week'>;
+
+/** Options to format duration string for object returned by `useTimer` hook used by the helper utility `formatTimer` */
+export interface TimerFormatOptions extends Omit<DurationOptions, 'toTime' | 'absolute'> {
+	/** Maximum number of units (`1-6`) to display, e.g. 2 → "1 hour, 20 minutes". Default is `6`. */
+	maxUnits?: NumberRange<1, 6>;
+	/** Separator between units (default: `' · '`). */
+	separator?: string;
+}

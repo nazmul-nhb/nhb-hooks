@@ -9,5 +9,9 @@ export { useToggle } from './hooks/useToggle';
 export { useValidImage } from './hooks/useValidImage';
 export { useWindowResize } from './hooks/useWindowResize';
 
+// ! Title Provider and Hooks
 export { useTitle, useTitleMeta } from './hooks/useTitle';
 export { TitleProvider } from './providers/TitleProvider';
+
+// ! Utility Functions
+export { formatTimer } from './utils/timer';
