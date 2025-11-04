@@ -668,8 +668,7 @@ function SessionTimeout() {
 - **Precision**: Updates every second (`1000`ms)
 - **Formats**: Accepts both duration and target date
 - **Output**: Returns a `TimeDuration` object with *dynamic* `years`, `months`, `days`, `hours`, `minutes`, `seconds` and *static* `milliseconds` properties
-- **Duration Formatter**: The package also provides an utility function to format the `TimeDuration` object: `formatTimer`
-  - `formatTimer` returns a human-readable formatted duration string from duration object returned by [`useTimer`](#usetimer) hook
+- **Duration Formatter**: `nhb-hooks` also provides utility to format the returned `TimeDuration` object: [`formatTimer`](#formattimer)
 
 **Important**:
 
@@ -703,6 +702,69 @@ type ChronosInput = number | string | Date | Chronos;
 
 type TimerUnit = 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond';
 ```
+
+### `formatTimer`
+
+Formats a `TimeDuration` object (returned by [`useTimer`](#usetimer) hook) into a human-readable string.
+
+> - The `formatTimer` utility transforms a duration object into a readable time string such as `"2 hours · 15 minutes"` or `"2h 15m"`.
+> - It is especially useful when displaying timer or countdown values in the UI with minimal code.
+> - Exported as separate utility to reduce final bundle size by making it optional.
+
+---
+
+#### Parameters
+
+| Name       | Type                                                     | Description                                                |
+| ---------- | -------------------------------------------------------- | ---------------------------------------------------------- |
+| `duration` | `TimeDuration`                                           | Duration object returned by [`useTimer`](#usetimer).       |
+| `options`  | [`TimerFormatOptions`](#timerformatoptions) *(optional)* | Control display style, separator, and formatting behavior. |
+
+---
+
+#### `TimerFormatOptions`
+
+| Option      | Type                | Default  | Description                                                |
+| ----------- | ------------------- | -------- | ---------------------------------------------------------- |
+| `maxUnits`  | `1–6`               | `6`      | Limits the number of displayed time units.                 |
+| `separator` | `string`            | `' · '`  | String used to separate time units.                        |
+| `style`     | `'full' \| 'short'` | `'full'` | Display style. `"full"` → `"2 hours"`, `"short"` → `"2h"`. |
+| `showZero`  | `boolean`           | `false`  | Whether to include units with `0` value.                   |
+
+---
+
+#### Examples
+
+```tsx
+import { formatTimer, useTimer } from 'nhb-hooks';
+
+const duration = useTimer('2025-12-31');
+
+console.log(formatTimer(duration));
+// something like → "1 day · 2 hours · 15 minutes · 30 seconds"
+
+console.log(formatTimer(duration, { style: 'short', maxUnits: 2 }));
+// something like → "1d · 2h"
+
+console.log(formatTimer(duration, { showZero: true }));
+// something like → "0 years · 0 months · 1 day · 2 hours · 15 minutes · 30 seconds"
+```
+
+#### Notes
+
+- `formatTimer` returns a human-readable formatted duration string from duration object returned by [`useTimer`](#usetimer) hook.
+- When `showZero` is `false` (default), only units with non-zero values are included in the output.
+- If all values are zero and `showZero` is `false`, the result will be `"0 seconds"` or `"0s"` depending on `style`.
+- The `maxUnits` parameter limits the number of time units displayed, starting from the largest unit (`years`). It always applies **after** zero filtering.
+- The method automatically handles pluralization in `"full"` style (e.g., `"1 second"` vs `"2 seconds"`).
+- The order of units is always consistent: `years → months → days → hours → minutes → seconds`.
+- It removes `'milliseconds'` property as it is static (updates after `1000ms` which is equivalent to `seconds`).
+- Short style abbreviations: `years` (y), `months` (mo), `days` (d), `hours` (h), `minutes` (m), `seconds` (s).
+
+#### Related
+
+- [`duration`](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos/calculation#duration) method from `Chronos` — Used internally by `useTimer` to compute durations.
+- [`durationString`](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos/calculation#durationstring) — Similar `Chronos` method which returns formatted duration string.
 
 ---
 

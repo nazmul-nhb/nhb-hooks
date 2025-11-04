@@ -11,7 +11,20 @@ import type { TimerFormatOptions } from '../types';
 export function formatTimer(duration: TimeDuration, options?: TimerFormatOptions): string {
 	const { maxUnits = 6, separator = ' · ', style = 'full', showZero = false } = options ?? {};
 
+	const units: Record<string, string> = {
+		years: 'y',
+		months: 'mo',
+		days: 'd',
+		hours: 'h',
+		minutes: 'm',
+		seconds: 's',
+	};
+
 	const _formatUnit = (unit: string, value: number): string => {
+		if (style === 'short') {
+			return `${value}${units[unit]}`;
+		}
+
 		const $unit = Math.abs(value) === 1 ? unit.slice(0, -1) : unit;
 
 		return `${value} ${$unit}`;
