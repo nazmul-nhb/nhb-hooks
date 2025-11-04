@@ -1,6 +1,6 @@
-import { Chronos } from 'nhb-toolbox';
+import { Chronos, isNumber } from 'nhb-toolbox';
 import type { ChronosInput, TimeDuration } from 'nhb-toolbox/date/types';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { TimerUnit } from '../types';
 
 /**
@@ -28,13 +28,13 @@ export function useTimer(time: ChronosInput): TimeDuration;
  * @returns Remaining time as a structured duration object.
  */
 export function useTimer(time: ChronosInput, unit?: TimerUnit): TimeDuration {
-	const now = /*#__PURE__*/ new Chronos();
-	const target =
-		typeof time === 'number' && unit ?
-			/*#__PURE__*/ now.add(time, unit)
-		:	/*#__PURE__*/ new Chronos(time);
+	const now = useMemo(() => new Chronos(), []);
+	const target = useMemo(
+		() => (isNumber(time) && unit ? now.add(time, unit) : new Chronos(time)),
+		[time, unit, now]
+	);
 
-	const initialMs = target.diff(now, 'millisecond');
+	const initialMs = useMemo(() => target.diff(now, 'millisecond'), [target, now]);
 
 	const [remainingMs, setRemainingMs] = useState<number>(initialMs);
 	const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -43,14 +43,8 @@ export function useTimer(time: ChronosInput, unit?: TimerUnit): TimeDuration {
 		if (remainingMs <= 0) return;
 
 		intervalRef.current = setInterval(() => {
-			setRemainingMs((prev) => {
-				const next = prev - 1000;
-				if (next <= 0) {
-					clearInterval(intervalRef.current!);
-					return 0;
-				}
-				return next;
-			});
+			const elapsed = new Chronos().diff(now, 'millisecond');
+			setRemainingMs(Math.max(initialMs - elapsed, 0));
 		}, 1000);
 
 		return () => {
@@ -58,7 +52,10 @@ export function useTimer(time: ChronosInput, unit?: TimerUnit): TimeDuration {
 				clearInterval(intervalRef.current);
 			}
 		};
-	}, [remainingMs]);
+	}, [initialMs, now, remainingMs]);
 
-	return /*#__PURE__*/ new Chronos().subtract(remainingMs, 'millisecond').duration();
+	return useMemo(
+		() => new Chronos().subtract(remainingMs, 'millisecond').duration(),
+		[remainingMs]
+	);
 }
