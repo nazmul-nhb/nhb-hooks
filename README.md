@@ -108,6 +108,7 @@ yarn add nhb-hooks nhb-toolbox
 - [useValidImage](#usevalidimage)
 - [useWindowResize](#usewindowresize)
 - [useTitle](#usetitle)
+- [useMount](#usemount)
 
 ---
 
@@ -977,8 +978,6 @@ Sets the `document.title` dynamically at runtime, using your app’s site title 
 import { useTitle, useTitleMeta, TitleProvider } from 'nhb-hooks';
 ```
 
----
-
 ### 📦 Context Setup (Required Once)
 
 Wrap your root component (or layout) with `TitleProvider` to configure the global site title and defaults:
@@ -997,15 +996,11 @@ import { TitleProvider } from 'nhb-hooks';
 </TitleProvider>
 ```
 
----
-
 ### ✅ Hook Signature
 
 ```ts
 function useTitle(title: string, options?: TitleOptions): void
 ```
-
----
 
 ### 🔧 Options
 
@@ -1014,8 +1009,6 @@ function useTitle(title: string, options?: TitleOptions): void
 | `separator` | `string`                | Character(s) between page and site title                      | `" - "`    |
 | `position`  | `"before" \| "after"`   | Where to place the page title: before or after the site title | `"before"` |
 | `favicon`   | `string` \| `undefined` | Optional favicon to temporarily set with the title            |            |
-
----
 
 ### 🧪 Examples
 
@@ -1032,8 +1025,6 @@ useTitle('Docs', { separator: ' | ' }); // → "Docs | Bangu Site Inc."
 // Custom everything
 useTitle('Account', { position: 'after', separator: ' • ' }); // → "Bangu Site Inc. • Account"
 ```
-
----
 
 ### 🌐 Full Page Example
 
@@ -1053,21 +1044,15 @@ function Page() {
 }
 ```
 
----
-
 ### 🧼 Cleanup Behavior
 
 On unmount, `useTitle` will **restore the previous document title**, making it safe for conditional rendering and nested layouts.
-
----
 
 ### ⚠️ Notes
 
 - **Client-only**: This hook must run in a browser environment.
 - **Memoization**: You don’t need to memoize `options`; shallow comparison is already handled.
 - **TitleProvider config options**: If not used, fallback title will be `title` only.
-
----
 
 ### 🧩 Advanced Customization
 
@@ -1081,17 +1066,17 @@ const { siteTitle, pageTitle, fullTitle, ... } = useTitleMeta();
 
 Extract and observe current title state from the global `TitleProvider` context.
 
-### Purpose
+#### Purpose
 
 Use `useTitleMeta` when you want to **read** the current title state (e.g., for displaying breadcrumbs, page headers, or meta tags).
 
-### Signature
+#### Signature
 
 ```ts
 function useTitleMeta(): TitleMeta
 ```
 
-### Returned Object
+#### Returned Object
 
 | Key                | Type                    | Description                          |
 | ------------------ | ----------------------- | ------------------------------------ |
@@ -1101,7 +1086,7 @@ function useTitleMeta(): TitleMeta
 | `defaultPosition`  | `"before"` \| `"after"` | Global default for title positioning |
 | `defaultSeparator` | `string`                | Global default separator             |
 
-### Example Usage
+#### Example Usage
 
 ```tsx
 import { useTitleMeta } from 'nhb-hooks';
@@ -1112,8 +1097,6 @@ function Breadcrumb() {
   return <nav aria-label="breadcrumb">{pageTitle}</nav>;
 }
 ```
-
----
 
 ### 📘 Type Definitions
 
@@ -1148,8 +1131,6 @@ interface TitleMeta {
 }
 ```
 
----
-
 ### 🧠 Best Practices
 
 | Scenario             | Recommendation                                                              |
@@ -1159,10 +1140,85 @@ interface TitleMeta {
 | Read-only access     | Use `useTitleMeta()` in components like breadcrumbs or metadata injection   |
 | SSR                  | `useTitle` doesn't run on server — inject `<title>` tag manually for SEO    |
 
----
-
 > ℹ️ `useTitle` only affects the document title **after hydration**.  
 > For proper SEO and server-rendered HTML, include a static `<title>` in your SSR framework's head management.
+
+---
+
+## useMount
+
+A tiny, client-only *React hook* to prevent **Next.js hydration mismatch errors**.
+
+### Description
+
+`Next.js` hydration mismatch errors occur when the server-rendered HTML doesn't match the client render.  
+`useMount` solves this by **rendering children only after the component mounts** on the client.
+
+### Import
+
+```tsx
+import { useMount } from 'nhb-hooks';
+```
+
+### Hook Signature
+
+```ts
+function useMount<T extends ReactNode>(children: T): T | null
+```
+
+### Examples
+
+```tsx
+'use client';
+
+import FloatingButton from '@/components/ui/floating-button';
+import { Moon, Sun } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import { useMount } from 'nhb-hooks';
+import { useCallback } from 'react';
+
+export default function ThemeToggler() {
+ const { theme, setTheme } = useTheme();
+
+ const toggleTheme = useCallback(() => {
+  if (theme) {
+   setTheme(theme === 'dark' ? 'light' : 'dark');
+  }
+ }, [theme]);
+
+ return useMount(
+  <FloatingButton onClick={toggleTheme} icon={theme === 'dark' ? Sun : Moon} />
+ );
+}
+```
+
+```tsx
+const ClientOnlyContent = () => {
+ return useMount(<div>This will only render on the client!</div>);
+};
+```
+
+### Notes
+
+- Returns `null` on the server or before mounting to avoid mismatch.
+- Perfect for **Floating Buttons**, **theme toggles**, or other **client-only UI elements**.
+- Lightweight, zero dependencies, fully typed for TypeScript.
+- Works seamlessly with `Next.js` **App Router**.
+
+### Benefits
+
+- Prevents React hydration mismatch errors.
+- No additional wrapper components or libraries required.
+- Keeps SSR clean while safely rendering client-only logic.
+
+---
+
+### Why It’s Effective
+
+- **Hydration-safe:** Ensures `children` render **only on the client**.  
+- **Tiny & composable:** Works with any component or UI element.  
+- **Type-safe:** Generic `<T extends ReactNode>` supports all React content.  
+- **No layout shift:** Simple, lightweight, no extra markup is added.  
 
 ---
 
