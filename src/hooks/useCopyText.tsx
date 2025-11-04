@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import type { CopyOptions, UseCopyTextReturn } from '../types';
 
 /**
@@ -41,17 +41,14 @@ import type { CopyOptions, UseCopyTextReturn } from '../types';
  * ```
  */
 export const useCopyText = (options?: CopyOptions): UseCopyTextReturn => {
-	const [copiedText, setCopiedText] = useState<string>('');
+	const [copiedText, setCopiedText] = useState<string | undefined>(undefined);
+	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-	/**
-	 * * Function to copy the provided text to the clipboard.
-	 *
-	 * @param text - The string content to be copied.
-	 * @param msg - Optional custom success message. Default is `'Text Copied!'`
-	 * @param errorMsg - Optional custom error message. Default is from message from the error object or `'Failed to copy!'`
-	 */
+	/** * Function to copy the provided text to the clipboard. */
 	const copyToClipboard = async (text: string, msg?: string, errorMsg?: string) => {
 		try {
+			if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
 			if (navigator?.clipboard?.writeText) {
 				await navigator.clipboard.writeText(text);
 			} else {
@@ -78,11 +75,10 @@ export const useCopyText = (options?: CopyOptions): UseCopyTextReturn => {
 
 			options?.onSuccess?.(msg ?? 'Text Copied!');
 
-			const timeoutId = setTimeout(() => {
+			timeoutRef.current = setTimeout(() => {
 				setCopiedText('');
+				timeoutRef.current = null;
 			}, options?.resetTimeOut ?? 2500);
-
-			clearTimeout(timeoutId);
 		} catch (err) {
 			options?.onError?.(
 				errorMsg ? errorMsg

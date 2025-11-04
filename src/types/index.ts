@@ -48,10 +48,10 @@ export interface CopyOptions {
 
 /** Return type of `useCopyText` */
 export interface UseCopyTextReturn {
-	/** * A string containing the last copied text. Automatically resets after timeout. */
-	copiedText: string;
+	/** * A string containing the last copied text (`string`). Automatically resets (`undefined`) after timeout. */
+	copiedText: string | undefined;
 	/**
-	 * * Function to copy the provided text to the clipboard.
+	 * * Function to copy the provided text to the clipboard. Optionally accepts custom success and error msg.
 	 *
 	 * @param text - The string content to be copied.
 	 * @param msg - Optional custom success message. Default is `'Text Copied!'`
