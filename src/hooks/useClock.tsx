@@ -54,13 +54,13 @@ export function useClock(options?: UseClockOptions): UseClockResult {
 	const [isPaused, setIsPaused] = useState(!autoStart);
 
 	const [now, setNow] = useState(() => {
-		const init = new Chronos();
+		const init = /* @__PURE__ */ new Chronos();
 
 		return timeZone ? init.timeZone(timeZone) : init;
 	});
 
 	const tick = useCallback(() => {
-		const $init = new Chronos();
+		const $init = /* @__PURE__ */ new Chronos();
 		const tzApplied = timeZone ? $init.timeZone(timeZone) : $init;
 
 		setNow(tzApplied);

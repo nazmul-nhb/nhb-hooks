@@ -28,9 +28,10 @@ export function useTimer(time: ChronosInput): TimeDuration;
  * @returns Remaining time as a structured duration object.
  */
 export function useTimer(time: ChronosInput, unit?: TimerUnit): TimeDuration {
-	const now = useMemo(() => new Chronos(), []);
+	const now = useMemo(() => /* @__PURE__ */ new Chronos(), []);
 	const target = useMemo(
-		() => (isNumber(time) && unit ? now.add(time, unit) : new Chronos(time)),
+		() =>
+			isNumber(time) && unit ? now.add(time, unit) : /* @__PURE__ */ new Chronos(time),
 		[time, unit, now]
 	);
 
@@ -43,7 +44,7 @@ export function useTimer(time: ChronosInput, unit?: TimerUnit): TimeDuration {
 		if (remainingMs <= 0) return;
 
 		intervalRef.current = setInterval(() => {
-			const elapsed = new Chronos().diff(now, 'millisecond');
+			const elapsed = /* @__PURE__ */ new Chronos().diff(now, 'millisecond');
 			setRemainingMs(Math.max(initialMs - elapsed, 0));
 		}, 1000);
 
@@ -55,7 +56,7 @@ export function useTimer(time: ChronosInput, unit?: TimerUnit): TimeDuration {
 	}, [initialMs, now, remainingMs]);
 
 	return useMemo(
-		() => new Chronos().subtract(remainingMs, 'millisecond').duration(),
+		() => /* @__PURE__ */ new Chronos().subtract(remainingMs, 'millisecond').duration(),
 		[remainingMs]
 	);
 }
