@@ -24,8 +24,8 @@ const checkImageExists = (fullUrl: string): Promise<boolean> => {
  * @returns A single valid image URL string or an array of valid image URL strings (with fallback applied as needed).
  *
  * @example
- * const avatar = useValidImage("user/avatar.jpg"); // `as string`
- * const avatars = useValidImage(["img1.jpg", "img2.jpg"]); // `as string[]`
+ * const avatar = useValidImage("user/avatar.jpg"); // output: `string`
+ * const avatars = useValidImage(["img1.jpg", "img2.jpg"]); // output: `string[]`
  */
 export function useValidImage<T extends string | string[]>(
 	input: T | undefined,

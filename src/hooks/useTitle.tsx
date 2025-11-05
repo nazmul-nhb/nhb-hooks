@@ -107,7 +107,7 @@ export function useTitle(title: string, options?: TitleOptions) {
  * @remarks
  * This hook requires `TitleProvider` to be used in a parent component.
  */
-export const useTitleMeta = () => {
+export function useTitleMeta(): TitleMeta {
 	const { siteTitle, defaultPosition, defaultSeparator, pageTitle, fullTitle } =
 		useTitleConfig();
 
@@ -117,5 +117,5 @@ export const useTitleMeta = () => {
 		fullTitle,
 		defaultPosition,
 		defaultSeparator,
-	} as TitleMeta;
-};
+	};
+}

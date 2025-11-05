@@ -8,10 +8,10 @@ import { useMediaQuery } from './useMediaQuery';
  *
  * @returns Object with boolean flags: `{ mobile, tablet, desktop }`
  */
-export const useBreakPoint = () => {
+export function useBreakPoint() {
 	const mobile = useMediaQuery('(max-width: 767px)');
 	const tablet = useMediaQuery('(min-width: 768px) and (max-width: 1279px)');
 	const desktop = useMediaQuery('(min-width: 1280px)');
 
 	return { mobile, tablet, desktop };
-};
+}

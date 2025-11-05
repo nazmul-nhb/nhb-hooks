@@ -11,7 +11,7 @@ export default defineConfig({
 			entry: './src/index.ts',
 			name: 'nhb-hooks',
 			fileName: 'index',
-			formats: ['es', 'cjs', 'umd'],
+			formats: ['es', 'cjs'],
 		},
 		rollupOptions: {
 			treeshake: true,

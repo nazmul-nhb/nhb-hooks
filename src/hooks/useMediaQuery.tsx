@@ -38,7 +38,7 @@ import type { MediaQueryOptions } from '../types';
  * - If you pass a media query string, it will evaluate that query.
  * - If you pass an object with `minWidth`/`maxWidth`, the hook will build the media query and evaluate it.
  */
-export const useMediaQuery = (queryOrOptions: string | MediaQueryOptions): boolean => {
+export function useMediaQuery(queryOrOptions: string | MediaQueryOptions): boolean {
 	const getQuery = useCallback((): string => {
 		if (typeof queryOrOptions === 'string') return queryOrOptions;
 
@@ -71,4 +71,4 @@ export const useMediaQuery = (queryOrOptions: string | MediaQueryOptions): boole
 	}, [getQuery]);
 
 	return matches;
-};
+}

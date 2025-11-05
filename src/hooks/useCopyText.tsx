@@ -40,7 +40,7 @@ import type { CopyOptions, UseCopyTextReturn } from '../types';
  * copyToClipboard('Text with fallback', 'Copied!', 'Oops, try again!');
  * ```
  */
-export const useCopyText = (options?: CopyOptions): UseCopyTextReturn => {
+export function useCopyText(options?: CopyOptions): UseCopyTextReturn {
 	const [copiedText, setCopiedText] = useState<string | undefined>(undefined);
 
 	const copyToClipboard = async (text: string, msg?: string, errorMsg?: string) => {
@@ -91,4 +91,4 @@ export const useCopyText = (options?: CopyOptions): UseCopyTextReturn => {
 	};
 
 	return { copiedText, copyToClipboard };
-};
+}

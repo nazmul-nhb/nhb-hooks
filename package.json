@@ -1,6 +1,6 @@
 {
   "name": "nhb-hooks",
-  "version": "1.30.10",
+  "version": "1.30.11",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
