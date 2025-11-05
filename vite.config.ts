@@ -1,8 +1,7 @@
 import react from '@vitejs/plugin-react';
 import path from 'node:path';
 import { visualizer } from 'rollup-plugin-visualizer';
-import { defineConfig } from 'vite';
-import type { ViteUserConfig } from 'vitest/config';
+import { defineConfig, type UserConfig } from 'vite';
 
 export default defineConfig({
 	plugins: [react({ jsxRuntime: 'automatic' })],
@@ -12,17 +11,11 @@ export default defineConfig({
 			entry: './src/index.ts',
 			name: 'nhb-hooks',
 			fileName: 'index',
-			formats: ['es', 'cjs'],
+			formats: ['es', 'cjs', 'umd'],
 		},
 		rollupOptions: {
-			external: [
-				'react',
-				'react-dom',
-				'react/jsx-runtime',
-				'nhb-toolbox',
-				'nhb-toolbox/plugins/timeZonePlugin',
-				'nhb-toolbox/constants',
-			],
+			treeshake: true,
+			external: [/^react/, /^nhb-toolbox/],
 			plugins: [visualizer({ open: true })],
 			output: {
 				globals: {
@@ -43,4 +36,15 @@ export default defineConfig({
 		environment: 'jsdom',
 		setupFiles: './__test__/setup.ts',
 	},
-} as ViteUserConfig);
+} as UserConfig);
+
+// {
+// 	external: [
+// 		'react',
+// 		'react-dom',
+// 		'react/jsx-runtime',
+// 		'nhb-toolbox',
+// 		'nhb-toolbox/plugins/timeZonePlugin',
+// 		'nhb-toolbox/constants',
+// 	];
+// }
