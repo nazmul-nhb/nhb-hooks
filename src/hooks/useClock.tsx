@@ -50,7 +50,11 @@ export function useClock(options?: UseClockOptions): UseClockResult {
 
 	const [isPaused, setIsPaused] = useState(!autoStart);
 
-	Chronos.use(timeZonePlugin);
+	useMemo(() => {
+		// It is not a React Hook
+		// eslint-disable-next-line react-hooks/rules-of-hooks
+		Chronos.use(timeZonePlugin);
+	}, []);
 
 	const [now, setNow] = useState(() => {
 		const init = /* @__PURE__ */ new Chronos();
