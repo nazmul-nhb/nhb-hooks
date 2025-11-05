@@ -3,9 +3,6 @@ import { timeZonePlugin } from 'nhb-toolbox/plugins/timeZonePlugin';
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import type { UseClockOptions, UseClockResult } from '../types';
 
-// eslint-disable-next-line react-hooks/rules-of-hooks
-Chronos.use(timeZonePlugin);
-
 /**
  * * React hook that returns a live-updating `Chronos` clock.
  *
@@ -52,6 +49,8 @@ export function useClock(options?: UseClockOptions): UseClockResult {
 	const { timeZone, format = 'HH:mm:ss', interval = 1000, autoStart = true } = options || {};
 
 	const [isPaused, setIsPaused] = useState(!autoStart);
+
+	Chronos.use(timeZonePlugin);
 
 	const [now, setNow] = useState(() => {
 		const init = /* @__PURE__ */ new Chronos();
