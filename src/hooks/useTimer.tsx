@@ -1,5 +1,6 @@
 import { Chronos, isNumber } from 'nhb-toolbox';
 import type { ChronosInput, TimeDuration } from 'nhb-toolbox/date/types';
+import { durationPlugin } from 'nhb-toolbox/plugins/durationPlugin';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { TimerUnit } from '../types';
 
@@ -28,6 +29,10 @@ export function useTimer(time: ChronosInput): TimeDuration;
  * @returns Remaining time as a structured duration object.
  */
 export function useTimer(time: ChronosInput, unit?: TimerUnit): TimeDuration {
+	useMemo(() => {
+		Chronos.register(durationPlugin);
+	}, []);
+
 	const now = useMemo(() => /* @__PURE__ */ new Chronos(), []);
 	const target = useMemo(
 		() =>

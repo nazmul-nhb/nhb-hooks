@@ -1,5 +1,11 @@
 import type { Chronos } from 'nhb-toolbox';
-import type { StrictFormat, TimeUnit, TimeZone, UTCOffSet } from 'nhb-toolbox/date/types';
+import type {
+	StrictFormat,
+	TimeUnit,
+	TimeZone,
+	TimeZoneIdentifier,
+	UTCOffset,
+} from 'nhb-toolbox/date/types';
 import type { NumberRange } from 'nhb-toolbox/number/types';
 import type { Prettify } from 'nhb-toolbox/utils/types';
 import type { ReactNode } from 'react';
@@ -112,10 +118,14 @@ export interface TitleProviderProps {
 /** Configurable options for `useClock` hook */
 export interface UseClockOptions {
 	/**
-	 * Timezone string (e.g., `'BDT'`, or UTC offset like `'+06:00'`).
+	 * Timezone string:
+	 * - Time zone identifier (e.g., `'Africa/Harare'`)
+	 * - Time zone abbreviation (e.g., `'IST'`, `'UTC'`, `'EST'` etc.)
+	 * - UTC Offset in `UTC±HH:mm` format for fictional or unlisted time zone (e.g., `'UTC+06:15'`)
+	 *
 	 * Passed to `Chronos.timeZone()`.
 	 */
-	timeZone?: TimeZone | UTCOffSet;
+	timeZone?: TimeZoneIdentifier | TimeZone | UTCOffset;
 
 	/**
 	 * Format string to return a formatted time value via `Chronos.format()`.

@@ -1,6 +1,6 @@
 {
   "name": "nhb-hooks",
-  "version": "1.30.11",
+  "version": "1.40.0",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -74,18 +74,18 @@
   "license": "MIT",
   "packageManager": "pnpm@10.20.0+sha512.cf9998222162dd85864d0a8102e7892e7ba4ceadebbf5a31f9c2fce48dfce317a9c53b9f6464d1ef9042cba2e02ae02a9f7c143a2b438cd93c91840f0192b9dd",
   "peerDependencies": {
-    "nhb-toolbox": ">=4.12.67",
-    "react": "^18 || ^19",
-    "react-dom": "^18 || ^19"
+    "nhb-toolbox": ">=4.26.20",
+    "react": ">=18.3.1 || ^19.0.0",
+    "react-dom": ">=18.3.1 || ^19.0.0"
   },
   "peerDependenciesMeta": {
+    "nhb-toolbox": {
+      "optional": false
+    },
     "react": {
       "optional": false
     },
     "react-dom": {
-      "optional": false
-    },
-    "nhb-toolbox": {
       "optional": false
     }
   },
@@ -100,8 +100,8 @@
     "@typescript-eslint/eslint-plugin": "^8.46.3",
     "@typescript-eslint/parser": "^8.46.3",
     "@vitejs/plugin-react": "^5.1.0",
-    "@vitest/coverage-v8": "4.0.7",
-    "@vitest/ui": "^4.0.7",
+    "@vitest/coverage-v8": "4.0.8",
+    "@vitest/ui": "^4.0.8",
     "eslint": "^9.39.1",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
@@ -109,16 +109,16 @@
     "globals": "^16.5.0",
     "jsdom": "^27.1.0",
     "nhb-scripts": "^1.8.81",
-    "nhb-toolbox": "^4.25.4",
+    "nhb-toolbox": "^4.26.20",
     "prettier": "^3.6.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "rollup": "^4.52.5",
+    "rollup": "^4.53.1",
     "rollup-plugin-dts": "^6.2.3",
     "rollup-plugin-visualizer": "^6.0.5",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.3",
-    "vite": "^7.1.12",
-    "vitest": "^4.0.7"
+    "vite": "^7.2.2",
+    "vitest": "^4.0.8"
   }
 }
