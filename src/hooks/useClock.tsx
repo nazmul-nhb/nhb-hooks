@@ -1,5 +1,4 @@
 import { Chronos } from 'nhb-toolbox';
-import type { TimeZoneIdentifier } from 'nhb-toolbox/date/types';
 import { timeZonePlugin } from 'nhb-toolbox/plugins/timeZonePlugin';
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import type { UseClockOptions, UseClockResult } from '../types';
@@ -56,14 +55,14 @@ export function useClock(options?: UseClockOptions): UseClockResult {
 	}, []);
 
 	const [now, setNow] = useState(() => {
-		const init = /* @__PURE__ */ new Chronos();
+		const init = new Chronos();
 
-		return timeZone ? init.timeZone(timeZone as TimeZoneIdentifier) : init;
+		return timeZone ? init.timeZone(timeZone) : init;
 	});
 
 	const tick = useCallback(() => {
-		const $init = /* @__PURE__ */ new Chronos();
-		const tzApplied = timeZone ? $init.timeZone(timeZone as TimeZoneIdentifier) : $init;
+		const $init = new Chronos();
+		const tzApplied = timeZone ? $init.timeZone(timeZone) : $init;
 
 		setNow(tzApplied);
 	}, [timeZone]);
@@ -117,7 +116,6 @@ export function useClock(options?: UseClockOptions): UseClockResult {
 			resume: start,
 			isPaused,
 		}),
-		// @ts-expect-error This is TypeScript recursion limitation
 		[now, format, stop, start, isPaused]
 	);
 }
