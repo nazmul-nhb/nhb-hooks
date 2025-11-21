@@ -59,8 +59,7 @@ export function useTimer(time: ChronosInput, unit?: TimerUnit): TimeDuration {
 		};
 	}, [initialMs, now, remainingMs]);
 
-	return useMemo(
-		() => new Chronos().subtract(remainingMs, 'millisecond').duration(),
-		[remainingMs]
-	);
+	return useMemo(() => {
+		return new Chronos().subtract(remainingMs, 'millisecond').duration(undefined, false);
+	}, [remainingMs]);
 }
