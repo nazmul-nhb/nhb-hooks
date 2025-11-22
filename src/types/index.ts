@@ -67,6 +67,7 @@ export interface UseCopyTextReturn {
 	copyToClipboard: (text: string, msg?: string, errorMsg?: string) => Promise<void>;
 }
 
+/** Page title position, either `"after" `or `"before"` the site title. */
 export type TitlePosition = (typeof TITLE_POSITIONS)[number];
 
 /** * Configuration options for the title context. */

@@ -34,10 +34,9 @@ export function useTimer(time: ChronosInput, unit?: TimerUnit): TimeDuration {
 	}, []);
 
 	const now = useMemo(() => new Chronos(), []);
-	const target = useMemo(
-		() => (isNumber(time) && unit ? now.add(time, unit) : new Chronos(time)),
-		[time, unit, now]
-	);
+	const target = useMemo(() => {
+		return isNumber(time) && unit ? now.add(time, unit) : new Chronos(time);
+	}, [time, unit, now]);
 
 	const initialMs = useMemo(() => target.diff(now, 'millisecond'), [target, now]);
 
@@ -45,7 +44,13 @@ export function useTimer(time: ChronosInput, unit?: TimerUnit): TimeDuration {
 	const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	useEffect(() => {
-		if (remainingMs <= 0) return;
+		if (remainingMs <= 0) {
+			setTimeout(() => {
+				setRemainingMs(0);
+			}, 0);
+
+			return;
+		}
 
 		intervalRef.current = setInterval(() => {
 			const elapsed = new Chronos().diff(now, 'millisecond');
