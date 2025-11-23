@@ -45,10 +45,7 @@ export function useTimer(time: ChronosInput, unit?: TimerUnit): TimeDuration {
 
 	useEffect(() => {
 		if (remainingMs <= 0) {
-			setTimeout(() => {
-				setRemainingMs(0);
-			}, 0);
-
+			queueMicrotask(() => setRemainingMs(0));
 			return;
 		}
 

@@ -109,6 +109,7 @@ yarn add nhb-hooks nhb-toolbox
 - [useWindowResize](#usewindowresize)
 - [useTitle](#usetitle)
 - [useMount](#usemount)
+- [useStorage](#usestorage)
 
 ---
 
@@ -163,7 +164,7 @@ return (
 )
 ```
 
-### Notes for useMediaQuery
+### Notes for `useMediaQuery`
 
 - **Automatic Updates**: Recalculates whenever the viewport size changes
 - **Performance**: Uses `matchMedia` under the hood for efficient detection
@@ -237,7 +238,7 @@ return (
 );
 ```
 
-### Notes for useBreakPoint
+### Notes for `useBreakPoint`
 
 - **Predefined Breakpoints**: Uses common device breakpoints (mobile < 768px, tablet 768-1279px, desktop ≥1280px)
 - **Derived Hook**: Built on top of [useMediaQuery](#usemediaquery)
@@ -316,7 +317,7 @@ function Dropdown() {
 }
 ```
 
-### Notes for useClickOutside
+### Notes for `useClickOutside`
 
 - **Multiple Elements**: Supports both single element and multiple element detection
 - **Event Types**: Handles both mouse and touch events
@@ -396,7 +397,7 @@ return (
 - `onError`: Callback called if copy operation fails. Receives an error message string.
 - `resetTimeOut`: Time in milliseconds to retain `copiedText` before it resets to `undefined`. Defaults to `2500`.
 
-### Notes for useCopyText
+### Notes for `useCopyText`
 
 - **`copiedText` State**: Useful for showing transient UI feedback like button label change ("Copied!" state).
 - **Fallback-Safe**: Works in environments without `navigator.clipboard` by falling back to `document.execCommand('copy')`.
@@ -453,7 +454,7 @@ function Search() {
 }
 ```
 
-### Notes for useDebouncedValue
+### Notes for `useDebouncedValue`
 
 - **Cancellation**: Includes a cancel function to abort pending updates
 - **Leading Edge**: Doesn't fire immediately (for leading edge debounce, consider `useThrottle`)
@@ -663,7 +664,7 @@ function SessionTimeout() {
 }
 ```
 
-### Notes for useTimer
+### Notes for `useTimer`
 
 - **Dependency**: Requires [**Chronos**](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos) from `nhb-toolbox`
 - **Precision**: Updates every second (`1000`ms)
@@ -751,7 +752,7 @@ console.log(formatTimer(duration, { showZero: true }));
 // something like → "0 years · 0 months · 1 day · 2 hours · 15 minutes · 30 seconds"
 ```
 
-#### Notes
+#### Notes for `formatTimer`
 
 - `formatTimer` returns a human-readable formatted duration string from duration object returned by [`useTimer`](#usetimer) hook.
 - When `showZero` is `false` (default), only units with non-zero values are included in the output.
@@ -798,7 +799,7 @@ const [theme, toggleTheme] = useToggle(['light', 'dark']);
 toggleTheme(); // Switches between `dark` and `light` theme
 ```
 
-### Notes for useToggle
+### Notes for `useToggle`
 
 - **Simple API**: Just provide two values to toggle between
 - **Type Safe**: Maintains your value types
@@ -875,7 +876,7 @@ return galleryImages.map((img, i) => (
 - `trailingSlash`: Whether the `imgHostLink` has a trailing slash `/`. Default is `true`. Full image URL will be built on this flag.
 - `placeholder`: Fallback image URL. It can be local/public image or hosted image (needs full url for hosted placeholder image).
 
-### Notes for useValidImage
+### Notes for `useValidImage`
 
 - **Fallback**: Automatically uses placeholder for broken images
 - **CDN Support**: Easily prepend base URLs
@@ -947,7 +948,7 @@ useWindowResize(() => {
 });
 ```
 
-### Notes for useWindowResize
+### Notes for `useWindowResize`
 
 - **Simple API**: Just pass your resize handler
 - **Cleanup**: Automatically removes listeners
@@ -1202,7 +1203,7 @@ const ClientOnlyContent = () => {
 };
 ```
 
-### Notes
+### Notes for `onMount`
 
 - Returns `null` on the server or before mounting to avoid mismatch.
 - Perfect for **Floating Buttons**, **theme toggles**, or other **client-only UI elements**.
@@ -1217,6 +1218,137 @@ const ClientOnlyContent = () => {
 - **Type-safe:** Generic `<T extends ReactNode>` supports all React content.  
 - **No layout shift:** Simple, lightweight, no extra markup is added.  
 - **Versatile:** Can be used for buttons, modals, theme togglers, animations, etc.
+
+---
+
+## useStorage
+
+Persist state in `localStorage` or `sessionStorage` with reactive updates and type safety. Safely handles SSR environments like `Next.js`.
+
+### Import
+
+```ts
+import { useStorage } from 'nhb-hooks';
+```
+
+### Hook Signature
+
+```ts
+function useStorage<T>(options: StorageOptions<T>): WebStorage<T>;
+```
+
+### Examples
+
+```tsx
+// Basic usage - store theme preference
+const themeStorage = useStorage<string>({
+  key: 'app-theme',
+  type: 'local',
+});
+
+return (
+  <button onClick={() => themeStorage.set('dark')}>
+    Current theme: {themeStorage.value ?? 'none'}
+  </button>
+);
+```
+
+```tsx
+// Store complex objects with custom serialization
+type User = {
+  name: string;
+  age: number;
+  dob: Date;
+};
+
+const userStore = useStorage<User>({
+  key: 'app-user',
+  serialize: (u) => JSON.stringify(u),
+  deserialize: (s) => {
+    const parsed = JSON.parse(s);
+    return { dob: new Date(parsed.dob), ...parsed };
+  },
+});
+
+// Session storage example
+const sessionData = useStorage<number[]>({
+  key: 'cart-items',
+  type: 'session',
+});
+```
+
+```tsx
+// Complete storage management
+const settings = useStorage<Settings>({
+  key: 'app-settings',
+  type: 'local',
+});
+
+// Update settings
+settings.set({ theme: 'dark', language: 'en' });
+
+// Remove just these settings
+settings.remove();
+
+// Clear all local storage
+settings.clear();
+```
+
+### Options
+
+- `key`: Unique key to identify the stored value (required)
+- `type`: Storage type - `'local'` (default) or `'session'`
+- `serialize`: Custom function to convert value to string (default: `JSON.stringify`)
+- `deserialize`: Custom function to parse stored string back to type (default: `JSON.parse`)
+
+### Notes for `useStorage`
+
+- **SSR Safe**: Delays storage access until client-side hydration is complete
+- **Reactive**: Component re-renders when stored value changes
+- **Type Safe**: Full TypeScript support with generic type parameter
+- **Error Handling**: Gracefully handles storage errors (quota exceeded, etc.)
+- **Synchronized**: Multiple components using same key stay in sync
+
+**Important Behaviors**:
+
+- Returns `null` for `value` if key doesn't exist or on error
+- `set()` overwrites existing value
+- `remove()` deletes only the specified key
+- `clear()` removes all items from the selected storage type
+
+### Type Definitions
+
+```ts
+/** Options for `useStorage` hook. */
+export type StorageOptions<T> = {
+  /** Key to store the value with in local/session storage. */
+  key: string;
+  /** Storage type to use (`localStorage`/`sessionStorage`). Defaults to `'local'`. */
+  type?: 'local' | 'session';
+  /**
+   * Optional serializer function to convert the value of type `T` to a string. 
+   * Defaults to `JSON.stringify`.
+   */
+  serialize?: (value: T) => string;
+  /**
+   * Optional deserializer function to convert the stored value back to type `T`.
+   * Defaults to `JSON.parse`.
+   */
+  deserialize?: (value: string) => T;
+};
+
+/** Return type of `useStorage` hook. */
+export type WebStorage<T> = {
+  /** Current value from storage, or `null` if not set or on error. */
+  value: T | null;
+  /** Function to set value in specified storage. */
+  set: (value: T) => void;
+  /** Function to remove the item from specified storage. */
+  remove: () => void;
+  /** Function to clear all items from the selected storage type. */
+  clear: () => void;
+};
+```
 
 ---
 

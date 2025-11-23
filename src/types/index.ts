@@ -193,7 +193,7 @@ export type StorageOptions<T> = {
 	/**
 	 * * Optional deserializer function to convert the stored value back to type `T`. Defaults to `JSON.parse`.
 	 * @param value Value to deserialize/parse to its actual type.
-	 * @returns Parsed value.
+	 * @returns Parsed/deserialized value.
 	 */
 	deserialize?: (value: string) => T;
 };
@@ -209,6 +209,10 @@ export type WebStorage<T> = {
 	set: (value: T) => void;
 	/** * Function to remove the item from specified storage. */
 	remove: () => void;
-	/** * Function to clear all items from the selected storage type. */
+	/**
+	 * * Function to clear all items from the selected storage type.
+	 *
+	 * `CAUTION` This will remove **all items** in the selected storage type, not just the current key.
+	 */
 	clear: () => void;
 };
