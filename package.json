@@ -109,7 +109,7 @@
     "globals": "^16.5.0",
     "jsdom": "^27.2.0",
     "nhb-scripts": "^1.8.88",
-    "nhb-toolbox": "^4.26.71",
+    "nhb-toolbox": "^4.26.74",
     "prettier": "^3.6.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

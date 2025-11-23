@@ -5,6 +5,7 @@ export { useCopyText } from './hooks/useCopyText';
 export { useDebouncedValue } from './hooks/useDebouncedValue';
 export { useMediaQuery } from './hooks/useMediaQuery';
 export { useMount } from './hooks/useMount';
+export { useStorage } from './hooks/useStorage';
 export { useTimer } from './hooks/useTimer';
 export { useToggle } from './hooks/useToggle';
 export { useValidImage } from './hooks/useValidImage';

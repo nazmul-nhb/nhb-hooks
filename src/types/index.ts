@@ -177,3 +177,38 @@ export type TimerFormatOptions = {
 	/** Whether to include zero values (default: `false`) */
 	showZero?: boolean;
 };
+
+/** Options for `useStorage` hook. */
+export type StorageOptions<T> = {
+	/** * Key to store the value with in local/session storage. */
+	key: string;
+	/** * Storage type to use (`localStorage`/`sessionStorage`). Defaults to `'local'`. */
+	type?: 'local' | 'session';
+	/**
+	 * * Optional serializer function to convert the value of type `T` to a string. Defaults to `JSON.stringify`.
+	 * @param value Value to serialize.
+	 * @returns Serialized/stringified value.
+	 */
+	serialize?: (value: T) => string;
+	/**
+	 * * Optional deserializer function to convert the stored value back to type `T`. Defaults to `JSON.parse`.
+	 * @param value Value to deserialize/parse to its actual type.
+	 * @returns Parsed value.
+	 */
+	deserialize?: (value: string) => T;
+};
+
+/** * Return type of `useStorage` hook. */
+export type WebStorage<T> = {
+	/** * Current value from storage, or `null` if not set or on error. */
+	value: T | null;
+	/**
+	 * * Function to set value in specified storage.
+	 * @param value Value to set in the storage.
+	 */
+	set: (value: T) => void;
+	/** * Function to remove the item from specified storage. */
+	remove: () => void;
+	/** * Function to clear all items from the selected storage type. */
+	clear: () => void;
+};

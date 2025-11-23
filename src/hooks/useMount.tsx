@@ -26,10 +26,8 @@ export function useMount<T extends ReactNode>(children: T, onMount?: () => void)
 	const [mounted, setMounted] = useState(false);
 
 	useEffect(() => {
-		const timeoutId = setTimeout(() => setMounted(true), 0);
+		queueMicrotask(() => setMounted(true));
 		onMount?.();
-
-		return () => clearTimeout(timeoutId);
 	}, [onMount]);
 
 	if (!mounted) return null;
