@@ -44,7 +44,7 @@ import type { StorageOptions, WebStorage } from '../types';
  * 	serialize: (u) => JSON.stringify(u),
  * 	deserialize: (s) => {
  * 		const parsed = JSON.parse(s);
- * 		return { dob: new Date(parsed.dob), ...parsed };
+ * 		return { ...parsed, dob: new Date(parsed.dob) };
  * 	},
  * });
  * ```
