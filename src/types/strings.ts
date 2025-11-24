@@ -133,7 +133,10 @@ export type PascalCase<S extends string> =
 		:	never
 	:	never;
 
-type Ex<T> = {
+export type Includes<S extends string, Search extends string> =
+	S extends `${string}${Search}${string}` ? true : false;
+
+type Mutate<T> = {
 	/**
 	 * * Function to set value in specified storage.
 	 * @param value Value to set in the storage.
@@ -143,7 +146,7 @@ type Ex<T> = {
 	remove: () => void;
 };
 
-type Cl = {
+type Clear = {
 	/**
 	 * * Function to clear all items from the selected storage type.
 	 *
@@ -152,10 +155,7 @@ type Cl = {
 	clear: () => void;
 };
 
-export type Includes<S extends string, Search extends string> =
-	S extends `${string}${Search}${string}` ? true : false;
-
-export type Vex<
+export type WStore<
 	T,
 	Key extends string,
 	Storage extends 'local' | 'session' = 'local',
@@ -165,16 +165,16 @@ export type Vex<
 		/** * Current value from storage, or `null` if not set or on error. */
 		value: T | null;
 	} & {
-		[K in keyof Ex<T> as `${K}${PascalCase<Key>}`]: Ex<T>[K];
+		[K in keyof Mutate<T> as `${K}${PascalCase<Key>}`]: Mutate<T>[K];
 	} & {
-		[K in keyof Cl as `${K}${PascalCase<Storage>}Storage`]: Cl[K];
+		[K in keyof Clear as `${K}${PascalCase<Storage>}Storage`]: Clear[K];
 	}
 >;
 
-type M = Vex<Date, 'app-settings', 'session'>;
+type Store = WStore<Date, 'app-settings', 'session'>;
 
-const { clearSessionStorage, removeAppSettings, setAppSettings, value } = {} as M;
-const t = {} as M;
+const { clearSessionStorage, removeAppSettings, setAppSettings, value } = {} as Store;
+const t = {} as Store;
 
 clearSessionStorage();
 removeAppSettings();
