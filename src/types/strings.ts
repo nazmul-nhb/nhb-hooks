@@ -1,5 +1,4 @@
-import { isNonEmptyString } from 'nhb-toolbox';
-import type { Prettify } from 'nhb-toolbox/utils/types';
+import type { Join, Prettify } from 'nhb-toolbox/utils/types';
 
 /** Utility: ensure early inference and string constraint. */
 export type EnsureString<S> = S extends string ? S : never;
@@ -13,54 +12,53 @@ type $NormalizeSeparators<S extends string> =
 	: S;
 
 /** Insert a space before an uppercase letter boundary (e.g. `helloWorld` -> `hello World`). */
-type InsertSpaceBeforeUpper<S extends string> =
+type $SpaceUpper<S extends string> =
 	S extends `${infer F}${infer R}` ?
 		R extends Uncapitalize<R> ?
-			`${F}${InsertSpaceBeforeUpper<R>}`
-		:	// R starts with uppercase — boundary between F and R
-			`${F} ${InsertSpaceBeforeUpper<R>}`
+			`${F}${$SpaceUpper<R>}`
+		:	`${F} ${$SpaceUpper<R>}`
 	:	S;
 
-type TrimRight<S extends string> = S extends `${infer L} ` ? TrimRight<L> : S;
+type $TrimRight<S extends string> = S extends `${infer L} ` ? $TrimRight<L> : S;
 
-type TrimLeft<S extends string> = S extends ` ${infer R}` ? TrimLeft<R> : S;
+type $TrimLeft<S extends string> = S extends ` ${infer R}` ? $TrimLeft<R> : S;
 
-type Trim<S extends string> = TrimLeft<TrimRight<S>>;
+export type Trim<S extends string> = $TrimLeft<$TrimRight<S>>;
 
 /** Normalize the input into a single-space separated, lowercased-ish stream,
  *  but keep original characters for case handling later. */
-type NormalizeForSplit<S extends string> =
+type $Normalize<S extends string> =
 	EnsureString<S> extends infer T ?
 		T extends string ?
-			Trim<$NormalizeSeparators<InsertSpaceBeforeUpper<T>>>
+			Trim<$NormalizeSeparators<$SpaceUpper<T>>>
 		:	never
 	:	never;
 
 /** Split a space-separated string into a tuple of words. */
-type SplitWords<S extends string> =
+type $SplitWords<S extends string> =
 	S extends '' ? []
-	: S extends `${infer Head} ${infer Rest}` ? [Head, ...SplitWords<Rest>]
+	: S extends `${infer Head} ${infer Rest}` ? [Head, ...$SplitWords<Rest>]
 	: [S];
 
 /** Map tuple of words to lowercase strings. */
-type LowercaseWords<Arr extends readonly string[]> =
+export type LowercaseWords<Arr extends readonly string[]> =
 	Arr extends [infer H extends string, ...infer R extends string[]] ?
 		[Lowercase<H>, ...LowercaseWords<R>]
 	:	[];
 
 /** Capitalize each word in tuple. */
-type CapitalizeWords<Arr extends readonly string[]> =
+export type CapitalizeWords<Arr extends readonly string[]> =
 	Arr extends [infer H extends string, ...infer R extends string[]] ?
 		[Capitalize<Lowercase<H>>, ...CapitalizeWords<R>]
 	:	[];
 
-/** Join tuple with a separator. */
-type JoinWith<Arr extends readonly string[], Sep extends string> =
-	Arr extends [] ? ''
-	: Arr extends [infer Only extends string] ? Only
-	: Arr extends [infer H extends string, ...infer R extends string[]] ?
-		`${H}${Sep}${JoinWith<R, Sep>}`
-	:	string;
+// /** Join tuple with a separator. */
+// type $JoinWith<Arr extends readonly string[], Sep extends string> =
+// 	Arr extends [] ? ''
+// 	: Arr extends [infer Only extends string] ? Only
+// 	: Arr extends [infer H extends string, ...infer R extends string[]] ?
+// 		`${H}${Sep}${$JoinWith<R, Sep>}`
+// 	:	string;
 
 /** ---------- Public case converters ---------- */
 
@@ -75,7 +73,7 @@ type JoinWith<Arr extends readonly string[], Sep extends string> =
 export type SnakeCase<S extends string> =
 	EnsureString<S> extends infer T ?
 		T extends string ?
-			JoinWith<LowercaseWords<SplitWords<NormalizeForSplit<T>>>, '_'>
+			Join<LowercaseWords<$SplitWords<$Normalize<T>>>, '_'>
 		:	never
 	:	never;
 
@@ -89,7 +87,7 @@ export type SnakeCase<S extends string> =
 export type KebabCase<S extends string> =
 	EnsureString<S> extends infer T ?
 		T extends string ?
-			JoinWith<LowercaseWords<SplitWords<NormalizeForSplit<T>>>, '-'>
+			Join<LowercaseWords<$SplitWords<$Normalize<T>>>, '-'>
 		:	never
 	:	never;
 
@@ -103,10 +101,10 @@ export type KebabCase<S extends string> =
 export type CamelCase<S extends string> =
 	EnsureString<S> extends infer T ?
 		T extends string ?
-			SplitWords<NormalizeForSplit<T>> extends (
+			$SplitWords<$Normalize<T>> extends (
 				[infer F extends string, ...infer R extends string[]]
 			) ?
-				`${Lowercase<F>}${JoinWith<
+				`${Lowercase<F>}${Join<
 					{
 						[K in keyof R]: R[K] extends string ? Capitalize<Lowercase<R[K]>>
 						:	never;
@@ -131,7 +129,7 @@ export type CamelCase<S extends string> =
 export type PascalCase<S extends string> =
 	EnsureString<S> extends infer T ?
 		T extends string ?
-			JoinWith<CapitalizeWords<SplitWords<NormalizeForSplit<T>>>, ''>
+			Join<CapitalizeWords<$SplitWords<$Normalize<T>>>, ''>
 		:	never
 	:	never;
 
@@ -145,42 +143,41 @@ type Ex<T> = {
 	remove: () => void;
 };
 
+type Cl = {
+	/**
+	 * * Function to clear all items from the selected storage type.
+	 *
+	 * `CAUTION` This will remove **all items** in the selected storage type, not just the current key.
+	 */
+	clear: () => void;
+};
+
 export type Includes<S extends string, Search extends string> =
 	S extends `${string}${Search}${string}` ? true : false;
 
-export type Vex<T, Key extends string> = Prettify<
+export type Vex<
+	T,
+	Key extends string,
+	Storage extends 'local' | 'session' = 'local',
+> = Prettify<
+	// { [K in 'value' as `${K}Of${PascalCase<Key>}`]: T | null }
 	{
+		/** * Current value from storage, or `null` if not set or on error. */
 		value: T | null;
-		/**
-		 * * Function to clear all items from the selected storage type.
-		 *
-		 * `CAUTION` This will remove **all items** in the selected storage type, not just the current key.
-		 */
-		clear: () => void;
 	} & {
 		[K in keyof Ex<T> as `${K}${PascalCase<Key>}`]: Ex<T>[K];
+	} & {
+		[K in keyof Cl as `${K}${PascalCase<Storage>}Storage`]: Cl[K];
 	}
 >;
 
-type M = Vex<Date, 'app-settings'>;
+type M = Vex<Date, 'app-settings', 'session'>;
 
-const h: M = {} as M;
+const { clearSessionStorage, removeAppSettings, setAppSettings, value } = {} as M;
+const t = {} as M;
 
-h.removeAppSettings();
-h.setAppSettings(new Date());
-
-type _T = PascalCase<'who are.you?'>;
-
-/** Convert a string to PascalCase (runtime). */
-export function pascalCase<S extends string>(input: S): PascalCase<S> {
-	return (
-		!isNonEmptyString(input) ? '' : (
-			input
-				.replace(/[-_.]+/g, ' ')
-				.replace(/\s+/g, ' ')
-				.trim()
-				.split(' ')
-				.map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
-				.join('')
-		)) as PascalCase<S>;
-}
+clearSessionStorage();
+removeAppSettings();
+setAppSettings(new Date());
+console.info(value);
+t.clearSessionStorage();
