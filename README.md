@@ -86,10 +86,10 @@ yarn add nhb-hooks nhb-toolbox
 
 ## ✨ Features
 
-✅ **Tree-shakable** – Only bundles the hooks you actually import.
-✅ **First-class TypeScript support** – Written in TypeScript for strict type safety and IntelliSense.
-✅ **Zero runtime bloat** – Minimal footprint with no unnecessary dependencies.
-✅ **Chronos integration** – Hooks like [**useClock**](#useclock) and [**useTimer**](#usetimer) leverage the powerful [**Chronos**](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos) class for time, date, and timezone operations.
+- **Tree-shakable** – Only bundles the hooks you actually import.
+- **First-class TypeScript support** – Written in TypeScript for strict type safety and IntelliSense.
+- **Zero runtime bloat** – Minimal footprint with no unnecessary dependencies.
+- **Chronos integration** – Hooks like [**useClock**](#useclock) and [**useTimer**](#usetimer) leverage the powerful [**Chronos**](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos) class for time, date, and timezone operations.
 
 > 🧠 So far, only one utility class ([**Chronos**](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos)) from [**nhb-toolbox**](https://www.npmjs.com/package/nhb-toolbox) is used. This keeps the package extremely light while allowing seamless future integration of more utilities from [**nhb-toolbox**](https://www.npmjs.com/package/nhb-toolbox).
 
