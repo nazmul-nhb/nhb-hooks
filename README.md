@@ -770,6 +770,130 @@ console.log(formatTimer(duration, { showZero: true }));
 
 ---
 
+## useStopwatch
+
+High-precision stopwatch with millisecond accuracy. Uses timestamp-based timing to maintain precision even when browser timers are throttled in background tabs.
+
+### Import
+
+```ts
+import { useStopwatch } from 'nhb-hooks';
+```
+
+### Hook Signature
+
+```ts
+function useStopwatch(options?: StopwatchOptions): StopwatchResult;
+```
+
+### Examples
+
+```tsx
+// Basic usage
+const { elapsed, start, pause, reset, toggle } = useStopwatch();
+
+return (
+  <div>
+    <p>Elapsed: {(elapsed / 1000).toFixed(2)}s</p>
+    <button onClick={start}>Start</button>
+    <button onClick={pause}>Pause</button>
+    <button onClick={reset}>Reset</button>
+    <button onClick={toggle}>Toggle</button>
+  </div>
+);
+```
+
+```tsx
+// Auto start on mount
+const stopwatch = useStopwatch({ autoStart: true });
+```
+
+```tsx
+// Custom update interval (UI refresh rate)
+const stopwatch = useStopwatch({ interval: 50 }); // updates every 50ms
+```
+
+```tsx
+// Start with initial elapsed time
+const stopwatch = useStopwatch({ initialTime: 5000 }); // starts at 5 seconds
+```
+
+```tsx
+// Controlled pause via external state
+const [paused, setPaused] = useState(false);
+const { elapsed } = useStopwatch({ paused });
+
+return (
+  <button onClick={() => setPaused(!paused)}>
+    {paused ? 'Resume' : 'Pause'}
+  </button>
+);
+```
+
+```tsx
+// Reset with custom time
+const { reset } = useStopwatch();
+
+reset(2000); // reset to 2 seconds
+```
+
+### Options
+
+| Option         | Type               | Default  | Description                                                                 |
+| -------------- | ------------------ | -------- | --------------------------------------------------------------------------- |
+| `autoStart`    | `boolean`          | `false`  | Whether to start the stopwatch immediately on mount                         |
+| `interval`     | `number`           | `100`    | UI update interval in milliseconds (does not affect precision)              |
+| `initialTime`  | `number`           | `0`      | Initial elapsed time in milliseconds                                        |
+| `paused`       | `boolean`          | `false`  | External pause control – when `true`, the stopwatch remains paused          |
+
+### Notes for `useStopwatch`
+
+- **High Precision**: Uses `Date.now()` and accumulates elapsed time via offset, ensuring accuracy even if render intervals drift or browsers throttle timers in background tabs
+- **Interval Purpose**: The `interval` option only controls UI update frequency, **not** the actual timing precision
+- **Pause/Resume**: Elapsed time is accumulated seamlessly across multiple pause/resume cycles
+- **External Control**: The `paused` option allows controlling the stopwatch from parent component state
+
+**Common Use Cases**:
+
+- Timing user interactions (game playtime, task completion)
+- Performance measurement and benchmarking
+- Exercise/activity timers
+- Any scenario requiring millisecond-precision elapsed time tracking
+
+### Type Definitions
+
+```ts
+/** Options for `useStopwatch` */
+interface StopwatchOptions {
+  /** Start the stopwatch automatically when the hook mounts. @default false */
+  autoStart?: boolean;
+  /** Update interval in milliseconds. Controls UI refresh rate, not precision. @default 100 */
+  interval?: number;
+  /** Initial elapsed time in milliseconds. @default 0 */
+  initialTime?: number;
+  /** External pause control – when `true`, the stopwatch remains paused. @default false */
+  paused?: boolean;
+}
+
+/** Result of `useStopwatch` */
+interface StopwatchResult {
+  /** Elapsed time in milliseconds */
+  elapsed: number;
+  /** Indicates whether the stopwatch is currently running */
+  isRunning: boolean;
+  /** Starts or resumes the stopwatch */
+  start: () => void;
+  /** Pauses the stopwatch */
+  pause: () => void;
+  /** Resets the stopwatch to the provided time (defaults to 0) */
+  reset: (time?: number) => void;
+  /** Toggles the running state */
+  toggle: () => void;
+}
+```
+
+---
+
 ## useToggle
 
 Clean state toggling between two values.
