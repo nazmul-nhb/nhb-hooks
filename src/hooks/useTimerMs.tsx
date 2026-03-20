@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { TimerOptions, TimerResult } from '../types';
 
 /**
- * Countdown timer hook with millisecond precision.
+ * * Hook to create a countdown timer with millisecond precision.
  *
  * @remarks
  * - Internally uses a deadline-based approach (`Date.now()`) for accurate timing.

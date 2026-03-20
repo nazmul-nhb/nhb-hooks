@@ -296,3 +296,81 @@ export interface TimerResult {
 	 */
 	toggle: () => void;
 }
+
+/** Options for `useStopwatch` */
+export interface StopwatchOptions {
+	/**
+	 * Start the stopwatch automatically when the hook mounts.
+	 *
+	 * @default false
+	 */
+	autoStart?: boolean;
+
+	/**
+	 * Update interval in milliseconds.
+	 *
+	 * This controls how often the UI is refreshed, not the actual stopwatch precision.
+	 *
+	 * @default 100
+	 */
+	interval?: number;
+
+	/**
+	 * Initial elapsed time in milliseconds.
+	 */
+	initialTime?: number;
+
+	/**
+	 * External pause control.
+	 *
+	 * When `false`, the stopwatch starts or resumes. When `true`, the stopwatch pauses and preserves the current elapsed time.
+	 *
+	 * @default false
+	 */
+	paused?: boolean;
+}
+
+/** Result of `useStopwatch` */
+export interface StopwatchResult {
+	/**
+	 * Elapsed time in milliseconds.
+	 *
+	 * This value increases while the stopwatch is running and remains constant while paused.
+	 */
+	elapsed: number;
+
+	/**
+	 * Indicates whether the stopwatch is currently running.
+	 */
+	isRunning: boolean;
+
+	/**
+	 * Starts or resumes the stopwatch.
+	 *
+	 * If the stopwatch is already running, this function does nothing.
+	 */
+	start: () => void;
+
+	/**
+	 * Pauses the stopwatch.
+	 *
+	 * The current elapsed time is preserved and can be resumed later with {@link start}.
+	 */
+	pause: () => void;
+
+	/**
+	 * Resets the stopwatch.
+	 *
+	 * Stops the stopwatch and sets the elapsed time to the provided value.
+	 *
+	 * @param time - Optional elapsed time in milliseconds. Defaults to `0`.
+	 */
+	reset: (time?: number) => void;
+
+	/**
+	 * Toggles the running state of the stopwatch.
+	 *
+	 * If running, pauses the stopwatch. If paused, starts or resumes it.
+	 */
+	toggle: () => void;
+}
