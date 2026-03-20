@@ -770,6 +770,166 @@ console.log(formatTimer(duration, { showZero: true }));
 
 ---
 
+## useTimerMs
+
+Countdown timer with millisecond precision. Uses deadline-based timing for accurate countdowns, even when browser timers are throttled.
+
+### Import
+
+```ts
+import { useTimerMs } from 'nhb-hooks';
+```
+
+### Hook Signature
+
+```ts
+function useTimerMs(time: TimeWithUnit | Numeric, options?: TimerOptions): TimerResult;
+```
+
+### Examples
+
+```tsx
+// Basic usage – countdown from 5 seconds
+const { remaining, start, pause, reset } = useTimerMs(5);
+
+return (
+  <div>
+    <p>Remaining: {(remaining / 1000).toFixed(2)}s</p>
+    <button onClick={start}>Start</button>
+    <button onClick={pause}>Pause</button>
+    <button onClick={reset}>Reset</button>
+  </div>
+);
+```
+
+```tsx
+// Explicit milliseconds
+const timer = useTimerMs('1500ms');
+```
+
+```tsx
+// Auto start on mount
+const timer = useTimerMs('10s', { autoStart: true });
+```
+
+```tsx
+// Resume from existing remaining time
+const timer = useTimerMs('30s', {
+  initialRemainingMs: 15000, // start with 15 seconds remaining
+});
+```
+
+```tsx
+// Controlled pause via external state
+const [paused, setPaused] = useState(false);
+const { remaining } = useTimerMs(30, { paused });
+
+return (
+  <button onClick={() => setPaused(!paused)}>
+    {paused ? 'Resume' : 'Pause'}
+  </button>
+);
+```
+
+```tsx
+// Reset with custom value
+const { reset } = useTimerMs('5m');
+
+reset(120000); // reset to 2 minutes
+```
+
+### Options
+
+| Option               | Type      | Default     | Description                                                             |
+| -------------------- | --------- | ----------- | ----------------------------------------------------------------------- |
+| `autoStart`          | `boolean` | `false`     | Whether to start the timer immediately on mount                         |
+| `interval`           | `number`  | `100`       | UI update interval in milliseconds (does not affect countdown accuracy) |
+| `initialRemainingMs` | `number`  | `undefined` | Initial remaining time in milliseconds (overrides parsed `time` value)  |
+| `paused`             | `boolean` | `false`     | External pause control – when `true`, the timer remains paused          |
+
+### Time Parsing Behavior
+
+The `time` argument is parsed using [`parseMSec`](https://toolbox.nazmul-nhb.dev/docs/utilities/date/parse-time#parsemsec) from `nhb-toolbox`:
+
+| Input Type    | Interpretation             | Examples                               |
+| ------------- | -------------------------- | -------------------------------------- |
+| `number`      | Interpreted as **seconds** | `5` → `5s` or `5000ms`                 |
+| `string`      | Supports explicit units    | `'1500ms'`, `'2s'`, `'1m'`, `'30m'`    |
+| Invalid input | Normalized to `0`          | `null`, `undefined`, `'invalid'` → `0` |
+
+**Best Practice**: If you already have milliseconds, prefer explicit units:
+
+```ts
+// Recommended
+useTimerMs('1500ms');
+
+// Works but less explicit
+useTimerMs(1.5);
+```
+
+### Notes for `useTimerMs`
+
+- **High Precision**: Uses deadline-based approach (`Date.now()`) for accurate timing, independent of render interval frequency
+- **Interval Purpose**: The `interval` option only controls UI refresh rate, not countdown accuracy
+- **Auto Completion**: Automatically stops when remaining time reaches `0`
+- **External Control**: The `paused` option allows controlling the timer from parent component state
+- **Reset Flexibility**: The `reset()` method accepts an optional custom time value
+
+**Common Use Cases**:
+
+- Session timeouts and auto-logout warnings
+- Quiz timers with countdown
+- Limited-time offers and flash sales
+- Any scenario requiring precise countdown timing
+
+### Comparison with `useTimer`
+
+| Feature          | `useTimer`                                       | `useTimerMs`                                   |
+| ---------------- | ------------------------------------------------ | ---------------------------------------------- |
+| **Precision**    | Second-level (updates every 1000ms)              | Millisecond-level (configurable interval)      |
+| **Output**       | Structured `TimeDuration` object                 | Raw milliseconds (`remaining`)                 |
+| **Dependencies** | Requires `Chronos` from `nhb-toolbox`            | Uses lightweight `parseMSec` helper            |
+| **Formatting**   | Built-in `formatTimer` utility                   | Manual formatting required                     |
+| **Best For**     | Human-readable countdowns (days, hours, minutes) | Precise timing needs (animations, performance) |
+
+> 💡 Tips:
+> **Choose `useTimerMs`** when you need millisecond precision or want to build custom formatting.  
+> **Choose `useTimer`** when you need structured duration objects (days, hours, minutes) with built-in formatting.
+
+### Type Definitions
+
+```ts
+/** Options for `useTimerMs` */
+interface TimerOptions {
+  /** Start the countdown automatically when the hook mounts. @default false */
+  autoStart?: boolean;
+  /** Update interval in milliseconds. Controls UI refresh rate, not accuracy. @default 100 */
+  interval?: number;
+  /** Initial remaining time in milliseconds (overrides parsed `time` value) */
+  initialRemainingMs?: number;
+  /** External pause control – when `true`, the timer remains paused. @default false */
+  paused?: boolean;
+}
+
+/** Result of `useTimerMs` */
+interface TimerResult {
+  /** Remaining countdown time in milliseconds */
+  remaining: number;
+  /** Indicates whether the timer is currently running */
+  isRunning: boolean;
+  /** Starts or resumes the countdown */
+  start: () => void;
+  /** Pauses the countdown */
+  pause: () => void;
+  /** Resets the timer to the provided time (defaults to initial value) */
+  reset: (time?: number) => void;
+  /** Toggles the running state */
+  toggle: () => void;
+}
+```
+
+---
+
 ## useStopwatch
 
 High-precision stopwatch with millisecond accuracy. Uses timestamp-based timing to maintain precision even when browser timers are throttled in background tabs.
@@ -839,12 +999,12 @@ reset(2000); // reset to 2 seconds
 
 ### Options
 
-| Option         | Type               | Default  | Description                                                                 |
-| -------------- | ------------------ | -------- | --------------------------------------------------------------------------- |
-| `autoStart`    | `boolean`          | `false`  | Whether to start the stopwatch immediately on mount                         |
-| `interval`     | `number`           | `100`    | UI update interval in milliseconds (does not affect precision)              |
-| `initialTime`  | `number`           | `0`      | Initial elapsed time in milliseconds                                        |
-| `paused`       | `boolean`          | `false`  | External pause control – when `true`, the stopwatch remains paused          |
+| Option        | Type      | Default | Description                                                        |
+| ------------- | --------- | ------- | ------------------------------------------------------------------ |
+| `autoStart`   | `boolean` | `false` | Whether to start the stopwatch immediately on mount                |
+| `interval`    | `number`  | `100`   | UI update interval in milliseconds (does not affect precision)     |
+| `initialTime` | `number`  | `0`     | Initial elapsed time in milliseconds                               |
+| `paused`      | `boolean` | `false` | External pause control – when `true`, the stopwatch remains paused |
 
 ### Notes for `useStopwatch`
 
