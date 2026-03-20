@@ -1,124 +1,158 @@
 {
-  "name": "nhb-hooks",
-  "version": "1.40.21",
-  "type": "module",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "description": "A lightweight, tree-shakable collection of essential React hooks for common use cases.",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    },
-    "./types": {
-      "types": "./dist/types.d.ts",
-      "default": "./dist/types.d.ts"
-    }
-  },
-  "typesVersions": {
-    "*": {
-      "types": [
-        "dist/types.d.ts"
-      ]
-    }
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "files": [
-    "dist",
-    "assets"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nazmul-nhb/nhb-hooks.git"
-  },
-  "sideEffects": false,
-  "scripts": {
-    "dev": "vite",
-    "build": "nhb-build",
-    "prepublishOnly": "vite build && rollup -c",
-    "lint": "nhb-lint",
-    "fix": "nhb-fix",
-    "format": "nhb-format",
-    "commit": "nhb-commit",
-    "count": "nhb-count",
-    "test": "vitest run --coverage"
-  },
-  "keywords": [
-    "react",
-    "hooks",
-    "react-hooks",
-    "typescript",
-    "clock",
-    "timer",
-    "breakpoint",
-    "toggle",
-    "debounce",
-    "media-query",
-    "image-validation",
-    "copy-text-to-clipboard",
-    "document-title",
-    "click-outside",
-    "hydration-error",
-    "resize-window",
-    "mount"
-  ],
-  "author": {
-    "name": "Nazmul Hassan",
-    "email": "nazmulnhb@gmail.com",
-    "url": "https://nazmul-nhb.dev"
-  },
-  "license": "MIT",
-  "packageManager": "pnpm@10.23.0+sha512.21c4e5698002ade97e4efe8b8b4a89a8de3c85a37919f957e7a0f30f38fbc5bbdd05980ffe29179b2fb6e6e691242e098d945d1601772cad0fef5fb6411e2a4b",
-  "peerDependencies": {
-    "nhb-toolbox": ">=4.26.50",
-    "react": ">=18.3.1 || ^19.0.0",
-    "react-dom": ">=18.3.1 || ^19.0.0"
-  },
-  "peerDependenciesMeta": {
-    "nhb-toolbox": {
-      "optional": false
-    },
-    "react": {
-      "optional": false
-    },
-    "react-dom": {
-      "optional": false
-    }
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.39.1",
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.0",
-    "@testing-library/user-event": "^14.6.1",
-    "@types/node": "^24.10.1",
-    "@types/react": "^19.2.6",
-    "@types/react-dom": "^19.2.3",
-    "@typescript-eslint/eslint-plugin": "^8.47.0",
-    "@typescript-eslint/parser": "^8.47.0",
-    "@vitejs/plugin-react": "^5.1.1",
-    "@vitest/coverage-v8": "4.0.13",
-    "@vitest/ui": "^4.0.13",
-    "eslint": "^9.39.1",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.4.24",
-    "globals": "^16.5.0",
-    "jsdom": "^27.2.0",
-    "nhb-scripts": "^1.8.88",
-    "nhb-toolbox": "^4.26.74",
-    "prettier": "^3.6.2",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "rollup": "^4.53.3",
-    "rollup-plugin-dts": "^6.2.3",
-    "rollup-plugin-visualizer": "^6.0.5",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.47.0",
-    "vite": "^7.2.4",
-    "vitest": "^4.0.13"
-  }
+	"name": "nhb-hooks",
+	"version": "1.40.21",
+	"type": "module",
+	"main": "dist/index.js",
+	"module": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"description": "A lightweight, tree-shakable collection of essential React hooks for common use cases.",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		},
+		"./types": {
+			"types": "./dist/types.d.ts",
+			"default": "./dist/types.d.ts"
+		}
+	},
+	"typesVersions": {
+		"*": {
+			"types": [
+				"dist/types.d.ts"
+			]
+		}
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"files": [
+		"dist",
+		"assets"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nazmul-nhb/nhb-hooks.git"
+	},
+	"sideEffects": false,
+	"scripts": {
+		"dev": "vite",
+		"build": "nhb-build",
+		"prepublishOnly": "vite build && rollup -c",
+		"lint": "nhb-lint",
+		"fix": "nhb-fix",
+		"format": "nhb-format",
+		"commit": "nhb-commit",
+		"count": "nhb-count",
+		"test": "vitest run --coverage"
+	},
+	"keywords": [
+		"react",
+		"hooks",
+		"react-hooks",
+		"typescript",
+		"clock",
+		"timer",
+		"breakpoint",
+		"toggle",
+		"debounce",
+		"media-query",
+		"image-validation",
+		"copy-text-to-clipboard",
+		"document-title",
+		"click-outside",
+		"hydration-error",
+		"resize-window",
+		"mount"
+	],
+	"author": {
+		"name": "Nazmul Hassan",
+		"email": "nazmulnhb@gmail.com",
+		"url": "https://nazmul-nhb.dev"
+	},
+	"maintainers": [
+		{
+			"name": "Nazmul Hassan",
+			"email": "nazmulnhb@gmail.com",
+			"url": "https://nazmul-nhb.dev"
+		},
+		{
+			"name": "Nazmul Hassan",
+			"email": "nazmulnhb007@yahoo.com",
+			"url": "https://nazmul-nhb.dev"
+		},
+		{
+			"name": "Mehedi Hasan",
+			"email": "imehedihasan95@gmail.com",
+			"url": "https://github.com/mehedihasan95"
+		}
+	],
+	"contributors": [
+		{
+			"name": "Nazmul Hassan",
+			"email": "nazmulnhb@gmail.com",
+			"url": "https://nazmul-nhb.dev"
+		},
+		{
+			"name": "Nazmul Hassan",
+			"email": "nazmulnhb007@yahoo.com",
+			"url": "https://nazmul-nhb.dev"
+		},
+		{
+			"name": "Mehedi Hasan",
+			"email": "imehedihasan95@gmail.com",
+			"url": "https://github.com/mehedihasan95"
+		}
+	],
+	"license": "MIT",
+	"packageManager": "pnpm@10.32.1+sha512.a706938f0e89ac1456b6563eab4edf1d1faf3368d1191fc5c59790e96dc918e4456ab2e67d613de1043d2e8c81f87303e6b40d4ffeca9df15ef1ad567348f2be",
+	"peerDependencies": {
+		"nhb-toolbox": ">=4.28.80",
+		"react": ">=18.3.1 || ^19.0.0",
+		"react-dom": ">=18.3.1 || ^19.0.0"
+	},
+	"peerDependenciesMeta": {
+		"nhb-toolbox": {
+			"optional": false
+		},
+		"react": {
+			"optional": false
+		},
+		"react-dom": {
+			"optional": false
+		}
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.39.4",
+		"@testing-library/jest-dom": "^6.9.1",
+		"@testing-library/react": "^16.3.2",
+		"@testing-library/user-event": "^14.6.1",
+		"@types/node": "^25.5.0",
+		"@types/react": "^19.2.14",
+		"@types/react-dom": "^19.2.3",
+		"@typescript-eslint/eslint-plugin": "^8.57.1",
+		"@typescript-eslint/parser": "^8.57.1",
+		"@vitejs/plugin-react": "^6.0.1",
+		"@vitest/coverage-v8": "4.1.0",
+		"@vitest/ui": "^4.1.0",
+		"eslint": "^9.39.4",
+		"eslint-plugin-react": "^7.37.5",
+		"eslint-plugin-react-hooks": "^7.0.1",
+		"eslint-plugin-react-refresh": "^0.5.2",
+		"globals": "^17.4.0",
+		"jsdom": "^29.0.1",
+		"nhb-scripts": "^1.9.2",
+		"nhb-toolbox": "^4.28.80",
+		"prettier": "^3.8.1",
+		"react": "^19.2.4",
+		"react-dom": "^19.2.4",
+		"rollup": "^4.59.0",
+		"rollup-plugin-dts": "^6.4.0",
+		"rollup-plugin-visualizer": "^7.0.1",
+		"typescript": "^5.9.3",
+		"typescript-eslint": "^8.57.1",
+		"vite": "^8.0.1",
+		"vitest": "^4.1.0"
+	}
 }
