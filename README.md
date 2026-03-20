@@ -104,6 +104,8 @@ yarn add nhb-hooks nhb-toolbox
 - [useDebouncedValue](#usedebouncedvalue)
 - [useClock](#useclock)
 - [useTimer](#usetimer)
+- [useTimerMs](#usetimerms)
+- [useStopwatch](#usestopwatch)
 - [useToggle](#usetoggle)
 - [useValidImage](#usevalidimage)
 - [useWindowResize](#usewindowresize)
@@ -853,7 +855,7 @@ The `time` argument is parsed using [`parseMSec`](https://toolbox.nazmul-nhb.dev
 
 | Input Type    | Interpretation             | Examples                               |
 | ------------- | -------------------------- | -------------------------------------- |
-| `number`      | Interpreted as **seconds** | `5` → `5s` or `5000ms`                 |
+| `number`      | Interpreted as **seconds** | `5` or `"5"` → `5s` or `5000ms`        |
 | `string`      | Supports explicit units    | `'1500ms'`, `'2s'`, `'1m'`, `'30m'`    |
 | Invalid input | Normalized to `0`          | `null`, `undefined`, `'invalid'` → `0` |
 
