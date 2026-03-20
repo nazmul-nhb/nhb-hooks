@@ -18,6 +18,8 @@ export function useTimer(initialDuration: number, unit: TimerUnit): TimeDuration
  *
  * @param time - The target time or date to count down to.
  * @returns Remaining time as a structured duration object.
+ *
+ * @remarks For timer hook with millisecond precision, consider using {@link https://github.com/nazmul-nhb/nhb-hooks?tab=readme-ov-file#usetimer useTimerMs}
  */
 export function useTimer(time: ChronosInput): TimeDuration;
 
@@ -27,6 +29,8 @@ export function useTimer(time: ChronosInput): TimeDuration;
  * @param time - Either a number representing a duration or a specific date/time.
  * @param unit - Optional time unit if the first argument is a number.
  * @returns Remaining time as a structured duration object.
+ *
+ * @remarks For timer hook with millisecond precision, consider using {@link https://github.com/nazmul-nhb/nhb-hooks?tab=readme-ov-file#usetimer useTimerMs}
  */
 export function useTimer(time: ChronosInput, unit?: TimerUnit): TimeDuration {
 	useMemo(() => {

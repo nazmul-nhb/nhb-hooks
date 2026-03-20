@@ -216,3 +216,83 @@ export type WebStorage<T> = {
 	 */
 	clear: () => void;
 };
+
+/** Options for `useTimerMs` */
+export interface TimerOptions {
+	/**
+	 * Start the countdown automatically when the hook mounts.
+	 *
+	 * @default false
+	 */
+	autoStart?: boolean;
+
+	/**
+	 * Update interval in milliseconds.
+	 *
+	 * This controls how often the UI is refreshed, not the actual countdown accuracy.
+	 *
+	 * @default 100
+	 */
+	interval?: number;
+
+	/**
+	 * Initial remaining time in milliseconds.
+	 *
+	 * Use this when you want to resume from a precomputed value instead of deriving the starting point from `time`.
+	 */
+	initialRemainingMs?: number;
+
+	/**
+	 * External pause control.
+	 *
+	 * When `false`, the timer will start or resume. When `true`, the timer pauses and preserves the current remaining time.
+	 *
+	 * @default false
+	 */
+	paused?: boolean;
+}
+
+/** Result of `useTimerMs` */
+export interface TimerResult {
+	/**
+	 * Remaining countdown time in milliseconds.
+	 */
+	remaining: number;
+
+	/**
+	 * Indicates whether the timer is currently running.
+	 */
+	isRunning: boolean;
+
+	/**
+	 * Starts or resumes the countdown.
+	 *
+	 * If the timer is already running, this function does nothing.
+	 */
+	start: () => void;
+
+	/**
+	 * Pauses the countdown.
+	 *
+	 * The current remaining time is preserved and can be resumed later with
+	 * {@link start}.
+	 */
+	pause: () => void;
+
+	/**
+	 * Resets the timer.
+	 *
+	 * Stops the countdown and sets the remaining time to the provided value.
+	 * When no value is passed, the timer resets to the initial countdown value resolved from `time` or `initialRemainingMs`.
+	 *
+	 * @param time - Optional remaining time in milliseconds.
+	 */
+	reset: (time?: number) => void;
+
+	/**
+	 * Toggles the running state of the timer.
+	 *
+	 * If running, pauses the timer. If paused, starts or resumes it.
+	 */
+	toggle: () => void;
+}
