@@ -591,7 +591,7 @@ interface UseClockResult {
 
 ## useTimer
 
-Creates a countdown timer. Requires [`Chronos` from `nhb-toolbox`](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos) (automatically tree-shaken if not used). Install it separately. Create countdown timers with minimal setup. Also provides a duration formatter utility: `formatTimer`.
+Creates a countdown timer. Create countdown timers with minimal setup. Also provides a duration formatter utility: `formatTimer`.
 
 ### Import
 
@@ -675,6 +675,8 @@ function SessionTimeout() {
 - **Duration Formatter**: `nhb-hooks` also provides utility to format the returned `TimeDuration` object: [`formatTimer`](#formattimer)
 
 **Important**:
+
+> Requires [`Chronos` from `nhb-toolbox`](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos) (automatically tree-shaken if not used). Install it separately.
 
 - Install required package: `npm i nhb-toolbox`
 - Tree-shakable - `Chronos` is bundled only if the [hook](#usetimer) is used
@@ -877,25 +879,33 @@ useTimerMs(1.5);
 - **External Control**: The `paused` option allows controlling the timer from parent component state
 - **Reset Flexibility**: The `reset()` method accepts an optional custom time value
 
+**Important**:
+
+> Requires [`parseMSec`](https://toolbox.nazmul-nhb.dev/docs/utilities/date/parse-time#parsemsec) (automatically tree-shaken if not used). Install it separately.
+
+- Install required package: `npm i nhb-toolbox`
+- Tree-shakable - `parseMSec` is bundled only if the [hook](#usetimerms) is used
+
 **Common Use Cases**:
 
 - Session timeouts and auto-logout warnings
 - Quiz timers with countdown
-- Limited-time offers and flash sales
+- Limited-time offers and flash sales (use [`useTimer`](#usetimer) for countdown to a specific date)
 - Any scenario requiring precise countdown timing
 
-### Comparison with `useTimer`
+### Comparison with [`useTimer`](#usetimer)
 
-| Feature          | `useTimer`                                       | `useTimerMs`                                   |
-| ---------------- | ------------------------------------------------ | ---------------------------------------------- |
-| **Precision**    | Second-level (updates every 1000ms)              | Millisecond-level (configurable interval)      |
-| **Output**       | Structured `TimeDuration` object                 | Raw milliseconds (`remaining`)                 |
-| **Dependencies** | Requires `Chronos` from `nhb-toolbox`            | Uses lightweight `parseMSec` helper            |
-| **Formatting**   | Built-in `formatTimer` utility                   | Manual formatting required                     |
-| **Best For**     | Human-readable countdowns (days, hours, minutes) | Precise timing needs (animations, performance) |
+| Feature          | `useTimer`                                       | `useTimerMs`                                            |
+| ---------------- | ------------------------------------------------ | ------------------------------------------------------- |
+| **Precision**    | Second-level (updates every 1000ms)              | Millisecond-level (configurable interval)               |
+| **Output**       | Structured `TimeDuration` object                 | Raw milliseconds (`remaining`)                          |
+| **Dependencies** | Requires `Chronos` from `nhb-toolbox`            | Uses lightweight `parseMSec` helper                     |
+| **Formatting**   | Built-in `formatTimer` utility                   | Manual formatting required                              |
+| **Control**      | Does not allow full control                      | Allowes full control: when and how starts/pauses/resets |
+| **Best For**     | Human-readable countdowns (days, hours, minutes) | Precise timing needs (animations, performance)          |
 
 > 💡 Tips:
-> **Choose `useTimerMs`** when you need millisecond precision or want to build custom formatting.  
+> **Choose `useTimerMs`** when you need millisecond precision with full control or want to build custom formatting.  
 > **Choose `useTimer`** when you need structured duration objects (days, hours, minutes) with built-in formatting.
 
 ### Type Definitions

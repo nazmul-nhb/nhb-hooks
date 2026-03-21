@@ -62,9 +62,10 @@ export function useStopwatch(options: StopwatchOptions = {}): StopwatchResult {
 	const { autoStart = false, interval = 100, initialTime = 0, paused = false } = options;
 
 	const [elapsed, setElapsed] = useState(initialTime);
-	const [isRunning, setIsRunning] = useState(autoStart);
 
-	const runningRef = useRef(autoStart);
+	const [isRunning, setIsRunning] = useState(false);
+	const runningRef = useRef(false);
+
 	const startTimeRef = useRef<number | null>(null);
 	const offsetRef = useRef(initialTime);
 	const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -73,7 +74,7 @@ export function useStopwatch(options: StopwatchOptions = {}): StopwatchResult {
 	 * Timer tick.
 	 */
 	const tick = useCallback(() => {
-		if (!runningRef.current || startTimeRef.current === null) return;
+		if (!runningRef.current || startTimeRef.current == null) return;
 
 		setElapsed(offsetRef.current + (Date.now() - startTimeRef.current));
 	}, []);
@@ -148,9 +149,9 @@ export function useStopwatch(options: StopwatchOptions = {}): StopwatchResult {
 		if (!isBoolean(paused)) return;
 
 		if (paused) {
-			queueMicrotask(() => pause());
+			queueMicrotask(pause);
 		} else {
-			queueMicrotask(() => start());
+			queueMicrotask(start);
 		}
 	}, [paused, pause, start]);
 
@@ -158,7 +159,7 @@ export function useStopwatch(options: StopwatchOptions = {}): StopwatchResult {
 	 * Auto start (run once).
 	 */
 	useEffect(() => {
-		if (autoStart) queueMicrotask(() => start());
+		if (autoStart) queueMicrotask(start);
 	}, [autoStart, start]);
 
 	return useMemo(

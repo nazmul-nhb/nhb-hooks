@@ -92,9 +92,10 @@ export function useTimerMs(time: TimeWithUnit | Numeric, options?: TimerOptions)
 	}, [initialMs, initialRemainingMs]);
 
 	const [remainingMs, setRemainingMs] = useState(resolvedInitialMs);
-	const [isRunning, setIsRunning] = useState(autoStart);
 
-	const runningRef = useRef(autoStart);
+	const [isRunning, setIsRunning] = useState(false);
+	const runningRef = useRef(false);
+
 	const deadlineRef = useRef<number | null>(null);
 	const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -208,9 +209,9 @@ export function useTimerMs(time: TimeWithUnit | Numeric, options?: TimerOptions)
 		if (!isBoolean(paused)) return;
 
 		if (paused) {
-			queueMicrotask(() => pause());
+			queueMicrotask(pause);
 		} else {
-			queueMicrotask(() => start());
+			queueMicrotask(start);
 		}
 	}, [paused, pause, start]);
 
@@ -218,7 +219,7 @@ export function useTimerMs(time: TimeWithUnit | Numeric, options?: TimerOptions)
 	 * Auto start (run once).
 	 */
 	useEffect(() => {
-		if (autoStart) queueMicrotask(() => start());
+		if (autoStart) queueMicrotask(start);
 	}, [autoStart, start]);
 
 	return useMemo(
