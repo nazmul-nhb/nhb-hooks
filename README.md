@@ -897,14 +897,14 @@ useTimerMs(1.5);
 
 ### Comparison with [`useTimer`](#usetimer)
 
-| Feature          | `useTimer`                                       | `useTimerMs`                                            |
-| ---------------- | ------------------------------------------------ | ------------------------------------------------------- |
-| **Precision**    | Second-level (updates every 1000ms)              | Millisecond-level (configurable interval)               |
-| **Output**       | Structured `TimeDuration` object                 | Raw milliseconds (`remaining`)                          |
-| **Dependencies** | Requires `Chronos` from `nhb-toolbox`            | Uses lightweight `parseMSec` helper                     |
-| **Formatting**   | Built-in `formatTimer` utility                   | Manual formatting required                              |
-| **Control**      | Does not allow full control                      | Allowes full control: when and how starts/pauses/resets |
-| **Best For**     | Human-readable countdowns (days, hours, minutes) | Precise timing needs (animations, performance)          |
+| Feature          | `useTimer`                                       | `useTimerMs`                                           |
+| ---------------- | ------------------------------------------------ | ------------------------------------------------------ |
+| **Precision**    | Second-level (updates every 1000ms)              | Millisecond-level (configurable interval)              |
+| **Output**       | Structured `TimeDuration` object                 | Raw milliseconds (`remaining`)                         |
+| **Dependencies** | Requires `Chronos` from `nhb-toolbox`            | Uses lightweight `parseMSec` helper                    |
+| **Formatting**   | Built-in `formatTimer` utility                   | Manual formatting required                             |
+| **Control**      | Does not allow full control                      | Allows full control: when and how starts/pauses/resets |
+| **Best For**     | Human-readable countdowns (days, hours, minutes) | Precise timing needs (animations, performance)         |
 
 > 💡 Tips:
 > **Choose `useTimerMs`** when you need millisecond precision with full control or want to build custom formatting.  
