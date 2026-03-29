@@ -10,8 +10,8 @@
   <a href="https://www.npmjs.com/package/nhb-hooks" aria-label="Version">
     <img src="https://img.shields.io/npm/v/nhb-hooks.svg?label=NPM&style=flat&color=teal&logo=npm" alt="Latest Version" />
   </a>
-  <a href="https://bundlephobia.com/result?p=nhb-hooks" aria-label="Bundle size">
-    <img src="https://img.shields.io/bundlephobia/minzip/nhb-hooks?style=flat&color=purple&label=SIZE&logo=nodedotjs" alt="Bundle Size" />
+  <a href="https://bundlejs.com/?q=nhb-hooks" aria-label="Bundle Size">
+    <img src="https://deno.bundlejs.com/badge?q=nhb-hooks" alt="Bundle Size" />
   </a>
 
   <!-- Project Metadata -->
