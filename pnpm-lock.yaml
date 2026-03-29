@@ -66,8 +66,8 @@ importers:
         specifier: ^1.9.2
         version: 1.9.2
       nhb-toolbox:
-        specifier: ^4.28.80
-        version: 4.28.80
+        specifier: ^4.29.10
+        version: 4.29.10
       prettier:
         specifier: ^3.8.1
         version: 3.8.1
@@ -1775,8 +1775,8 @@ packages:
     engines: {node: '>=22'}
     hasBin: true
 
-  nhb-toolbox@4.28.80:
-    resolution: {integrity: sha512-r79EGgHCUsGn2QAqbMhsmiOK4PwU3cScAGZNBQMKT0nt348kSzmFJBb79bM8bEn7eLVdSONhhAAnb634DiF0qg==}
+  nhb-toolbox@4.29.10:
+    resolution: {integrity: sha512-qG0MpmGrmCg3oOiTjdmXxsXRV8e+Fndr73ST47xP0EtFg6nUXQnmcFicTKWGJMgjgTOH0B3fWUxHoL86P2quhw==}
 
   node-exports-info@1.6.0:
     resolution: {integrity: sha512-pyFS63ptit/P5WqUkt+UUfe+4oevH+bFeIiPPdfb0pFeYEu/1ELnJu5l+5EcTKYL5M7zaAa7S8ddywgXypqKCw==}
@@ -4207,14 +4207,14 @@ snapshots:
       execa: 9.6.1
       globby: 16.1.1
       minimist: 1.2.8
-      nhb-toolbox: 4.28.80
+      nhb-toolbox: 4.29.10
       progress-estimator: 0.3.1
       rimraf: 6.1.3
       semver: 7.7.4
       type-fest: 5.5.0
       typescript: 5.9.3
 
-  nhb-toolbox@4.28.80: {}
+  nhb-toolbox@4.29.10: {}
 
   node-exports-info@1.6.0:
     dependencies:
