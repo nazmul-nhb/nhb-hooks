@@ -1596,8 +1596,11 @@ settings.clear();
 
 - `key`: Unique key to identify the stored value (required)
 - `type`: Storage type - `'local'` (default) or `'session'`
+- `defaultValue`: Optional default value to initialize the storage with
 - `serialize`: Custom function to convert value to string (default: `JSON.stringify`)
 - `deserialize`: Custom function to parse stored string back to type (default: `JSON.parse`)
+
+> No need to pass generic if you provide a `defaultValue`, as TypeScript can infer the type from it. If generic is passed for `T`, `defaultValue` must be provided and must match the type `T`.
 
 ### Notes for `useStorage`
 
@@ -1618,25 +1621,29 @@ settings.clear();
 
 ```ts
 /** Options for `useStorage` hook. */
-export type StorageOptions<T> = {
-  /** Key to store the value with in local/session storage. */
-  key: string;
-  /** Storage type to use (`localStorage`/`sessionStorage`). Defaults to `'local'`. */
-  type?: 'local' | 'session';
-  /**
-   * Optional serializer function to convert the value of type `T` to a string. 
-   * Defaults to `JSON.stringify`.
-   */
-  serialize?: (value: T) => string;
-  /**
-   * Optional deserializer function to convert the stored value back to type `T`.
-   * Defaults to `JSON.parse`.
-   */
-  deserialize?: (value: string) => T;
+type StorageOptions<T, D extends Maybe<T> = undefined> = {
+ /** * Key to store the value with in local/session storage. */
+ key: string;
+ /** * Storage type to use (`localStorage`/`sessionStorage`). Defaults to `'local'`. */
+ type?: 'local' | 'session';
+ /** * Optional default value to initialize the storage with if no value is found. */
+ defaultValue?: D;
+ /**
+  * * Optional serializer function to convert the value of type `T` to a string. Defaults to `JSON.stringify`.
+  * @param value Value to serialize.
+  * @returns Serialized/stringified value.
+  */
+ serialize?: (value: T) => string;
+ /**
+  * * Optional deserializer function to convert the stored value back to type `T`. Defaults to `JSON.parse`.
+  * @param value Value to deserialize/parse to its actual type.
+  * @returns Parsed/deserialized value.
+  */
+ deserialize?: (value: string) => T;
 };
 
 /** Return type of `useStorage` hook. */
-export type WebStorage<T> = {
+type WebStorage<T, D extends Maybe<T> = undefined> = {
   /** Current value from storage, or `null` if not set or on error. */
   value: T | null;
   /** Function to set value in specified storage. */

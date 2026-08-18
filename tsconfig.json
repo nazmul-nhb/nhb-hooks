@@ -2,20 +2,20 @@
 	"compilerOptions": {
 		"target": "ES2021",
 		"module": "ESNext",
-		// "lib": ["DOM", "DOM.Iterable", "ES2021"],
+		"lib": ["DOM", "DOM.Iterable", "ESNext"],
 		"declaration": true,
 		"declarationDir": "dist",
 		"outDir": "dist",
 		"jsx": "react-jsx",
 		"jsxImportSource": "react",
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"types": ["vite/client", "node"],
 		"strict": true,
-		"baseUrl": "./",
+		"rootDir": "src",
 		"paths": {
-			"*": ["src/*"]
+			"*": ["./src/*"]
 		},
 		"skipLibCheck": true,
 		"resolveJsonModule": true,

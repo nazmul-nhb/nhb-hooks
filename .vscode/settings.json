@@ -16,6 +16,41 @@
 		"**/coverage": true,
 		"**/.git": true
 	},
+	"biome.enabled": false,
+	"eslint.enable": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSaveMode": "file"
+	},
+	"[javascriptreact]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSaveMode": "file"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true,
+		"editor.formatOnSaveMode": "file"
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSaveMode": "file"
+	},
+	"[html]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSaveMode": "file"
+	},
+	"[css]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSaveMode": "file"
+	},
+	"[jsonc]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"prettier.enable": true,
 	"prettier.useTabs": true,
 	"prettier.tabWidth": 4,
 	"prettier.printWidth": 96,

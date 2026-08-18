@@ -16,7 +16,7 @@ export default defineConfig({
 		rollupOptions: {
 			treeshake: true,
 			external: [/^react/, /^nhb-toolbox/],
-			plugins: [visualizer({ open: true })],
+			plugins: [visualizer({ open: false })],
 			output: {
 				globals: {
 					react: 'React',
@@ -37,14 +37,3 @@ export default defineConfig({
 		setupFiles: './__test__/setup.ts',
 	},
 } as UserConfig);
-
-// {
-// 	external: [
-// 		'react',
-// 		'react-dom',
-// 		'react/jsx-runtime',
-// 		'nhb-toolbox',
-// 		'nhb-toolbox/plugins/timeZonePlugin',
-// 		'nhb-toolbox/constants',
-// 	];
-// }

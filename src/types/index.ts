@@ -7,6 +7,7 @@ import type {
 	UTCOffset,
 } from 'nhb-toolbox/date/types';
 import type { NumberRange } from 'nhb-toolbox/number/types';
+import type { Maybe } from 'nhb-toolbox/types';
 import type { Prettify } from 'nhb-toolbox/utils/types';
 import type { ReactNode } from 'react';
 import type { TITLE_POSITIONS } from '../constants';
@@ -179,11 +180,13 @@ export type TimerFormatOptions = {
 };
 
 /** Options for `useStorage` hook. */
-export type StorageOptions<T> = {
+export type StorageOptions<T, D extends Maybe<T> = undefined> = {
 	/** * Key to store the value with in local/session storage. */
 	key: string;
 	/** * Storage type to use (`localStorage`/`sessionStorage`). Defaults to `'local'`. */
 	type?: 'local' | 'session';
+	/** * Optional default value to initialize the storage with. */
+	defaultValue?: D;
 	/**
 	 * * Optional serializer function to convert the value of type `T` to a string. Defaults to `JSON.stringify`.
 	 * @param value Value to serialize.
@@ -199,9 +202,9 @@ export type StorageOptions<T> = {
 };
 
 /** * Return type of `useStorage` hook. */
-export type WebStorage<T> = {
+export type WebStorage<T, D extends Maybe<T> = undefined> = {
 	/** * Current value from storage, or `null` if not set or on error. */
-	value: T | null;
+	value: D extends NonNullable<T> ? D : T | null;
 	/**
 	 * * Function to set value in specified storage.
 	 * @param value Value to set in the storage.
