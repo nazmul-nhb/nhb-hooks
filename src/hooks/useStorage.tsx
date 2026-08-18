@@ -93,12 +93,12 @@ export function useStorage<T, D extends Maybe<T> = undefined>(
 			const item = storage.getItem(key);
 
 			queueMicrotask(() => {
-				setValue(item ? deserializer(item) : null);
+				setValue(item ? deserializer(item) : (value ?? null));
 			});
 		} catch {
 			queueMicrotask(() => setValue(null));
 		}
-	}, [isReady, key, deserializer, getStorage]);
+	}, [isReady, key, deserializer, getStorage, value]);
 
 	const setItem = useCallback(
 		($value: T) => {
