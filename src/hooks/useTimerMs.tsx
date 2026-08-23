@@ -16,10 +16,10 @@ import type { TimerOptions, TimerResult } from '../types';
  *
  * @returns Timer state and control methods
  *
- * - For a structured duration object, consider using {@link https://toolbox.nazmul-nhb.dev/docs/classes/Chronos Chronos} powered {@link https://github.com/nazmul-nhb/nhb-hooks?tab=readme-ov-file#usetimer useTimer} without any explicit controls
+ * - For a structured duration object, consider using {@link https://nhb-toolbox.vercel.app/docs/classes/Chronos Chronos} powered {@link https://github.com/nazmul-nhb/nhb-hooks?tab=readme-ov-file#usetimer useTimer} without any explicit controls
  *
  * ### Time parsing behavior
- * The `time` argument is parsed using {@link https://toolbox.nazmul-nhb.dev/docs/utilities/date/parse-time#parsemsec parseMSec} from `nhb-toolbox`:
+ * The `time` argument is parsed using {@link https://nhb-toolbox.vercel.app/docs/utilities/date/parse-time#parsemsec parseMSec} from `nhb-toolbox`:
  *
  * - {@link Numeric} values are interpreted as **seconds**
  *   - `useTimerMs(5)` or `useTimerMs('5')` or `useTimerMs('5s')` → `5s` or `5000ms`

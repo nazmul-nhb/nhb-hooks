@@ -53,12 +53,12 @@ A **lightweight**, **tree-shakable**, and **type-safe** collection of essential 
 Each hook is designed to be **independent**, **performant**, and **production-ready**, covering common real-world scenarios with minimal overhead.
 
 > 🧩 **Peer Dependency Notice**
-> This package depends on [**nhb-toolbox**](https://toolbox.nazmul-nhb.dev/), a modular utility library that provides foundational classes and utilities used internally by certain hooks.
+> This package depends on [**nhb-toolbox**](https://nhb-toolbox.vercel.app/), a modular utility library that provides foundational classes and utilities used internally by certain hooks.
 >
 > Specifically:
 >
-> - [**useClock**](#useclock) and [**useTimer**](#usetimer) rely on the [**Chronos**](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos) class from **nhb-toolbox** for accurate, timezone-aware date and time manipulation.
-> - [**useTimerMs**](#usetimerms) uses the [**parseMSec**](https://toolbox.nazmul-nhb.dev/docs/utilities/date/parse-time#parsemsec) utility from **nhb-toolbox** to flexibly parse time inputs.
+> - [**useClock**](#useclock) and [**useTimer**](#usetimer) rely on the [**Chronos**](https://nhb-toolbox.vercel.app/docs/classes/Chronos) class from **nhb-toolbox** for accurate, timezone-aware date and time manipulation.
+> - [**useTimerMs**](#usetimerms) uses the [**parseMSec**](https://nhb-toolbox.vercel.app/docs/utilities/date/parse-time#parsemsec) utility from **nhb-toolbox** to flexibly parse time inputs.
 > - Some type guards and helper functions are also imported from **nhb-toolbox** to keep the codebase clean and focused on hook logic.
 > - Make sure to install both `nhb-hooks` and `nhb-toolbox` packages to use all available features. Both packages are **fully tree-shakable**, so only the hooks you use will be bundled if you use bundler tools like `vite`, `turbopack`, `rollup`, `webpack` etc.
 
@@ -91,9 +91,9 @@ yarn add nhb-hooks nhb-toolbox
 - **Tree-shakable** – Only bundles the hooks you actually import.
 - **First-class TypeScript support** – Written in TypeScript for strict type safety and IntelliSense.
 - **Zero runtime bloat** – Minimal footprint with no unnecessary dependencies.
-- **Chronos integration** – Hooks like [**useClock**](#useclock) and [**useTimer**](#usetimer) leverage the powerful [**Chronos**](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos) class for time, date, and timezone operations.
+- **Chronos integration** – Hooks like [**useClock**](#useclock) and [**useTimer**](#usetimer) leverage the powerful [**Chronos**](https://nhb-toolbox.vercel.app/docs/classes/Chronos) class for time, date, and timezone operations.
 
-> 🧠 So far, only one utility class ([**Chronos**](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos)), time parser ([**parseMSec**](https://toolbox.nazmul-nhb.dev/docs/utilities/date/parse-time#parsemsec)) and some [**type guards**](https://toolbox.nazmul-nhb.dev/docs/guards/) from [**nhb-toolbox**](https://www.npmjs.com/package/nhb-toolbox) are used.
+> 🧠 So far, only one utility class ([**Chronos**](https://nhb-toolbox.vercel.app/docs/classes/Chronos)), time parser ([**parseMSec**](https://nhb-toolbox.vercel.app/docs/utilities/date/parse-time#parsemsec)) and some [**type guards**](https://nhb-toolbox.vercel.app/docs/guards/) from [**nhb-toolbox**](https://www.npmjs.com/package/nhb-toolbox) are used.
 
 ---
 
@@ -484,7 +484,7 @@ useEffect(() => {
 
 ## useClock
 
-Live-updating clock based on [`Chronos` from `nhb-toolbox`](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos). Supports formatting, timezones, animation frame ticking, and pause/resume. Lightweight and reactive by default.
+Live-updating clock based on [`Chronos` from `nhb-toolbox`](https://nhb-toolbox.vercel.app/docs/classes/Chronos). Supports formatting, timezones, animation frame ticking, and pause/resume. Lightweight and reactive by default.
 
 ### Import
 
@@ -541,7 +541,7 @@ function ClockWidget() {
 
 ### Notes for `useClock`
 
-- **Dependency**: Uses `Chronos` from [`nhb-toolbox`](https://toolbox.nazmul-nhb.dev).
+- **Dependency**: Uses `Chronos` from [`nhb-toolbox`](https://nhb-toolbox.vercel.app).
 - **Timezone**: Supports `TimeZone` names or `UTCOffset` values (e.g. `"BDT"` or `"+06:00"`).
 - **Precision**: Set `interval` for custom update rate (default: `1000`ms). Use `'frame'` for smooth updates.
 - **Control**: Fully pauseable/resumable using `.pause()` / `.resume()`.
@@ -670,7 +670,7 @@ function SessionTimeout() {
 
 ### Notes for `useTimer`
 
-- **Dependency**: Requires [**Chronos**](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos) from `nhb-toolbox`
+- **Dependency**: Requires [**Chronos**](https://nhb-toolbox.vercel.app/docs/classes/Chronos) from `nhb-toolbox`
 - **Precision**: Updates every second (`1000`ms)
 - **Formats**: Accepts both duration and target date
 - **Output**: Returns a `TimeDuration` object with *dynamic* `years`, `months`, `days`, `hours`, `minutes`, `seconds` and *static* `milliseconds` properties
@@ -678,7 +678,7 @@ function SessionTimeout() {
 
 **Important**:
 
-> Requires [`Chronos` from `nhb-toolbox`](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos) (automatically tree-shaken if not used). Install it separately.
+> Requires [`Chronos` from `nhb-toolbox`](https://nhb-toolbox.vercel.app/docs/classes/Chronos) (automatically tree-shaken if not used). Install it separately.
 
 - Install required package: `npm i nhb-toolbox`
 - Tree-shakable - `Chronos` is bundled only if the [hook](#usetimer) is used
@@ -771,8 +771,8 @@ console.log(formatTimer(duration, { showZero: true }));
 
 #### Related
 
-- [`duration`](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos/calculation#duration) method from `Chronos` — Used internally by `useTimer` to compute durations.
-- [`durationString`](https://toolbox.nazmul-nhb.dev/docs/classes/Chronos/calculation#durationstring) — Similar `Chronos` method which returns formatted duration string.
+- [`duration`](https://nhb-toolbox.vercel.app/docs/classes/Chronos/calculation#duration) method from `Chronos` — Used internally by `useTimer` to compute durations.
+- [`durationString`](https://nhb-toolbox.vercel.app/docs/classes/Chronos/calculation#durationstring) — Similar `Chronos` method which returns formatted duration string.
 
 ---
 
@@ -855,7 +855,7 @@ reset(120000); // reset to 2 minutes
 
 ### Time Parsing Behavior
 
-The `time` argument is parsed using [`parseMSec`](https://toolbox.nazmul-nhb.dev/docs/utilities/date/parse-time#parsemsec) from `nhb-toolbox`:
+The `time` argument is parsed using [`parseMSec`](https://nhb-toolbox.vercel.app/docs/utilities/date/parse-time#parsemsec) from `nhb-toolbox`:
 
 | Input Type    | Interpretation             | Examples                               |
 | ------------- | -------------------------- | -------------------------------------- |
@@ -883,7 +883,7 @@ useTimerMs(1.5);
 
 **Important**:
 
-> Requires [`parseMSec`](https://toolbox.nazmul-nhb.dev/docs/utilities/date/parse-time#parsemsec) (automatically tree-shaken if not used). Install it separately.
+> Requires [`parseMSec`](https://nhb-toolbox.vercel.app/docs/utilities/date/parse-time#parsemsec) (automatically tree-shaken if not used). Install it separately.
 
 - Install required package: `npm i nhb-toolbox`
 - Tree-shakable - `parseMSec` is bundled only if the [hook](#usetimerms) is used
@@ -1659,6 +1659,6 @@ type WebStorage<T, D extends Maybe<T> = undefined> = {
 
 ## 📜 License
 
-MIT © [Nazmul Hassan](https://nazmul-nhb.dev/). See [LICENSE](LICENSE) for details.
+MIT © [Nazmul Hassan](https://nazmul-nhb.vercel.app/). See [LICENSE](LICENSE) for details.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

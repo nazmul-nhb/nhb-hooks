@@ -1,6 +1,6 @@
 {
   "name": "nhb-hooks",
-  "version": "1.51.1",
+  "version": "1.51.2",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -69,18 +69,18 @@
   "author": {
     "name": "Nazmul Hassan",
     "email": "nazmulnhb@gmail.com",
-    "url": "https://nazmul-nhb.dev"
+    "url": "https://nazmul-nhb.vercel.app"
   },
   "maintainers": [
     {
       "name": "Nazmul Hassan",
       "email": "nazmulnhb@gmail.com",
-      "url": "https://nazmul-nhb.dev"
+      "url": "https://nazmul-nhb.vercel.app"
     },
     {
       "name": "Nazmul Hassan",
       "email": "nazmulnhb007@yahoo.com",
-      "url": "https://nazmul-nhb.dev"
+      "url": "https://nazmul-nhb.vercel.app"
     },
     {
       "name": "Mehedi Hasan",
@@ -92,12 +92,12 @@
     {
       "name": "Nazmul Hassan",
       "email": "nazmulnhb@gmail.com",
-      "url": "https://nazmul-nhb.dev"
+      "url": "https://nazmul-nhb.vercel.app"
     },
     {
       "name": "Nazmul Hassan",
       "email": "nazmulnhb007@yahoo.com",
-      "url": "https://nazmul-nhb.dev"
+      "url": "https://nazmul-nhb.vercel.app"
     },
     {
       "name": "Mehedi Hasan",
@@ -106,7 +106,7 @@
     }
   ],
   "license": "MIT",
-  "packageManager": "pnpm@11.22.0+sha512.1ff870c4c6133dfd88fb2afc46dd13d47f09c9794b438c6fdb47ca98caf3bc16381ee0be93a091b8e3824cf01f889f46d7d9e20910fb0be1ab0fb5baa80dd621",
+  "packageManager": "pnpm@11.23.0+sha512.f00082e5b283a199b74e079da28d155c008fe232f44c8a06ea7ddfa014ecf719fc362f790ecc67b28106ddac2afb24c49a9a079159da560b2ce7d1e98efd11af",
   "peerDependencies": {
     "nhb-toolbox": ">=4.28.80",
     "react": ">=18.3.1 || ^19.0.0",
@@ -127,31 +127,31 @@
     "@eslint/js": "^10.0.1",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.2",
-    "@testing-library/user-event": "^14.6.5",
+    "@testing-library/user-event": "^14.6.6",
     "@types/node": "^26.2.0",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "@typescript-eslint/eslint-plugin": "^8.67.0",
     "@typescript-eslint/parser": "^8.67.0",
-    "@vitejs/plugin-react": "^6.0.5",
+    "@vitejs/plugin-react": "^6.1.0",
     "@vitest/coverage-v8": "4.1.11",
     "@vitest/ui": "^4.1.11",
-    "eslint": "^10.8.1",
+    "eslint": "^10.9.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.4",
     "globals": "^17.11.0",
     "jsdom": "^30.0.1",
     "nhb-scripts": "^1.9.2",
-    "nhb-toolbox": "^4.31.4",
+    "nhb-toolbox": "^4.31.5",
     "prettier": "^3.9.6",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "rollup": "^4.62.4",
+    "rollup": "^4.62.5",
     "rollup-plugin-dts": "^6.5.1",
     "rollup-plugin-visualizer": "^7.1.1",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.67.0",
-    "vite": "^8.2.1",
+    "vite": "^8.2.2",
     "vitest": "^4.1.11"
   }
 }
