@@ -1,5 +1,5 @@
 import type { Maybe } from 'nhb-toolbox/types';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { StorageOptions, WebStorage } from '../types';
 
 /**
@@ -61,16 +61,14 @@ export function useStorage<T, D extends Maybe<T> = undefined>(
 		deserialize,
 	} = options ?? {};
 
-	const [value, setValue] = useState<T | null>(defaultValue ?? null);
+	// `defaultValue` is an initial fallback, not a reactive dependency.
+	const [value, setValue] = useState<T | null>(() => defaultValue ?? null);
 	const [isReady, setIsReady] = useState(false);
 
-	const serializer = useMemo<(value: T) => string>(() => {
-		return serialize ?? JSON.stringify;
-	}, [serialize]);
-
-	const deserializer = useMemo<(value: string) => T>(() => {
-		return deserialize ?? JSON.parse;
-	}, [deserialize]);
+	// Options may contain inline callbacks. Keep their latest implementations
+	// without making hydration or the returned methods unstable on every render.
+	const serializerRef = useRef<(value: T) => string>(serialize ?? JSON.stringify);
+	const deserializerRef = useRef<(value: string) => T>(deserialize ?? JSON.parse);
 
 	const getStorage = useCallback(() => {
 		if (!isReady) return null;
@@ -82,23 +80,39 @@ export function useStorage<T, D extends Maybe<T> = undefined>(
 		queueMicrotask(() => setIsReady(true));
 	}, []);
 
+	/** Keep custom callbacks current without accessing refs during render. */
+	useEffect(() => {
+		serializerRef.current = serialize ?? JSON.stringify;
+		deserializerRef.current = deserialize ?? JSON.parse;
+	}, [serialize, deserialize]);
+
 	/** Load stored value once ready */
 	useEffect(() => {
 		if (!isReady || !key) return;
+		let isCancelled = false;
 
 		try {
 			const storage = getStorage();
-			if (!storage) return;
+			if (!storage) return undefined;
 
 			const item = storage.getItem(key);
 
+			const nextValue = item !== null ? deserializerRef.current(item) : null;
 			queueMicrotask(() => {
-				setValue(item ? deserializer(item) : (value ?? null));
+				if (!isCancelled) {
+					setValue((currentValue) => (item !== null ? nextValue : currentValue));
+				}
 			});
 		} catch {
-			queueMicrotask(() => setValue(null));
+			queueMicrotask(() => {
+				if (!isCancelled) setValue(null);
+			});
 		}
-	}, [isReady, key, deserializer, getStorage, value]);
+
+		return () => {
+			isCancelled = true;
+		};
+	}, [isReady, key, getStorage]);
 
 	const setItem = useCallback(
 		($value: T) => {
@@ -106,13 +120,13 @@ export function useStorage<T, D extends Maybe<T> = undefined>(
 				const storage = getStorage();
 				if (!storage) return;
 
-				storage.setItem(key, serializer($value));
+				storage.setItem(key, serializerRef.current($value));
 				setValue($value);
 			} catch (error) {
 				console.error(`Error saving item with key "${key}" in ${type} storage:`, error);
 			}
 		},
-		[getStorage, key, serializer, type]
+		[getStorage, key, type]
 	);
 
 	const clearItem = useCallback(() => {
@@ -138,12 +152,12 @@ export function useStorage<T, D extends Maybe<T> = undefined>(
 		}
 	}, [getStorage, key, type]);
 
-	return useMemo<WebStorage<T, D>>(() => {
+	return useMemo(() => {
 		return {
-			value: value as D extends NonNullable<T> ? D : T | null,
+			value,
 			set: setItem,
 			remove: removeItem,
 			clear: clearItem,
-		};
+		} as WebStorage<T, D>;
 	}, [value, setItem, removeItem, clearItem]);
 }

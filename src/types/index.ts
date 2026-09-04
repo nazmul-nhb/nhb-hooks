@@ -203,7 +203,7 @@ export type StorageOptions<T, D extends Maybe<T> = undefined> = {
 
 /** * Return type of `useStorage` hook. */
 export type WebStorage<T, D extends Maybe<T> = undefined> = {
-	/** * Current value from storage, or `null` if not set or on error. */
+	/** * Current value from storage, the default value, or `null` if unavailable. */
 	value: D extends NonNullable<T> ? D : T | null;
 	/**
 	 * * Function to set value in specified storage.
